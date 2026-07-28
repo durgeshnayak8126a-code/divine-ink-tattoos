@@ -7,15 +7,11 @@ import {
   serverTimestamp,
   updateDoc,
 } from 'firebase/firestore/lite';
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytes,
-} from 'firebase/storage';
-import { getFirestoreDb, getFirebaseStorage } from '../../firebase/config.js';
+import { getFirestoreDb } from '../../firebase/config.js';
 import { FIRESTORE_COLLECTIONS } from '../../firebase/firestoreSchema.js';
-import { galleryStoragePath } from '../../firebase/storagePaths.js';
+
+const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME?.trim();
+const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET?.trim();
 
 function timestampValue(value) {
   if (typeof value?.toMillis === 'function') return value.toMillis();
@@ -28,6 +24,23 @@ function invalidatePublicCache() {
     sessionStorage.removeItem('divine-ink-gallery-cache-v1');
   } catch {
     // Cache invalidation is best-effort.
+  }
+}
+
+function cloudinaryPublicIdFromUrl(url) {
+  if (!url || !url.includes('res.cloudinary.com')) return '';
+
+  try {
+    const parsedUrl = new URL(url);
+    const uploadMarker = '/upload/';
+    const markerIndex = parsedUrl.pathname.indexOf(uploadMarker);
+    if (markerIndex === -1) return '';
+
+    let assetPath = parsedUrl.pathname.slice(markerIndex + uploadMarker.length);
+    assetPath = assetPath.replace(/^v\d+\//, '');
+    return decodeURIComponent(assetPath.replace(/\.[^/.]+$/, ''));
+  } catch {
+    return '';
   }
 }
 
@@ -51,20 +64,29 @@ export async function listGalleryItems() {
 }
 
 export async function uploadGalleryImage(file, folder) {
-  const storage = await getFirebaseStorage();
-  if (!storage) throw new Error('Firebase Storage is not configured.');
+  if (!cloudName || !uploadPreset) {
+    throw new Error('Cloudinary environment variables are not configured.');
+  }
 
-  const safeName = file.name
-    .toLowerCase()
-    .replace(/[^a-z0-9._-]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-  const uniqueName = `${Date.now()}-${crypto.randomUUID()}-${safeName}`;
-  const storageRef = ref(storage, galleryStoragePath(folder, uniqueName));
-  await uploadBytes(storageRef, file, {
-    contentType: file.type,
-    cacheControl: 'public,max-age=31536000,immutable',
-  });
-  return getDownloadURL(storageRef);
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', uploadPreset);
+  formData.append('folder', `divine-ink-tattoos/${folder}`);
+
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/${encodeURIComponent(cloudName)}/image/upload`,
+    {
+      method: 'POST',
+      body: formData,
+    },
+  );
+
+  const result = await response.json().catch(() => ({}));
+  if (!response.ok || !result.secure_url) {
+    throw new Error(result?.error?.message || 'Cloudinary image upload failed.');
+  }
+
+  return result.secure_url;
 }
 
 export async function createGalleryItem(values) {
@@ -92,14 +114,18 @@ export async function updateGalleryItem(itemId, values) {
 }
 
 async function deleteStoredImage(url) {
-  if (!url) return;
-  const storage = await getFirebaseStorage();
-  if (!storage) throw new Error('Firebase Storage is not configured.');
+  const publicId = cloudinaryPublicIdFromUrl(url);
+  if (!publicId) return;
 
-  try {
-    await deleteObject(ref(storage, url));
-  } catch (error) {
-    if (error?.code !== 'storage/object-not-found') throw error;
+  const response = await fetch('/.netlify/functions/delete-cloudinary-image', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ publicId }),
+  });
+
+  if (!response.ok) {
+    const result = await response.json().catch(() => ({}));
+    throw new Error(result.error || 'Cloudinary image deletion failed.');
   }
 }
 
