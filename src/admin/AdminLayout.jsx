@@ -27,6 +27,13 @@ export default function AdminLayout() {
         <nav className="admin-nav" aria-label="Admin navigation">
           <NavLink end to="/admin/">Dashboard</NavLink>
           <NavLink to="/admin/gallery/">Gallery</NavLink>
+          <NavLink to="/admin/services/">Services</NavLink>
+          <NavLink to="/admin/homepage/">Homepage</NavLink>
+          <NavLink to="/admin/reviews/">Reviews</NavLink>
+          <NavLink to="/admin/faqs/">FAQs</NavLink>
+          <NavLink to="/admin/offers/">Offers</NavLink>
+          <NavLink to="/admin/contact/">Contact</NavLink>
+          <NavLink to="/admin/seo/">SEO</NavLink>
           <a href="/" target="_blank" rel="noreferrer">View public website</a>
         </nav>
         <main className="admin-content">

@@ -557,3 +557,99 @@
     height: 260px;
   }
 }
+
+.cms-editor {
+  display: grid;
+  gap: 24px;
+  margin: 28px 0 36px;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #111;
+}
+
+.cms-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.cms-fields-grid label {
+  display: grid;
+  gap: 8px;
+}
+
+.cms-fields-grid input,
+.cms-fields-grid textarea {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: #080808;
+  color: #fff;
+  font: inherit;
+}
+
+.cms-fields-grid input:focus,
+.cms-fields-grid textarea:focus {
+  border-color: #d6aa52;
+  outline: 2px solid rgba(214, 170, 82, 0.35);
+  outline-offset: 2px;
+}
+
+.cms-full-field {
+  grid-column: 1 / -1;
+}
+
+.cms-fields-grid .cms-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.cms-checkbox input {
+  width: auto;
+}
+
+.cms-list {
+  display: grid;
+  gap: 14px;
+}
+
+.cms-list article {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: #131313;
+}
+
+.cms-list h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+.cms-list p {
+  max-width: 780px;
+  margin: 0;
+  color: #b8b1a7;
+}
+
+.admin-success {
+  color: #8ed3a6;
+}
+
+@media (max-width: 760px) {
+  .cms-fields-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cms-full-field {
+    grid-column: auto;
+  }
+
+  .cms-list article {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

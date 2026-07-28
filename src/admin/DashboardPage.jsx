@@ -5,29 +5,28 @@ export default function DashboardPage() {
     <>
       <AdminMeta title="Admin Dashboard | Divine Ink Tattoos" />
       <section aria-labelledby="dashboard-title">
-        <p className="admin-kicker">Phase 1 foundation</p>
+        <p className="admin-kicker">Phase 3 CMS</p>
         <h1 id="dashboard-title">Dashboard</h1>
         <p className="admin-intro">
-          Authentication and protected admin routing are ready. Content
-          management modules are intentionally not enabled in this phase.
+          Manage gallery, services, homepage settings, reviews, FAQs, offers,
+          contact details and SEO configuration from one protected workspace.
         </p>
 
         <div className="admin-summary-grid">
           <article>
-            <h2>Authentication</h2>
-            <p>Firebase email and password session structure is available.</p>
+            <h2>Content</h2>
+            <p>CRUD modules use validated Firestore documents.</p>
           </article>
           <article>
-            <h2>Firestore</h2>
-            <p>Admin profile and audit-log boundaries are defined and locked.</p>
+            <h2>Media</h2>
+            <p>Gallery uploads are compressed, stored and cleaned up safely.</p>
           </article>
           <article>
-            <h2>Storage</h2>
-            <p>Administrator-owned profile storage is defined and protected.</p>
+            <h2>Publishing</h2>
+            <p>Published gallery items automatically feed the public portfolio.</p>
           </article>
         </div>
       </section>
     </>
   );
 }
-

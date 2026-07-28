@@ -6,6 +6,14 @@ service cloud.firestore {
       return request.auth != null && request.auth.token.admin == true;
     }
 
+    function validText(value, maximum) {
+      return value is string && value.size() > 0 && value.size() <= maximum;
+    }
+
+    function validOptionalText(value, maximum) {
+      return value is string && value.size() <= maximum;
+    }
+
     match /adminUsers/{userId} {
       allow read: if isAdmin() && request.auth.uid == userId;
       allow write: if false;
@@ -65,6 +73,97 @@ service cloud.firestore {
         && validGalleryItem()
         && request.resource.data.createdAt == resource.data.createdAt;
       allow delete: if isAdmin();
+    }
+
+    function validService() {
+      return request.resource.data.keys().hasOnly([
+        'slug', 'title', 'description', 'faqs', 'pricing', 'metaTitle',
+        'metaDescription', 'active', 'createdAt', 'updatedAt'
+      ])
+        && validText(request.resource.data.slug, 100)
+        && validText(request.resource.data.title, 120)
+        && validText(request.resource.data.description, 5000)
+        && request.resource.data.faqs is list
+        && validText(request.resource.data.pricing, 500)
+        && validText(request.resource.data.metaTitle, 70)
+        && validText(request.resource.data.metaDescription, 170)
+        && request.resource.data.active is bool;
+    }
+
+    function validReview() {
+      return request.resource.data.keys().hasOnly([
+        'author', 'text', 'rating', 'source', 'featured', 'published',
+        'createdAt', 'updatedAt'
+      ])
+        && validText(request.resource.data.author, 120)
+        && validText(request.resource.data.text, 2000)
+        && request.resource.data.rating is number
+        && request.resource.data.rating >= 1
+        && request.resource.data.rating <= 5
+        && validOptionalText(request.resource.data.source, 100)
+        && request.resource.data.featured is bool
+        && request.resource.data.published is bool;
+    }
+
+    function validFaq() {
+      return request.resource.data.keys().hasOnly([
+        'question', 'answer', 'order', 'published', 'createdAt', 'updatedAt'
+      ])
+        && validText(request.resource.data.question, 300)
+        && validText(request.resource.data.answer, 3000)
+        && request.resource.data.order is number
+        && request.resource.data.published is bool;
+    }
+
+    function validOffer() {
+      return request.resource.data.keys().hasOnly([
+        'title', 'description', 'ctaText', 'startDate', 'endDate', 'active',
+        'createdAt', 'updatedAt'
+      ])
+        && validText(request.resource.data.title, 160)
+        && validText(request.resource.data.description, 2000)
+        && validOptionalText(request.resource.data.ctaText, 80)
+        && validText(request.resource.data.startDate, 10)
+        && validText(request.resource.data.endDate, 10)
+        && request.resource.data.startDate <= request.resource.data.endDate
+        && request.resource.data.active is bool;
+    }
+
+    match /services/{itemId} {
+      allow read: if isAdmin() || resource.data.active == true;
+      allow create, update: if isAdmin() && validService();
+      allow delete: if isAdmin();
+    }
+
+    match /reviews/{itemId} {
+      allow read: if isAdmin() || resource.data.published == true;
+      allow create, update: if isAdmin() && validReview();
+      allow delete: if isAdmin();
+    }
+
+    match /faqs/{itemId} {
+      allow read: if isAdmin() || resource.data.published == true;
+      allow create, update: if isAdmin() && validFaq();
+      allow delete: if isAdmin();
+    }
+
+    match /offers/{itemId} {
+      allow read: if isAdmin() || resource.data.active == true;
+      allow create, update: if isAdmin() && validOffer();
+      allow delete: if isAdmin();
+    }
+
+    function validSettings() {
+      return request.resource.data.keys().hasAll(['updatedAt'])
+        && request.resource.data.keys().size() <= 12;
+    }
+
+    match /siteSettings/{documentId} {
+      allow read: if true;
+      allow create, update: if isAdmin()
+        && documentId in ['homepage', 'contact', 'seo']
+        && validSettings();
+      allow delete: if false;
     }
 
     match /{document=**} {

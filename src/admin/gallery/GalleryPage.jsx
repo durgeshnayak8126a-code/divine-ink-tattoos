@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import AdminMeta from '../AdminMeta.jsx';
+import BulkGalleryUpload from './BulkGalleryUpload.jsx';
 import GalleryForm from './GalleryForm.jsx';
 import GalleryPreview from './GalleryPreview.jsx';
 import {
@@ -125,6 +126,7 @@ export default function GalleryPage() {
             Add gallery item
           </button>
         </div>
+        <BulkGalleryUpload onUploaded={loadItems} />
 
         {editorOpen && (
           <GalleryForm
