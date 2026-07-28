@@ -1,0 +1,208 @@
+import { useEffect, useState } from 'react';
+import { GALLERY_STORAGE_FOLDERS } from '../../firebase/storagePaths.js';
+import GalleryDropzone from './GalleryDropzone.jsx';
+import {
+  createGalleryItem,
+  deleteReplacedImages,
+  updateGalleryItem,
+  uploadGalleryImage,
+} from './galleryService.js';
+
+const emptyValues = {
+  title: '',
+  category: '',
+  bodyPart: '',
+  tattooStyle: '',
+  artist: '',
+  price: '',
+  altText: '',
+  description: '',
+  featured: false,
+  published: false,
+  image: '',
+  beforeImage: '',
+  afterImage: '',
+};
+
+export default function GalleryForm({ item, onCancel, onSaved }) {
+  const [values, setValues] = useState(emptyValues);
+  const [files, setFiles] = useState({
+    image: null,
+    beforeImage: null,
+    afterImage: null,
+  });
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    setValues(item ? { ...emptyValues, ...item } : emptyValues);
+    setFiles({ image: null, beforeImage: null, afterImage: null });
+    setError('');
+  }, [item]);
+
+  const updateValue = (event) => {
+    const { checked, name, type, value } = event.target;
+    setValues((current) => ({
+      ...current,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!files.image && !values.image) {
+      setError('A primary gallery image is required.');
+      return;
+    }
+
+    setSaving(true);
+    setError('');
+    const uploadedUrls = [];
+
+    try {
+      const nextImages = {
+        image: values.image || '',
+        beforeImage: values.beforeImage || '',
+        afterImage: values.afterImage || '',
+      };
+      const replacedImages = [];
+
+      if (files.image) {
+        nextImages.image = await uploadGalleryImage(
+          files.image,
+          values.featured
+            ? GALLERY_STORAGE_FOLDERS.featured
+            : GALLERY_STORAGE_FOLDERS.gallery,
+        );
+        uploadedUrls.push(nextImages.image);
+        if (values.image) replacedImages.push(values.image);
+      }
+      if (files.beforeImage) {
+        nextImages.beforeImage = await uploadGalleryImage(
+          files.beforeImage,
+          GALLERY_STORAGE_FOLDERS.beforeAfter,
+        );
+        uploadedUrls.push(nextImages.beforeImage);
+        if (values.beforeImage) replacedImages.push(values.beforeImage);
+      }
+      if (files.afterImage) {
+        nextImages.afterImage = await uploadGalleryImage(
+          files.afterImage,
+          GALLERY_STORAGE_FOLDERS.beforeAfter,
+        );
+        uploadedUrls.push(nextImages.afterImage);
+        if (values.afterImage) replacedImages.push(values.afterImage);
+      }
+
+      const payload = {
+        image: nextImages.image,
+        beforeImage: nextImages.beforeImage,
+        afterImage: nextImages.afterImage,
+        title: values.title.trim(),
+        category: values.category.trim(),
+        bodyPart: values.bodyPart.trim(),
+        tattooStyle: values.tattooStyle.trim(),
+        artist: values.artist.trim(),
+        price: values.price.trim(),
+        altText: values.altText.trim(),
+        description: values.description.trim(),
+        featured: Boolean(values.featured),
+        published: Boolean(values.published),
+      };
+
+      if (item?.id) await updateGalleryItem(item.id, payload);
+      else await createGalleryItem(payload);
+
+      await deleteReplacedImages(replacedImages);
+      onSaved();
+    } catch (saveError) {
+      if (uploadedUrls.length > 0) {
+        await deleteReplacedImages(uploadedUrls).catch(() => undefined);
+      }
+      setError(saveError.message || 'Gallery item could not be saved.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <section className="gallery-editor" aria-labelledby="gallery-editor-title">
+      <div className="gallery-editor-heading">
+        <div>
+          <p className="admin-kicker">{item ? 'Edit item' : 'New item'}</p>
+          <h2 id="gallery-editor-title">
+            {item ? `Edit ${item.title}` : 'Add gallery item'}
+          </h2>
+        </div>
+        <button className="admin-secondary-button" onClick={onCancel} type="button">
+          Cancel
+        </button>
+      </div>
+
+      <form className="gallery-editor-form" onSubmit={handleSubmit}>
+        <div className="gallery-upload-grid">
+          <GalleryDropzone
+            currentImage={values.image}
+            label="Gallery image"
+            onFile={(file) => setFiles((current) => ({ ...current, image: file }))}
+            required
+          />
+          <GalleryDropzone
+            currentImage={values.beforeImage}
+            label="Before image"
+            onFile={(file) => setFiles((current) => ({ ...current, beforeImage: file }))}
+          />
+          <GalleryDropzone
+            currentImage={values.afterImage}
+            label="After image"
+            onFile={(file) => setFiles((current) => ({ ...current, afterImage: file }))}
+          />
+        </div>
+
+        <div className="gallery-fields-grid">
+          <label>Title *
+            <input name="title" onChange={updateValue} required value={values.title} />
+          </label>
+          <label>Category *
+            <input name="category" onChange={updateValue} required value={values.category} />
+          </label>
+          <label>Body part *
+            <input name="bodyPart" onChange={updateValue} required value={values.bodyPart} />
+          </label>
+          <label>Tattoo style *
+            <input name="tattooStyle" onChange={updateValue} required value={values.tattooStyle} />
+          </label>
+          <label>Artist *
+            <input name="artist" onChange={updateValue} required value={values.artist} />
+          </label>
+          <label>Price *
+            <input name="price" onChange={updateValue} required value={values.price} />
+          </label>
+          <label className="gallery-full-field">Image alt text *
+            <input name="altText" onChange={updateValue} required value={values.altText} />
+          </label>
+          <label className="gallery-full-field">Description *
+            <textarea name="description" onChange={updateValue} required rows="4" value={values.description} />
+          </label>
+        </div>
+
+        <div className="gallery-checkboxes">
+          <label>
+            <input checked={values.featured} name="featured" onChange={updateValue} type="checkbox" />
+            Featured
+          </label>
+          <label>
+            <input checked={values.published} name="published" onChange={updateValue} type="checkbox" />
+            Published
+          </label>
+        </div>
+
+        {error && <p className="admin-error" role="alert">{error}</p>}
+        <button className="admin-primary-button" disabled={saving} type="submit">
+          {saving ? 'Uploading and saving…' : item ? 'Save changes' : 'Create gallery item'}
+        </button>
+      </form>
+    </section>
+  );
+}
+

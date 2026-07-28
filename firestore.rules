@@ -1,0 +1,74 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+
+    match /adminUsers/{userId} {
+      allow read: if isAdmin() && request.auth.uid == userId;
+      allow write: if false;
+    }
+
+    match /auditLogs/{document=**} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    function validGalleryItem() {
+      let requiredFields = [
+        'image',
+        'beforeImage',
+        'afterImage',
+        'title',
+        'category',
+        'bodyPart',
+        'tattooStyle',
+        'artist',
+        'price',
+        'altText',
+        'description',
+        'featured',
+        'createdAt',
+        'updatedAt',
+        'published'
+      ];
+
+      return request.resource.data.keys().hasAll(requiredFields)
+        && request.resource.data.keys().hasOnly(requiredFields)
+        && request.resource.data.image is string
+        && request.resource.data.image.size() > 0
+        && request.resource.data.beforeImage is string
+        && request.resource.data.afterImage is string
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.category is string
+        && request.resource.data.category.size() > 0
+        && request.resource.data.bodyPart is string
+        && request.resource.data.tattooStyle is string
+        && request.resource.data.artist is string
+        && request.resource.data.price is string
+        && request.resource.data.altText is string
+        && request.resource.data.altText.size() > 0
+        && request.resource.data.description is string
+        && request.resource.data.featured is bool
+        && request.resource.data.published is bool
+        && request.resource.data.createdAt is timestamp
+        && request.resource.data.updatedAt is timestamp;
+    }
+
+    match /gallery/{galleryItemId} {
+      allow get, list: if isAdmin() || resource.data.published == true;
+      allow create: if isAdmin() && validGalleryItem();
+      allow update: if isAdmin()
+        && validGalleryItem()
+        && request.resource.data.createdAt == resource.data.createdAt;
+      allow delete: if isAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "Divine Ink Tattoos & Piercing Studio",
+  "short_name": "Divine Ink",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070707",
+  "theme_color": "#070707",
+  "icons": [
+    {"src": "/divine-ink-logo.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}
