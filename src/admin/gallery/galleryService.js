@@ -7,7 +7,7 @@ import {
   serverTimestamp,
   updateDoc,
 } from 'firebase/firestore/lite';
-import { getFirestoreDb } from '../../firebase/config.js';
+import { firebaseAuth, getFirestoreDb } from '../../firebase/config.js';
 import { FIRESTORE_COLLECTIONS } from '../../firebase/firestoreSchema.js';
 
 const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME?.trim();
@@ -123,9 +123,18 @@ async function deleteStoredImage(url) {
   const publicId = cloudinaryPublicIdFromUrl(url);
   if (!publicId) return;
 
+  const currentUser = firebaseAuth?.currentUser;
+  if (!currentUser) {
+    throw new Error('You must be signed in as an admin to delete images.');
+  }
+  const idToken = await currentUser.getIdToken();
+
   const response = await fetch('/.netlify/functions/delete-cloudinary-image', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({ publicId }),
   });
 
