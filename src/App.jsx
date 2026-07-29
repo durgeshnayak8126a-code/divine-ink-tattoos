@@ -29,7 +29,6 @@ import durgessh from './assets/team/durgessh-nayak.png';
 import sachin from './assets/team/sachin-nayak.jpg';
 import { galleryFallbackItems } from './galleryFallback.js';
 import { usePublicGallery } from './usePublicGallery.js';
-import { useManagedSeo, usePublicCms } from './usePublicCms.js';
 
 import lobePiercing from './assets/piercing/lobe.jpg';
 import helixPiercing from './assets/piercing/helix.jpg';
@@ -51,8 +50,9 @@ function FacebookLogo({ size = 25 }) {
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.87.24-1.46 1.54-1.46H16.7V5a22.8 22.8 0 0 0-2.4-.12c-2.38 0-4 1.45-4 4.12v2H7.6v3h2.7v8h3.2Z"/></svg>;
 }
 
-const fallbackPhone = '918445702782';
-const fallbackMapLink = 'https://share.google/Ot0WZGKQFZkWTcSll';
+const phone = '918445702782';
+const mapLink = 'https://share.google/Ot0WZGKQFZkWTcSll';
+const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent('Hi Divine Ink Tattoos, I want to book a consultation.')}`;
 
 const services = [
   ['Custom Tattoos', 'Original concepts designed around your idea, placement and style.'],
@@ -89,18 +89,6 @@ function App() {
   const lightboxCloseRef = useRef(null);
   const lightboxTriggerRef = useRef(null);
   const galleryItems = usePublicGallery(galleryFallbackItems);
-  const cms = usePublicCms();
-  useManagedSeo(cms.seo);
-  const phone = (cms.contact?.whatsapp || cms.contact?.phone || fallbackPhone).replace(/\D/g, '');
-  const mapLink = cms.contact?.googleMapsUrl || fallbackMapLink;
-  const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent('Hi Divine Ink Tattoos, I want to book a consultation.')}`;
-  const visibleServices = cms.services.length
-    ? cms.services.map((service) => [service.title, service.description])
-    : services;
-  const visibleFaqs = cms.faqs.length
-    ? cms.faqs.map((faq) => [faq.question, faq.answer])
-    : faqs;
-  const heroImage = cms.homepage?.featuredImages?.[0] || hero;
 
   const filters = ['All', ...new Set(galleryItems.map((item) => item.category))];
   const filtered = useMemo(() => activeFilter === 'All' ? galleryItems : galleryItems.filter((item) => item.category === activeFilter), [activeFilter, galleryItems]);
@@ -185,14 +173,14 @@ function App() {
       </header>
 
       <main>
-        <section id="home" className="hero" style={{ backgroundImage: `linear-gradient(90deg, rgba(5,5,5,.96) 0%, rgba(5,5,5,.72) 45%, rgba(5,5,5,.2) 100%), url(${heroImage})` }}>
+        <section id="home" className="hero" style={{ backgroundImage: `linear-gradient(90deg, rgba(5,5,5,.96) 0%, rgba(5,5,5,.72) 45%, rgba(5,5,5,.2) 100%), url(${hero})` }}>
           <div className="hero-content">
             <p className="eyebrow">Premium Tattoo & Piercing Studio · Gurugram</p>
             <h1>Ink Your Story At<br/><span>Divine Ink Tattoos</span></h1>
-            <p className="hero-tagline">{cms.homepage?.bannerText || 'Your Personal Tattoo Studio'}</p>
+            <p className="hero-tagline">Your Personal Tattoo Studio</p>
             <p className="hero-copy">Custom tattoos, cover-ups, realism, portraits, minimal designs and professional piercing in a hygiene-focused studio at Sector 31, Gurugram.</p>
             <div className="hero-actions">
-              <a className="btn primary" href={whatsappLink} target="_blank" rel="noreferrer"><MessageCircle size={19}/> {cms.homepage?.ctaText || 'Book on WhatsApp'}</a>
+              <a className="btn primary" href={whatsappLink} target="_blank" rel="noreferrer"><MessageCircle size={19}/> Book on WhatsApp</a>
               <a className="btn primary" href="tel:+918445702782"><Phone size={18}/> Book on Call</a>
             </div>
             <div className="hero-points">
@@ -236,7 +224,7 @@ function App() {
             <p>Every design is evaluated for size, placement, detail and long-term readability before the session begins.</p>
           </div>
           <div className="service-grid">
-            {visibleServices.map(([title, text], index) => (
+            {services.map(([title, text], index) => (
               <article className="service-card" key={title}>
                 <span className="service-number">{String(index + 1).padStart(2,'0')}</span>
                 <h3>{title}</h3><p>{text}</p>
@@ -302,7 +290,7 @@ function App() {
         <section id="faq" className="section faq-section">
           <div className="section-heading center"><p className="eyebrow">Before You Book</p><h2>Frequently asked questions</h2></div>
           <div className="faq-list">
-            {visibleFaqs.map(([q,a], index) => {
+            {faqs.map(([q,a], index) => {
               const expanded = openFaq === index;
               const buttonId = `faq-button-${index}`;
               const answerId = `faq-answer-${index}`;
@@ -318,14 +306,14 @@ function App() {
               <h2>Send your idea, size and placement.</h2>
               <p>For faster consultation, send a clear reference image, approximate size and body placement on WhatsApp.</p>
               <div className="contact-list">
-                <a href={`tel:+${phone}`}><Phone/> {cms.contact?.phone || '+91 84457 02782'}</a>
+                <a href="tel:+918445702782"><Phone/> +91 84457 02782</a>
                 <a href="mailto:divinetattoostudio1@gmail.com"><Mail/> divinetattoostudio1@gmail.com</a>
-                <a href={mapLink} target="_blank" rel="noreferrer"><MapPin/> {cms.contact?.address || 'Shop No. 155, Basement, Near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001'}</a>
-                <span><Clock3/> {cms.contact?.openingHours || 'Open 24x7 — advance confirmation recommended'}</span>
+                <a href={mapLink} target="_blank" rel="noreferrer"><MapPin/> Shop No. 155, Basement, Near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001</a>
+                <span><Clock3/> Open 24x7 — advance confirmation recommended</span>
               </div>
               <div className="social-row">
-                <a href={cms.contact?.instagram || 'https://www.instagram.com/divineinktattoos1/'} target="_blank" rel="noreferrer">Instagram</a>
-                <a href={cms.contact?.facebook || 'https://www.facebook.com/profile.php?id=100078466583354'} target="_blank" rel="noreferrer">Facebook</a>
+                <a href="https://www.instagram.com/divineinktattoos1/" target="_blank" rel="noreferrer">Instagram</a>
+                <a href="https://www.facebook.com/profile.php?id=100078466583354" target="_blank" rel="noreferrer">Facebook</a>
               </div>
             </div>
             <form className="booking-form" action="https://formsubmit.co/divinetattoostudio1@gmail.com" method="POST">
@@ -355,7 +343,7 @@ function App() {
       <footer className="footer">
         <div><img src={logo} alt="Divine Ink logo"/><p>Custom tattoos and professional piercing in Sector 31, Gurugram.</p></div>
         <div><h4>Quick Links</h4><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#artists">Artists</a><a href="#reviews">Reviews</a></div>
-        <div><h4>Contact</h4><a href={`tel:+${phone}`}>{cms.contact?.phone || '+91 84457 02782'}</a><a href="mailto:divinetattoostudio1@gmail.com">divinetattoostudio1@gmail.com</a><a href={mapLink} target="_blank" rel="noreferrer">Get Directions</a></div>
+        <div><h4>Contact</h4><a href="tel:+918445702782">+91 84457 02782</a><a href="mailto:divinetattoostudio1@gmail.com">divinetattoostudio1@gmail.com</a><a href={mapLink} target="_blank" rel="noreferrer">Get Directions</a></div>
         <div className="copyright">© {new Date().getFullYear()} Divine Ink Tattoos & Piercing Studio. All rights reserved.</div>
       </footer>
 

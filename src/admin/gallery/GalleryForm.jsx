@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { GALLERY_STORAGE_FOLDERS } from '../../firebase/storagePaths.js';
 import GalleryDropzone from './GalleryDropzone.jsx';
 import {
   createGalleryItem,
   deleteReplacedImages,
+  GALLERY_UPLOAD_FOLDERS,
   updateGalleryItem,
   uploadGalleryImage,
 } from './galleryService.js';
@@ -71,8 +71,8 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
         nextImages.image = await uploadGalleryImage(
           files.image,
           values.featured
-            ? GALLERY_STORAGE_FOLDERS.featured
-            : GALLERY_STORAGE_FOLDERS.gallery,
+            ? GALLERY_UPLOAD_FOLDERS.featured
+            : GALLERY_UPLOAD_FOLDERS.gallery,
         );
         uploadedUrls.push(nextImages.image);
         if (values.image) replacedImages.push(values.image);
@@ -80,7 +80,7 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
       if (files.beforeImage) {
         nextImages.beforeImage = await uploadGalleryImage(
           files.beforeImage,
-          GALLERY_STORAGE_FOLDERS.beforeAfter,
+          GALLERY_UPLOAD_FOLDERS.beforeAfter,
         );
         uploadedUrls.push(nextImages.beforeImage);
         if (values.beforeImage) replacedImages.push(values.beforeImage);
@@ -88,7 +88,7 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
       if (files.afterImage) {
         nextImages.afterImage = await uploadGalleryImage(
           files.afterImage,
-          GALLERY_STORAGE_FOLDERS.beforeAfter,
+          GALLERY_UPLOAD_FOLDERS.beforeAfter,
         );
         uploadedUrls.push(nextImages.afterImage);
         if (values.afterImage) replacedImages.push(values.afterImage);
@@ -205,4 +205,3 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
     </section>
   );
 }
-

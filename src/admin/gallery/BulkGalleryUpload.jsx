@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
-import { GALLERY_STORAGE_FOLDERS } from '../../firebase/storagePaths.js';
 import { prepareGalleryImage } from './imageProcessing.js';
 import {
   createGalleryItem,
   deleteReplacedImages,
+  GALLERY_UPLOAD_FOLDERS,
   uploadGalleryImage,
 } from './galleryService.js';
 
@@ -33,7 +33,7 @@ export default function BulkGalleryUpload({ onUploaded }) {
         let uploadedUrl = '';
         try {
           const file = await prepareGalleryImage(originalFile);
-          uploadedUrl = await uploadGalleryImage(file, GALLERY_STORAGE_FOLDERS.gallery);
+          uploadedUrl = await uploadGalleryImage(file, GALLERY_UPLOAD_FOLDERS.gallery);
           const title = titleFromFile(originalFile.name);
           await createGalleryItem({
             image: uploadedUrl,

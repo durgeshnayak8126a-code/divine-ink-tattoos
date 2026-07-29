@@ -17,9 +17,3 @@ export async function getFirestoreDb() {
   const { getFirestore } = await import('firebase/firestore/lite');
   return getFirestore(firebaseApp);
 }
-
-export async function getFirebaseStorage() {
-  if (!firebaseApp) return null;
-  const { getStorage } = await import('firebase/storage');
-  return getStorage(firebaseApp);
-}

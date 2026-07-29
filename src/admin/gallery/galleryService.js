@@ -13,6 +13,12 @@ import { FIRESTORE_COLLECTIONS } from '../../firebase/firestoreSchema.js';
 const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME?.trim();
 const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET?.trim();
 
+export const GALLERY_UPLOAD_FOLDERS = Object.freeze({
+  gallery: 'gallery',
+  beforeAfter: 'before-after',
+  featured: 'featured',
+});
+
 function timestampValue(value) {
   if (typeof value?.toMillis === 'function') return value.toMillis();
   if (typeof value?.seconds === 'number') return value.seconds * 1000;
