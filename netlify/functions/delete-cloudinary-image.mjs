@@ -85,7 +85,7 @@ export async function handler(event) {
   const timestamp = Math.floor(Date.now() / 1000);
   const signature = crypto
     .createHash('sha1')
-    .update(`public_id=${publicId}&timestamp=${timestamp}${apiSecret}`)
+    .update(`invalidate=true&public_id=${publicId}&timestamp=${timestamp}${apiSecret}`)
     .digest('hex');
 
   const formData = new URLSearchParams({
