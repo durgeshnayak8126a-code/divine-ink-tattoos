@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import GalleryDropzone from './GalleryDropzone.jsx';
 import {
+  GALLERY_CATEGORY_GROUPS,
+  LEGACY_GALLERY_CATEGORY,
+} from './galleryCategories.js';
+import {
   createGalleryItem,
   deleteReplacedImages,
   GALLERY_UPLOAD_FOLDERS,
@@ -164,7 +168,19 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
             <input name="title" onChange={updateValue} required value={values.title} />
           </label>
           <label>Category *
-            <input name="category" onChange={updateValue} required value={values.category} />
+            <select name="category" onChange={updateValue} required value={values.category}>
+              <option disabled value="">Select a category</option>
+              {values.category === LEGACY_GALLERY_CATEGORY && (
+                <option value={LEGACY_GALLERY_CATEGORY}>Tattoo (legacy)</option>
+              )}
+              {GALLERY_CATEGORY_GROUPS.map((group) => (
+                <optgroup key={group.label} label={group.label}>
+                  {group.categories.map((category) => (
+                    <option key={category} value={category}>{category}</option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
           </label>
           <label>Body part *
             <input name="bodyPart" onChange={updateValue} required value={values.bodyPart} />
