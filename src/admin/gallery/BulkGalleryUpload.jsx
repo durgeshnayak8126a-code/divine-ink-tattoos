@@ -1,6 +1,10 @@
 import { useRef, useState } from 'react';
 import { prepareGalleryImage } from './imageProcessing.js';
 import {
+  DEFAULT_GALLERY_CATEGORY,
+  GALLERY_CATEGORY_GROUPS,
+} from './galleryCategories.js';
+import {
   createGalleryItem,
   deleteReplacedImages,
   GALLERY_UPLOAD_FOLDERS,
@@ -17,6 +21,7 @@ function titleFromFile(fileName) {
 export default function BulkGalleryUpload({ onUploaded }) {
   const inputRef = useRef(null);
   const [busy, setBusy] = useState(false);
+  const [category, setCategory] = useState(DEFAULT_GALLERY_CATEGORY);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
@@ -40,7 +45,7 @@ export default function BulkGalleryUpload({ onUploaded }) {
             beforeImage: '',
             afterImage: '',
             title,
-            category: 'Tattoo',
+            category,
             bodyPart: 'Not specified',
             tattooStyle: 'Custom',
             artist: 'Divine Ink',
@@ -70,6 +75,21 @@ export default function BulkGalleryUpload({ onUploaded }) {
 
   return (
     <div className="bulk-gallery-upload">
+      <label>Category
+        <select
+          disabled={busy}
+          onChange={(event) => setCategory(event.target.value)}
+          value={category}
+        >
+          {GALLERY_CATEGORY_GROUPS.map((group) => (
+            <optgroup key={group.label} label={group.label}>
+              {group.categories.map((categoryOption) => (
+                <option key={categoryOption} value={categoryOption}>{categoryOption}</option>
+              ))}
+            </optgroup>
+          ))}
+        </select>
+      </label>
       <button
         className="admin-secondary-button"
         disabled={busy}
