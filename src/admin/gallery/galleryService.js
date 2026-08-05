@@ -9,6 +9,7 @@ import {
 } from 'firebase/firestore/lite';
 import { firebaseAuth, getFirestoreDb } from '../../firebase/config.js';
 import { FIRESTORE_COLLECTIONS } from '../../firebase/firestoreSchema.js';
+import { isValidGalleryCategory } from './galleryCategories.js';
 
 const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME?.trim();
 const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET?.trim();
@@ -96,6 +97,9 @@ export async function uploadGalleryImage(file, folder) {
 }
 
 export async function createGalleryItem(values) {
+  if (!isValidGalleryCategory(values.category)) {
+    throw new Error('Select a valid gallery category.');
+  }
   const db = await getFirestoreDb();
   if (!db) throw new Error('Firestore is not configured.');
 
@@ -109,6 +113,9 @@ export async function createGalleryItem(values) {
 }
 
 export async function updateGalleryItem(itemId, values) {
+  if (!isValidGalleryCategory(values.category)) {
+    throw new Error('Select a valid gallery category.');
+  }
   const db = await getFirestoreDb();
   if (!db) throw new Error('Firestore is not configured.');
 
@@ -127,7 +134,7 @@ async function deleteStoredImage(url) {
   if (!currentUser) {
     throw new Error('You must be signed in as an admin to delete images.');
   }
-  const idToken = await currentUser.getIdToken();
+  const idToken = await currentUser.getIdToken(true);
 
   const response = await fetch('/.netlify/functions/delete-cloudinary-image', {
     method: 'POST',
