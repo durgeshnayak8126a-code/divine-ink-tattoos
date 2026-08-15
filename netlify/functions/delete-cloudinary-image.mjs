@@ -2,6 +2,28 @@ import crypto from 'node:crypto';
 import { cert, getApps, initializeApp } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 
+const FIREBASE_PROJECT_ID = 'divine-ink-tattoos';
+const FIREBASE_ADMIN_APP_NAME = 'divine-ink-gallery-admin';
+
+function isLocalDevelopment() {
+  return (
+    process.env.NETLIFY_DEV === 'true' ||
+    process.env.CONTEXT === 'dev' ||
+    process.env.NODE_ENV === 'development'
+  );
+}
+
+function localAuthLog(message, details) {
+  if (!isLocalDevelopment()) return;
+  console.error(`[delete-cloudinary-image] ${message}`, details);
+}
+
+function configurationError(code, message) {
+  const error = new Error(message);
+  error.code = code;
+  return error;
+}
+
 function jsonResponse(statusCode, body) {
   return {
     statusCode,
@@ -16,19 +38,56 @@ function jsonResponse(statusCode, body) {
 function firebaseAdminAuth() {
   const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT_KEY?.trim();
   if (!serviceAccountJson) {
-    throw new Error('Firebase Admin credentials are not configured.');
+    throw configurationError(
+      'firebase-admin/credential-missing',
+      'FIREBASE_SERVICE_ACCOUNT_KEY is not available to the function runtime.',
+    );
   }
 
   let serviceAccount;
   try {
     serviceAccount = JSON.parse(serviceAccountJson);
-  } catch {
-    throw new Error('Firebase Admin credentials are invalid.');
+  } catch (error) {
+    throw configurationError(
+      'firebase-admin/credential-json-invalid',
+      `FIREBASE_SERVICE_ACCOUNT_KEY is not valid JSON: ${error.message}`,
+    );
   }
 
-  const app = getApps()[0] || initializeApp({
-    credential: cert(serviceAccount),
+  if (serviceAccount.project_id !== FIREBASE_PROJECT_ID) {
+    throw configurationError(
+      'firebase-admin/project-mismatch',
+      `Firebase Admin project must be ${FIREBASE_PROJECT_ID}.`,
+    );
+  }
+  if (typeof serviceAccount.client_email !== 'string' || !serviceAccount.client_email.trim()) {
+    throw configurationError(
+      'firebase-admin/client-email-invalid',
+      'Firebase Admin client_email is missing.',
+    );
+  }
+  if (
+    typeof serviceAccount.private_key !== 'string' ||
+    !serviceAccount.private_key.startsWith('-----BEGIN PRIVATE KEY-----\n') ||
+    !serviceAccount.private_key.trimEnd().endsWith('-----END PRIVATE KEY-----')
+  ) {
+    throw configurationError(
+      'firebase-admin/private-key-invalid',
+      'Firebase Admin private_key has invalid PEM or newline formatting.',
+    );
+  }
+
+  localAuthLog('Firebase Admin configuration loaded.', {
+    projectId: serviceAccount.project_id,
+    clientEmailPresent: true,
+    privateKeyFormatValid: true,
   });
+
+  const app = getApps().find(({ name }) => name === FIREBASE_ADMIN_APP_NAME) ||
+    initializeApp(
+      { credential: cert(serviceAccount), projectId: FIREBASE_PROJECT_ID },
+      FIREBASE_ADMIN_APP_NAME,
+    );
   return getAuth(app);
 }
 
@@ -46,11 +105,24 @@ async function authorizeAdmin(event) {
 
   try {
     const decodedToken = await firebaseAdminAuth().verifyIdToken(idToken, true);
+    localAuthLog('Firebase ID token verified.', {
+      audience: decodedToken.aud,
+      issuer: decodedToken.iss,
+      uid: decodedToken.uid,
+      admin: decodedToken.admin === true,
+      issuedAt: decodedToken.iat,
+      expiresAt: decodedToken.exp,
+      authTime: decodedToken.auth_time,
+    });
     if (decodedToken.admin !== true) {
       return { error: jsonResponse(403, { error: 'Admin access required.' }) };
     }
     return { decodedToken };
-  } catch {
+  } catch (error) {
+    localAuthLog('Firebase Admin verification failed.', {
+      code: error?.code || 'NO_ERROR_CODE',
+      message: error?.message || String(error),
+    });
     return { error: jsonResponse(401, { error: 'Invalid or expired authentication token.' }) };
   }
 }
