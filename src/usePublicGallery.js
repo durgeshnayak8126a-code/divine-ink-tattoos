@@ -35,6 +35,15 @@ function writeCache(items) {
   }
 }
 
+function clearCache() {
+  memoryCache = null;
+  try {
+    sessionStorage.removeItem(CACHE_KEY);
+  } catch {
+    // Memory cache is still cleared when sessionStorage is unavailable.
+  }
+}
+
 function timestampValue(value) {
   if (typeof value?.toMillis === 'function') return value.toMillis();
   if (typeof value?.seconds === 'number') return value.seconds * 1000;
@@ -70,10 +79,16 @@ export function usePublicGallery(fallbackItems) {
             return timestampValue(b.createdAt) - timestampValue(a.createdAt);
           });
 
-        if (active && publishedItems.length > 0) {
+        if (!active) return;
+
+        if (publishedItems.length > 0) {
           writeCache(publishedItems);
           setItems(publishedItems);
+          return;
         }
+
+        clearCache();
+        setItems(fallbackItems);
       } catch {
         // Preserve the current production gallery if Firebase is unavailable.
       }
