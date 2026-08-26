@@ -3,9 +3,13 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   serverTimestamp,
+  setDoc,
+  Timestamp,
   updateDoc,
+  writeBatch,
 } from 'firebase/firestore/lite';
 import { firebaseAuth, getFirestoreDb } from '../../firebase/config.js';
 import { FIRESTORE_COLLECTIONS } from '../../firebase/firestoreSchema.js';
@@ -13,6 +17,8 @@ import { isValidGalleryCategory } from './galleryCategories.js';
 
 const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME?.trim();
 const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET?.trim();
+const GALLERY_MIGRATION_VERSION = 1;
+const LEGACY_ORDER_BASE = Date.UTC(2000, 0, 1);
 
 export const GALLERY_UPLOAD_FOLDERS = Object.freeze({
   gallery: 'gallery',
@@ -71,6 +77,65 @@ export async function listGalleryItems() {
     );
 }
 
+export async function migrateFallbackGalleryItems(fallbackItems) {
+  const db = await getFirestoreDb();
+  if (!db) throw new Error('Firebase is not configured.');
+
+  const homepageRef = doc(db, FIRESTORE_COLLECTIONS.siteSettings, 'homepage');
+  const homepageSnapshot = await getDoc(homepageRef);
+  const migrationVersion = Number(homepageSnapshot.data()?.galleryMigrationVersion || 0);
+  if (migrationVersion >= GALLERY_MIGRATION_VERSION) {
+    return { migrated: 0, complete: true };
+  }
+
+  const gallerySnapshot = await getDocs(
+    collection(db, FIRESTORE_COLLECTIONS.gallery),
+  );
+  const existingIds = new Set(gallerySnapshot.docs.map((item) => item.id));
+  const existingImages = new Set(
+    gallerySnapshot.docs.map((item) => item.data()?.image).filter(Boolean),
+  );
+
+  const missingItems = fallbackItems.filter(
+    (item) => !existingIds.has(item.id) && !existingImages.has(item.image),
+  );
+
+  const batch = writeBatch(db);
+  missingItems.forEach((item, index) => {
+    const legacyTimestamp = Timestamp.fromMillis(LEGACY_ORDER_BASE - index);
+    batch.set(doc(db, FIRESTORE_COLLECTIONS.gallery, item.id), {
+      image: item.image,
+      beforeImage: '',
+      afterImage: '',
+      title: item.title || item.category || 'Gallery item',
+      category: item.category || 'Tattoo',
+      bodyPart: '',
+      tattooStyle: '',
+      artist: '',
+      price: '',
+      altText: item.altText || item.title || item.category || 'Gallery image',
+      description: '',
+      featured: false,
+      createdAt: legacyTimestamp,
+      updatedAt: legacyTimestamp,
+      published: true,
+    });
+  });
+
+  batch.set(
+    homepageRef,
+    {
+      galleryMigrationVersion: GALLERY_MIGRATION_VERSION,
+      updatedAt: serverTimestamp(),
+    },
+    { merge: true },
+  );
+
+  await batch.commit();
+  invalidatePublicCache();
+  return { migrated: missingItems.length, complete: true };
+}
+
 export async function uploadGalleryImage(file, folder) {
   if (!cloudName || !uploadPreset) {
     throw new Error('Cloudinary environment variables are not configured.');
@@ -114,7 +179,10 @@ export async function createGalleryItem(values) {
 }
 
 export async function updateGalleryItem(itemId, values) {
-  if (!isValidGalleryCategory(values.category)) {
+  if (
+    Object.prototype.hasOwnProperty.call(values, 'category') &&
+    !isValidGalleryCategory(values.category)
+  ) {
     throw new Error('Select a valid gallery category.');
   }
   const db = await getFirestoreDb();
