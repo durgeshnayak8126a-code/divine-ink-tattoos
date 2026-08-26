@@ -29,6 +29,7 @@ function timestampValue(value) {
 function invalidatePublicCache() {
   try {
     sessionStorage.removeItem('divine-ink-gallery-cache-v1');
+    sessionStorage.removeItem('divine-ink-gallery-cache-v2');
   } catch {
     // Cache invalidation is best-effort.
   }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { isFirebaseConfigured } from './firebase/env.js';
 
-const CACHE_KEY = 'divine-ink-gallery-cache-v1';
+const CACHE_KEY = 'divine-ink-gallery-cache-v2';
 const CACHE_TTL = 5 * 60 * 1000;
 let memoryCache = null;
 
@@ -50,6 +50,15 @@ function timestampValue(value) {
   return 0;
 }
 
+function mergeGalleryItems(publishedItems, fallbackItems) {
+  const cmsIds = new Set(publishedItems.map((item) => item.id).filter(Boolean));
+  const cmsImages = new Set(publishedItems.map((item) => item.image).filter(Boolean));
+  const untouchedFallbackItems = fallbackItems.filter(
+    (item) => !cmsIds.has(item.id) && !cmsImages.has(item.image),
+  );
+  return [...publishedItems, ...untouchedFallbackItems];
+}
+
 export function usePublicGallery(fallbackItems) {
   const [items, setItems] = useState(() => readCache() || fallbackItems);
 
@@ -82,8 +91,9 @@ export function usePublicGallery(fallbackItems) {
         if (!active) return;
 
         if (publishedItems.length > 0) {
-          writeCache(publishedItems);
-          setItems(publishedItems);
+          const mergedItems = mergeGalleryItems(publishedItems, fallbackItems);
+          writeCache(mergedItems);
+          setItems(mergedItems);
           return;
         }
 

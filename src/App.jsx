@@ -29,6 +29,7 @@ import durgessh from './assets/team/durgessh-nayak.png';
 import sachin from './assets/team/sachin-nayak.jpg';
 import { galleryFallbackItems } from './galleryFallback.js';
 import { usePublicGallery } from './usePublicGallery.js';
+import { usePublicCms } from './usePublicCms.js';
 
 import lobePiercing from './assets/piercing/lobe.jpg';
 import helixPiercing from './assets/piercing/helix.jpg';
@@ -53,6 +54,7 @@ function FacebookLogo({ size = 25 }) {
 const phone = '918445702782';
 const mapLink = 'https://share.google/Ot0WZGKQFZkWTcSll';
 const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent('Hi Divine Ink Tattoos, I want to book a consultation.')}`;
+const artistFilters = ['All Artists', 'Durgessh Nayak', 'Sachin Nayak'];
 
 const services = [
   ['Custom Tattoos', 'Original concepts designed around your idea, placement and style.'],
@@ -83,17 +85,53 @@ const faqs = [
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState('All');
+  const [activeArtist, setActiveArtist] = useState('All Artists');
   const [lightbox, setLightbox] = useState(null);
   const [openFaq, setOpenFaq] = useState(0);
   const [booking, setBooking] = useState({ name: '', mobile: '', service: 'Tattoo', budget: '₹999–₹2,999', date: '', details: '' });
   const lightboxCloseRef = useRef(null);
   const lightboxTriggerRef = useRef(null);
   const galleryItems = usePublicGallery(galleryFallbackItems);
+  const { homepage: homepageSettings } = usePublicCms();
 
+  const aboutImages = Array.isArray(homepageSettings?.featuredImages)
+    ? homepageSettings.featuredImages
+    : [];
+  const aboutMainImage = aboutImages[0] || reception;
+  const aboutFloatingImage = aboutImages[1] || artistWorking;
   const filters = ['All', ...new Set(galleryItems.map((item) => item.category))];
-  const filtered = useMemo(() => activeFilter === 'All' ? galleryItems : galleryItems.filter((item) => item.category === activeFilter), [activeFilter, galleryItems]);
+  const filtered = useMemo(
+    () => galleryItems.filter((item) => {
+      const categoryMatches = activeFilter === 'All' || item.category === activeFilter;
+      const artistMatches = activeArtist === 'All Artists' || item.artist === activeArtist;
+      return categoryMatches && artistMatches;
+    }),
+    [activeArtist, activeFilter, galleryItems],
+  );
 
   const closeMenu = () => setMenuOpen(false);
+
+  const viewArtistPortfolio = (artist) => {
+    setActiveArtist(artist);
+    setActiveFilter('All');
+    window.requestAnimationFrame(() => {
+      document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  };
+
+  const showAdjacentLightboxItem = (direction) => {
+    if (!lightbox || filtered.length < 2) return;
+    const currentIndex = filtered.findIndex((item) => item.id === lightbox.id);
+    const safeIndex = currentIndex < 0 ? 0 : currentIndex;
+    const nextIndex = (safeIndex + direction + filtered.length) % filtered.length;
+    const nextItem = filtered[nextIndex];
+    setLightbox({
+      id: nextItem.id,
+      src: nextItem.image,
+      category: nextItem.category,
+      altText: nextItem.altText,
+    });
+  };
 
   useEffect(() => {
     if (!lightbox) return undefined;
@@ -105,10 +143,12 @@ function App() {
         setLightbox(null);
         return;
       }
-
-      if (event.key === 'Tab') {
-        event.preventDefault();
-        lightboxCloseRef.current?.focus();
+      if (event.key === 'ArrowLeft') {
+        showAdjacentLightboxItem(-1);
+        return;
+      }
+      if (event.key === 'ArrowRight') {
+        showAdjacentLightboxItem(1);
       }
     };
 
@@ -117,7 +157,7 @@ function App() {
       document.removeEventListener('keydown', handleLightboxKeyDown);
       lightboxTriggerRef.current?.focus();
     };
-  }, [lightbox]);
+  }, [lightbox, filtered]);
 
   useEffect(() => {
     if (!menuOpen) return undefined;
@@ -200,8 +240,8 @@ function App() {
 
         <section id="about" className="section split-section">
           <div className="image-stack">
-            <img className="main-image" src={reception} alt="Divine Ink studio reception" />
-            <img className="floating-image" src={artistWorking} alt="Tattoo artist working at Divine Ink" />
+            <img className="main-image" src={aboutMainImage} alt="Divine Ink studio reception" />
+            <img className="floating-image" src={aboutFloatingImage} alt="Tattoo artist working at Divine Ink" />
           </div>
           <div className="section-copy">
             <p className="eyebrow">About Divine Ink</p>
@@ -239,8 +279,8 @@ function App() {
             <h2>Experience guided by your idea</h2>
           </div>
           <div className="artist-grid">
-            <article className="artist-card"><img src={durgessh} alt="Durgessh Nayak"/><div><p>Founder & Head Tattoo Artist</p><h3>Durgessh Nayak</h3><span>Custom concepts, realism, portrait work, religious tattoos and cover-up planning.</span></div></article>
-            <article className="artist-card"><img src={sachin} alt="Sachin Nayak"/><div><p>Senior Tattoo Artist</p><h3>Sachin Nayak</h3><span>Minimal, geometric, lettering, black-and-grey, color and detailed custom tattoo work.</span></div></article>
+            <article className="artist-card"><img src={durgessh} alt="Durgessh Nayak"/><div><p>Founder & Head Tattoo Artist</p><h3>Durgessh Nayak</h3><span>Custom concepts, realism, portrait work, religious tattoos and cover-up planning.</span><button className="btn secondary" style={{ marginTop: 18 }} onClick={() => viewArtistPortfolio('Durgessh Nayak')} type="button">View Portfolio</button></div></article>
+            <article className="artist-card"><img src={sachin} alt="Sachin Nayak"/><div><p>Senior Tattoo Artist</p><h3>Sachin Nayak</h3><span>Minimal, geometric, lettering, black-and-grey, color and detailed custom tattoo work.</span><button className="btn secondary" style={{ marginTop: 18 }} onClick={() => viewArtistPortfolio('Sachin Nayak')} type="button">View Portfolio</button></div></article>
           </div>
         </section>
 
@@ -250,19 +290,26 @@ function App() {
             <h2>Real work. Different stories.</h2>
             <p>Browse selected tattoos created across portrait, realism, religious, minimal, floral, geometric and color styles.</p>
           </div>
+          <div className="filter-row" aria-label="Filter portfolio by artist">
+            {artistFilters.map((artist) => <button key={artist} className={activeArtist === artist ? 'active' : ''} onClick={() => setActiveArtist(artist)}>{artist}</button>)}
+          </div>
           <div className="filter-row">
             {filters.map((filter) => <button key={filter} className={activeFilter === filter ? 'active' : ''} onClick={() => setActiveFilter(filter)}>{filter}</button>)}
           </div>
-          <div className="gallery-grid">
-            {filtered.map(({ id, image, category, title, altText }) => (
-              <button className="gallery-card" key={id} onClick={(event) => {
-                lightboxTriggerRef.current = event.currentTarget;
-                setLightbox({src: image, title, altText});
-              }} aria-label={`Open ${title}`}>
-                <img src={image} alt={altText || title} title={title} loading="lazy"/><span className="gallery-overlay"><small>{category}</small><strong>{title}</strong><ZoomIn size={20}/></span>
-              </button>
-            ))}
-          </div>
+          {filtered.length === 0 ? (
+            <p style={{ textAlign: 'center', color: 'var(--muted)' }}>No portfolio images are assigned to this artist yet.</p>
+          ) : (
+            <div className="gallery-grid">
+              {filtered.map(({ id, image, category, altText }) => (
+                <button className="gallery-card" key={id} onClick={(event) => {
+                  lightboxTriggerRef.current = event.currentTarget;
+                  setLightbox({ id, src: image, category, altText });
+                }} aria-label={`Open ${category || 'portfolio'} image`}>
+                  <img src={image} alt={altText || category || 'Tattoo portfolio image'} loading="lazy"/><span className="gallery-overlay"><small>{category}</small><ZoomIn size={20}/></span>
+                </button>
+              ))}
+            </div>
+          )}
         </section>
 
         <section id="piercing" className="section piercing-section">
@@ -353,7 +400,12 @@ function App() {
         <a className="floating-social facebook" href="https://www.facebook.com/profile.php?id=100078466583354" target="_blank" rel="noreferrer" aria-label="Open Facebook"><FacebookLogo/></a>
       </div>
 
-      {lightbox && <div className="lightbox" role="dialog" aria-modal="true" aria-label={`${lightbox.title} image preview`} onClick={() => setLightbox(null)}><button ref={lightboxCloseRef} onClick={() => setLightbox(null)} aria-label="Close image"><X/></button><img src={lightbox.src} alt={lightbox.altText || lightbox.title} title={lightbox.title}/><p>{lightbox.title}</p></div>}
+      {lightbox && <div className="lightbox" role="dialog" aria-modal="true" aria-label={`${lightbox.category || 'Gallery'} image preview`} onClick={() => setLightbox(null)}>
+        <button ref={lightboxCloseRef} onClick={() => setLightbox(null)} aria-label="Close image"><X/></button>
+        {filtered.length > 1 && <button aria-label="Previous image" onClick={(event) => { event.stopPropagation(); showAdjacentLightboxItem(-1); }} style={{ left: 24, right: 'auto', top: '50%', transform: 'translateY(-50%)', fontSize: 46, lineHeight: 1 }}>‹</button>}
+        <img src={lightbox.src} alt={lightbox.altText || lightbox.category || 'Tattoo portfolio image'} onClick={(event) => event.stopPropagation()}/>
+        {filtered.length > 1 && <button aria-label="Next image" onClick={(event) => { event.stopPropagation(); showAdjacentLightboxItem(1); }} style={{ left: 'auto', right: 24, top: '50%', transform: 'translateY(-50%)', fontSize: 46, lineHeight: 1 }}>›</button>}
+      </div>}
     </div>
   );
 }

@@ -12,6 +12,8 @@ import {
   uploadGalleryImage,
 } from './galleryService.js';
 
+const ARTIST_OPTIONS = ['Durgessh Nayak', 'Sachin Nayak'];
+
 const emptyValues = {
   title: '',
   category: '',
@@ -98,17 +100,24 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
         if (values.afterImage) replacedImages.push(values.afterImage);
       }
 
+      const category = values.category.trim();
+      const artist = values.artist.trim();
+      const internalTitle =
+        values.title.trim() || [category, artist].filter(Boolean).join(' — ') || 'Gallery item';
+      const internalAltText =
+        values.altText.trim() || [category, artist].filter(Boolean).join(' — ') || internalTitle;
+
       const payload = {
         image: nextImages.image,
         beforeImage: nextImages.beforeImage,
         afterImage: nextImages.afterImage,
-        title: values.title.trim(),
-        category: values.category.trim(),
+        title: internalTitle,
+        category,
         bodyPart: values.bodyPart.trim(),
         tattooStyle: values.tattooStyle.trim(),
-        artist: values.artist.trim(),
+        artist,
         price: values.price.trim(),
-        altText: values.altText.trim() || values.title.trim(),
+        altText: internalAltText,
         description: values.description.trim(),
         featured: Boolean(values.featured),
         published: Boolean(values.published),
@@ -135,7 +144,7 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
         <div>
           <p className="admin-kicker">{item ? 'Edit item' : 'New item'}</p>
           <h2 id="gallery-editor-title">
-            {item ? `Edit ${item.title}` : 'Add gallery item'}
+            {item ? 'Edit gallery item' : 'Add gallery item'}
           </h2>
         </div>
         <button className="admin-secondary-button" onClick={onCancel} type="button">
@@ -154,9 +163,6 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
         </div>
 
         <div className="gallery-fields-grid">
-          <label>Title *
-            <input name="title" onChange={updateValue} required value={values.title} />
-          </label>
           <label>Category *
             <select name="category" onChange={updateValue} required value={values.category}>
               <option disabled value="">Select a category</option>
@@ -169,6 +175,14 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
                     <option key={category} value={category}>{category}</option>
                   ))}
                 </optgroup>
+              ))}
+            </select>
+          </label>
+          <label>Artist
+            <select name="artist" onChange={updateValue} value={values.artist}>
+              <option value="">Studio / Unassigned</option>
+              {ARTIST_OPTIONS.map((artist) => (
+                <option key={artist} value={artist}>{artist}</option>
               ))}
             </select>
           </label>
@@ -205,9 +219,6 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
             </label>
             <label>Tattoo style
               <input name="tattooStyle" onChange={updateValue} value={values.tattooStyle} />
-            </label>
-            <label>Artist
-              <input name="artist" onChange={updateValue} value={values.artist} />
             </label>
             <label>Price
               <input name="price" onChange={updateValue} value={values.price} />

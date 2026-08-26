@@ -56,12 +56,12 @@ export const CMS_MODULES = Object.freeze({
 export const SETTINGS_MODULES = Object.freeze({
   homepage: {
     title: 'Homepage settings',
-    intro: 'Manage homepage text and asset references while preserving the existing layout.',
+    intro: 'Manage homepage text and the two About section image references while preserving the existing layout.',
     documentId: 'homepage',
     fields: [
       { name: 'bannerText', label: 'Banner text', required: true },
       { name: 'ctaText', label: 'Primary CTA text', required: true },
-      { name: 'featuredImages', label: 'Featured image URLs (JSON array)', type: 'json', defaultValue: [] },
+      { name: 'featuredImages', label: 'About image URLs (JSON array: main image first, small image second)', type: 'json', defaultValue: [] },
       { name: 'offersHeading', label: 'Offers heading' },
       { name: 'offersText', label: 'Offers text', type: 'textarea' },
     ],
