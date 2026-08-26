@@ -3,6 +3,7 @@ import { isFirebaseConfigured } from './firebase/env.js';
 
 const CACHE_KEY = 'divine-ink-gallery-cache-v2';
 const CACHE_TTL = 5 * 60 * 1000;
+const GALLERY_MIGRATION_VERSION = 1;
 let memoryCache = null;
 
 function readCache() {
@@ -69,17 +70,22 @@ export function usePublicGallery(fallbackItems) {
 
     async function loadGallery() {
       try {
-        const [{ collection, getDocs, query, where }, { getFirestoreDb }] =
-          await Promise.all([
-            import('firebase/firestore/lite'),
-            import('./firebase/config.js'),
-          ]);
+        const [
+          { collection, doc, getDoc, getDocs, query, where },
+          { getFirestoreDb },
+        ] = await Promise.all([
+          import('firebase/firestore/lite'),
+          import('./firebase/config.js'),
+        ]);
         const db = await getFirestoreDb();
         if (!db) return;
 
-        const snapshot = await getDocs(
-          query(collection(db, 'gallery'), where('published', '==', true)),
-        );
+        const [snapshot, homepageSnapshot] = await Promise.all([
+          getDocs(
+            query(collection(db, 'gallery'), where('published', '==', true)),
+          ),
+          getDoc(doc(db, 'siteSettings', 'homepage')),
+        ]);
         const publishedItems = snapshot.docs
           .map((document) => ({ id: document.id, ...document.data() }))
           .filter((item) => Boolean(item.image && item.title && item.altText))
@@ -89,6 +95,15 @@ export function usePublicGallery(fallbackItems) {
           });
 
         if (!active) return;
+
+        const migrationVersion = Number(
+          homepageSnapshot.data()?.galleryMigrationVersion || 0,
+        );
+        if (migrationVersion >= GALLERY_MIGRATION_VERSION) {
+          writeCache(publishedItems);
+          setItems(publishedItems);
+          return;
+        }
 
         if (publishedItems.length > 0) {
           const mergedItems = mergeGalleryItems(publishedItems, fallbackItems);

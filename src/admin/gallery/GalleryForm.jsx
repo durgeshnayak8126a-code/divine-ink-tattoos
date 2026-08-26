@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import GalleryDropzone from './GalleryDropzone.jsx';
 import {
+  GALLERY_CATEGORIES,
   GALLERY_CATEGORY_GROUPS,
-  LEGACY_GALLERY_CATEGORY,
 } from './galleryCategories.js';
 import {
   createGalleryItem,
@@ -138,6 +138,10 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
     }
   };
 
+  const hasLegacyCategory = Boolean(
+    values.category && !GALLERY_CATEGORIES.includes(values.category),
+  );
+
   return (
     <section className="gallery-editor" aria-labelledby="gallery-editor-title">
       <div className="gallery-editor-heading">
@@ -166,8 +170,8 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
           <label>Category *
             <select name="category" onChange={updateValue} required value={values.category}>
               <option disabled value="">Select a category</option>
-              {values.category === LEGACY_GALLERY_CATEGORY && (
-                <option value={LEGACY_GALLERY_CATEGORY}>Tattoo (legacy)</option>
+              {hasLegacyCategory && (
+                <option value={values.category}>{values.category} (legacy)</option>
               )}
               {GALLERY_CATEGORY_GROUPS.map((group) => (
                 <optgroup key={group.label} label={group.label}>
