@@ -57,6 +57,21 @@ export default function SettingsCmsPage({ config }) {
     setSaved('');
   };
 
+  const resetAboutImage = (index) => {
+    setAboutFiles((current) => {
+      const next = [...current];
+      next[index] = null;
+      return next;
+    });
+    setValues((current) => {
+      const nextImages = normalizeImageUrls(current.featuredImages);
+      nextImages[index] = '';
+      return { ...current, featuredImages: nextImages };
+    });
+    setError('');
+    setSaved('');
+  };
+
   const save = async (event) => {
     event.preventDefault();
     setBusy(true);
@@ -100,7 +115,7 @@ export default function SettingsCmsPage({ config }) {
           {isHomepage && (
             <div>
               <p className="admin-kicker">About section images</p>
-              <p className="admin-intro">Choose a new photo only when you want to replace it. If you leave a field empty, the current website photo stays unchanged.</p>
+              <p className="admin-intro">Choose a new photo only when you want to replace it. If you leave a field empty, the current website photo stays unchanged. Use the reset button to go back to the original built-in website photo.</p>
               <div className="gallery-upload-grid gallery-advanced-upload-grid">
                 {[['Main About image', 0], ['Small About image', 1]].map(([label, index]) => (
                   <div className="gallery-upload-field" key={label}>
@@ -124,6 +139,25 @@ export default function SettingsCmsPage({ config }) {
                         type="file"
                       />
                     </label>
+                    {currentAboutImages[index] ? (
+                      <button
+                        className="admin-secondary-button"
+                        disabled={busy}
+                        onClick={() => resetAboutImage(index)}
+                        type="button"
+                      >
+                        Use original website photo
+                      </button>
+                    ) : aboutFiles[index] ? (
+                      <button
+                        className="admin-secondary-button"
+                        disabled={busy}
+                        onClick={() => setAboutFile(index, null)}
+                        type="button"
+                      >
+                        Cancel selected photo
+                      </button>
+                    ) : null}
                   </div>
                 ))}
               </div>
