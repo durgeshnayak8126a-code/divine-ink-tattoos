@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { galleryFallbackItems } from '../../galleryFallback.js';
 import AdminMeta from '../AdminMeta.jsx';
 import BulkGalleryUpload from './BulkGalleryUpload.jsx';
 import GalleryForm from './GalleryForm.jsx';
@@ -6,6 +7,7 @@ import GalleryPreview from './GalleryPreview.jsx';
 import {
   deleteGalleryItem,
   listGalleryItems,
+  migrateFallbackGalleryItems,
   updateGalleryItem,
 } from './galleryService.js';
 
@@ -15,6 +17,7 @@ export default function GalleryPage() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [migrationNote, setMigrationNote] = useState('');
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All');
   const [page, setPage] = useState(1);
@@ -27,6 +30,20 @@ export default function GalleryPage() {
     setLoading(true);
     setError('');
     try {
+      try {
+        const migration = await migrateFallbackGalleryItems(galleryFallbackItems);
+        if (migration.migrated > 0) {
+          setMigrationNote(
+            `${migration.migrated} existing website gallery photos are now editable in Gallery CMS.`,
+          );
+        }
+      } catch (migrationError) {
+        setError(
+          migrationError.message ||
+            'Existing website gallery photos could not be migrated into the CMS.',
+        );
+      }
+
       setItems(await listGalleryItems());
     } catch (galleryError) {
       setError(galleryError.message || 'Gallery could not be loaded.');
@@ -166,6 +183,7 @@ export default function GalleryPage() {
           </label>
         </div>
 
+        {migrationNote && <p className="admin-success" role="status">{migrationNote}</p>}
         {error && <p className="admin-error" role="alert">{error}</p>}
         {loading && <p className="admin-intro" aria-live="polite">Loading gallery…</p>}
 
