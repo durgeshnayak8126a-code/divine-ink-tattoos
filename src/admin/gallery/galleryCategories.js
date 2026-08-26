@@ -46,12 +46,24 @@ export const GALLERY_CATEGORIES = Object.freeze(
   GALLERY_CATEGORY_GROUPS.flatMap(({ categories }) => categories),
 );
 
+export const LEGACY_GALLERY_CATEGORIES = Object.freeze([
+  'Tattoo',
+  'Portrait',
+  'Geometric',
+  'Minimal',
+  'Religious',
+  'Couple',
+  'Realism',
+  'Color',
+  'Floral',
+]);
+
 export const DEFAULT_GALLERY_CATEGORY = GALLERY_CATEGORIES[0];
 export const LEGACY_GALLERY_CATEGORY = 'Tattoo';
 
 export function isValidGalleryCategory(category) {
   return (
-    category === LEGACY_GALLERY_CATEGORY ||
+    LEGACY_GALLERY_CATEGORIES.includes(category) ||
     GALLERY_CATEGORIES.includes(category)
   );
 }
