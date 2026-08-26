@@ -108,7 +108,7 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
         tattooStyle: values.tattooStyle.trim(),
         artist: values.artist.trim(),
         price: values.price.trim(),
-        altText: values.altText.trim(),
+        altText: values.altText.trim() || values.title.trim(),
         description: values.description.trim(),
         featured: Boolean(values.featured),
         published: Boolean(values.published),
@@ -144,22 +144,12 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
       </div>
 
       <form className="gallery-editor-form" onSubmit={handleSubmit}>
-        <div className="gallery-upload-grid">
+        <div className="gallery-upload-grid gallery-basic-upload-grid">
           <GalleryDropzone
             currentImage={values.image}
             label="Gallery image"
             onFile={(file) => setFiles((current) => ({ ...current, image: file }))}
             required
-          />
-          <GalleryDropzone
-            currentImage={values.beforeImage}
-            label="Before image"
-            onFile={(file) => setFiles((current) => ({ ...current, beforeImage: file }))}
-          />
-          <GalleryDropzone
-            currentImage={values.afterImage}
-            label="After image"
-            onFile={(file) => setFiles((current) => ({ ...current, afterImage: file }))}
           />
         </div>
 
@@ -182,24 +172,6 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
               ))}
             </select>
           </label>
-          <label>Body part *
-            <input name="bodyPart" onChange={updateValue} required value={values.bodyPart} />
-          </label>
-          <label>Tattoo style *
-            <input name="tattooStyle" onChange={updateValue} required value={values.tattooStyle} />
-          </label>
-          <label>Artist *
-            <input name="artist" onChange={updateValue} required value={values.artist} />
-          </label>
-          <label>Price *
-            <input name="price" onChange={updateValue} required value={values.price} />
-          </label>
-          <label className="gallery-full-field">Image alt text *
-            <input name="altText" onChange={updateValue} required value={values.altText} />
-          </label>
-          <label className="gallery-full-field">Description *
-            <textarea name="description" onChange={updateValue} required rows="4" value={values.description} />
-          </label>
         </div>
 
         <div className="gallery-checkboxes">
@@ -212,6 +184,42 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
             Published
           </label>
         </div>
+
+        <details className="gallery-advanced-details">
+          <summary>Advanced details</summary>
+          <div className="gallery-upload-grid gallery-advanced-upload-grid">
+            <GalleryDropzone
+              currentImage={values.beforeImage}
+              label="Before image"
+              onFile={(file) => setFiles((current) => ({ ...current, beforeImage: file }))}
+            />
+            <GalleryDropzone
+              currentImage={values.afterImage}
+              label="After image"
+              onFile={(file) => setFiles((current) => ({ ...current, afterImage: file }))}
+            />
+          </div>
+          <div className="gallery-fields-grid">
+            <label>Body part
+              <input name="bodyPart" onChange={updateValue} value={values.bodyPart} />
+            </label>
+            <label>Tattoo style
+              <input name="tattooStyle" onChange={updateValue} value={values.tattooStyle} />
+            </label>
+            <label>Artist
+              <input name="artist" onChange={updateValue} value={values.artist} />
+            </label>
+            <label>Price
+              <input name="price" onChange={updateValue} value={values.price} />
+            </label>
+            <label className="gallery-full-field">Image alt text
+              <input name="altText" onChange={updateValue} value={values.altText} />
+            </label>
+            <label className="gallery-full-field">Description
+              <textarea name="description" onChange={updateValue} rows="4" value={values.description} />
+            </label>
+          </div>
+        </details>
 
         {error && <p className="admin-error" role="alert">{error}</p>}
         <button className="admin-primary-button" disabled={saving} type="submit">

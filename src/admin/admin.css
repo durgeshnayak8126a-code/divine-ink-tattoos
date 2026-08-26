@@ -258,6 +258,36 @@
   margin-top: 24px;
 }
 
+.gallery-basic-upload-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.gallery-advanced-details {
+  margin: 0 0 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #0b0b0b;
+}
+
+.gallery-advanced-details summary {
+  padding: 16px 18px;
+  color: #d6aa52;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.gallery-advanced-details[open] summary {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gallery-advanced-details .gallery-upload-grid,
+.gallery-advanced-details .gallery-fields-grid {
+  margin: 20px;
+}
+
+.gallery-advanced-upload-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .gallery-upload-field {
   display: grid;
   gap: 8px;
