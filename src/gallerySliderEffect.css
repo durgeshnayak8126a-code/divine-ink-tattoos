@@ -1,0 +1,16 @@
+/* Gallery slider transition only. No popup/open animation and no card redesign. */
+.lightbox {
+  overflow: hidden;
+}
+
+.lightbox img {
+  display: block;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox img {
+    will-change: auto;
+  }
+}
