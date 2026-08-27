@@ -1,25 +1,42 @@
 const POPUP_SELECTOR = '.lightbox img';
+const popupTokens = new WeakMap();
 
 function prefersReducedMotion() {
   return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 }
 
-function playGalleryPopup(image) {
+async function playGalleryPopup(image) {
   if (!(image instanceof HTMLImageElement) || prefersReducedMotion()) return;
 
+  const token = Symbol('gallery-popup');
+  popupTokens.set(image, token);
   image.getAnimations?.().forEach((animation) => animation.cancel());
-  image.animate(
-    [
-      { opacity: 0, transform: 'scale(0.9) translateY(6px)', filter: 'blur(1px)' },
-      { opacity: 1, transform: 'scale(1.006) translateY(0)', filter: 'blur(0)' },
-      { opacity: 1, transform: 'scale(1) translateY(0)', filter: 'blur(0)' },
-    ],
-    {
-      duration: 950,
-      easing: 'cubic-bezier(.22,1,.36,1)',
-      fill: 'both',
-    },
-  );
+
+  try {
+    if (typeof image.decode === 'function') {
+      await image.decode();
+    }
+  } catch {
+    // If decoding fails or is unsupported, still allow the visual transition.
+  }
+
+  if (!image.isConnected || popupTokens.get(image) !== token) return;
+
+  requestAnimationFrame(() => {
+    if (!image.isConnected || popupTokens.get(image) !== token) return;
+
+    image.animate(
+      [
+        { opacity: 0, transform: 'translate3d(0, 8px, 0) scale(0.94)' },
+        { opacity: 1, transform: 'translate3d(0, 0, 0) scale(1)' },
+      ],
+      {
+        duration: 820,
+        easing: 'cubic-bezier(.22,.61,.36,1)',
+        fill: 'both',
+      },
+    );
+  });
 }
 
 function watchGalleryPopup() {
@@ -31,7 +48,7 @@ function watchGalleryPopup() {
       if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
         const image = mutation.target;
         if (image.matches?.(POPUP_SELECTOR)) {
-          requestAnimationFrame(() => playGalleryPopup(image));
+          playGalleryPopup(image);
         }
         continue;
       }
@@ -39,11 +56,11 @@ function watchGalleryPopup() {
       for (const node of mutation.addedNodes) {
         if (!(node instanceof Element)) continue;
         if (node.matches?.(POPUP_SELECTOR)) {
-          requestAnimationFrame(() => playGalleryPopup(node));
+          playGalleryPopup(node);
           continue;
         }
         const image = node.querySelector?.(POPUP_SELECTOR);
-        if (image) requestAnimationFrame(() => playGalleryPopup(image));
+        if (image) playGalleryPopup(image);
       }
     }
   });
