@@ -25,6 +25,21 @@ function setMeta(attribute, key, content) {
   element.setAttribute('content', content);
 }
 
+function getSeoMeta(service) {
+  if (service.slug === 'fine-line-tattoos') {
+    return {
+      title: 'Fine Line Tattoo Artist in Gurugram | Divine Ink Sector 31',
+      description:
+        'Fine line and minimal tattoo artist in Sector 31, Gurugram. Explore clean linework, custom small tattoos, healed-result guidance, 24x7 confirmed bookings and design-based pricing at Divine Ink.',
+    };
+  }
+
+  return {
+    title: service.metaTitle,
+    description: service.description,
+  };
+}
+
 export default function SeoManager({ service }) {
   useEffect(() => {
     const previousTitle = document.title;
@@ -37,8 +52,9 @@ export default function SeoManager({ service }) {
 
     const canonical = `https://divineinktattoos.in/services/${service.slug}/`;
     const socialImage = 'https://divineinktattoos.in/divine-ink-logo.png';
+    const seo = getSeoMeta(service);
 
-    document.title = service.metaTitle;
+    document.title = seo.title;
     let canonicalElement = document.head.querySelector('link[rel="canonical"]');
     if (!canonicalElement) {
       canonicalElement = document.createElement('link');
@@ -47,16 +63,16 @@ export default function SeoManager({ service }) {
     }
     canonicalElement.setAttribute('href', canonical);
 
-    setMeta('name', 'description', service.description);
-    setMeta('property', 'og:title', service.metaTitle);
-    setMeta('property', 'og:description', service.description);
+    setMeta('name', 'description', seo.description);
+    setMeta('property', 'og:title', seo.title);
+    setMeta('property', 'og:description', seo.description);
     setMeta('property', 'og:url', canonical);
     setMeta('property', 'og:type', 'website');
     setMeta('property', 'og:image', socialImage);
     setMeta('property', 'og:image:alt', 'Divine Ink Tattoos & Piercing Studio logo');
     setMeta('name', 'twitter:card', 'summary');
-    setMeta('name', 'twitter:title', service.metaTitle);
-    setMeta('name', 'twitter:description', service.description);
+    setMeta('name', 'twitter:title', seo.title);
+    setMeta('name', 'twitter:description', seo.description);
     setMeta('name', 'twitter:image', socialImage);
     setMeta('name', 'twitter:image:alt', 'Divine Ink Tattoos & Piercing Studio logo');
 
@@ -88,7 +104,7 @@ export default function SeoManager({ service }) {
         '@id': `${canonical}#service`,
         name: service.name,
         serviceType: service.name,
-        description: service.description,
+        description: seo.description,
         url: canonical,
         areaServed: {
           '@type': 'City',

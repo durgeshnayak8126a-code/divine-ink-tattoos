@@ -3,14 +3,17 @@
 
   <url>
     <loc>https://divineinktattoos.in/</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url><loc>https://divineinktattoos.in/services/custom-tattoos/</loc></url>
   <url><loc>https://divineinktattoos.in/services/name-tattoos/</loc></url>
-  <url><loc>https://divineinktattoos.in/services/fine-line-tattoos/</loc></url>
+  <url>
+    <loc>https://divineinktattoos.in/services/fine-line-tattoos/</loc>
+    <lastmod>2026-08-25</lastmod>
+  </url>
   <url><loc>https://divineinktattoos.in/services/black-grey-tattoos/</loc></url>
   <url><loc>https://divineinktattoos.in/services/colour-tattoos/</loc></url>
   <url><loc>https://divineinktattoos.in/services/portrait-tattoos/</loc></url>
