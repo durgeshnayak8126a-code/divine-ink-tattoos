@@ -1,12 +1,13 @@
 /* Gallery popup/lightbox effect only. Gallery cards and all other sections stay unchanged. */
 
 .lightbox {
-  animation: gallery-backdrop-in 500ms ease-out both;
+  animation: gallery-backdrop-in 420ms ease-out both;
 }
 
 .lightbox img {
   transform-origin: center center;
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .lightbox button {
