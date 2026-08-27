@@ -1,0 +1,140 @@
+.artists-admin-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.artists-admin-list {
+  display: grid;
+  gap: 20px;
+}
+
+.artist-admin-card {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 24px;
+  padding: 22px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: #101010;
+}
+
+.artist-admin-photo {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.artist-admin-photo img,
+.artist-photo-empty {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,.1);
+  background: #080808;
+}
+
+.artist-photo-empty {
+  display: grid;
+  place-items: center;
+  color: #8d877e;
+  font-size: 13px;
+}
+
+.artist-photo-button {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  cursor: pointer;
+}
+
+.artist-photo-button input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.artist-text-button {
+  border: 0;
+  padding: 4px 0;
+  background: transparent;
+  color: var(--gold);
+  text-align: left;
+  cursor: pointer;
+}
+
+.artist-admin-fields {
+  display: grid;
+  gap: 14px;
+}
+
+.artist-admin-fields label:not(.artist-active-toggle) {
+  display: grid;
+  gap: 7px;
+  color: #e7e0d5;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.artist-admin-fields input[type='text'],
+.artist-admin-fields input:not([type]),
+.artist-admin-fields textarea {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,.12);
+  background: #090909;
+  color: #fff;
+  padding: 12px 13px;
+  font: inherit;
+}
+
+.artist-active-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ddd6ca;
+}
+
+.artist-remove-button {
+  justify-self: start;
+}
+
+.artists-save-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 28px;
+  padding: 16px 18px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(10,10,10,.96);
+  backdrop-filter: blur(12px);
+}
+
+.artists-save-bar p {
+  margin: 0;
+  max-width: 760px;
+  color: #aaa298;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+@media (max-width: 760px) {
+  .artists-admin-heading,
+  .artists-save-bar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .artist-admin-card {
+    grid-template-columns: 1fr;
+  }
+
+  .artist-admin-photo {
+    max-width: 280px;
+  }
+}

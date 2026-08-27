@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { galleryFallbackItems } from '../../galleryFallback.js';
 import AdminMeta from '../AdminMeta.jsx';
+import { loadArtists } from '../artists/artistService.js';
 import BulkGalleryUpload from './BulkGalleryUpload.jsx';
 import GalleryForm from './GalleryForm.jsx';
 import GalleryPreview from './GalleryPreview.jsx';
@@ -15,6 +16,7 @@ const PAGE_SIZE = 8;
 
 export default function GalleryPage() {
   const [items, setItems] = useState([]);
+  const [artistOptions, setArtistOptions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [migrationNote, setMigrationNote] = useState('');
@@ -44,7 +46,12 @@ export default function GalleryPage() {
         );
       }
 
-      setItems(await listGalleryItems());
+      const [galleryItems, artists] = await Promise.all([
+        listGalleryItems(),
+        loadArtists(),
+      ]);
+      setItems(galleryItems);
+      setArtistOptions(artists.map((artist) => artist.name).filter(Boolean));
     } catch (galleryError) {
       setError(galleryError.message || 'Gallery could not be loaded.');
     } finally {
@@ -143,10 +150,11 @@ export default function GalleryPage() {
             Add gallery item
           </button>
         </div>
-        <BulkGalleryUpload onUploaded={loadItems} />
+        <BulkGalleryUpload artistOptions={artistOptions} onUploaded={loadItems} />
 
         {editorOpen && (
           <GalleryForm
+            artistOptions={artistOptions}
             item={editingItem}
             onCancel={() => {
               setEditorOpen(false);
@@ -209,7 +217,7 @@ export default function GalleryPage() {
                   {item.featured && <span>Featured</span>}
                 </div>
                 <h2>{item.title}</h2>
-                <p>{item.artist} · {item.bodyPart} · {item.tattooStyle}</p>
+                <p>{item.artist || 'Studio / Unassigned'} · {item.bodyPart} · {item.tattooStyle}</p>
                 <div className="gallery-card-actions">
                   <button onClick={() => setPreviewItem(item)} type="button">Preview</button>
                   <button onClick={() => {

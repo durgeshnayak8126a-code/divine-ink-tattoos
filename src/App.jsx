@@ -18,15 +18,13 @@ const Star = (p) => <SvgIcon {...p}><path d="m12 2 3 6 6.5 1-4.7 4.6 1.1 6.4-5.9
 const Mail = (p) => <SvgIcon {...p}><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></SvgIcon>;
 const MapPin = (p) => <SvgIcon {...p}><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="2"/></SvgIcon>;
 
-
 import logo from './assets/logo.png';
 import hero from './assets/hero.png';
 import reception from './assets/studio/reception.jpg';
 import artistWorking from './assets/studio/artist-working.jpg';
 import shopFront1 from './assets/studio/shop-front-1.jpg';
 import shopFront2 from './assets/studio/shop-front-2.jpg';
-import durgessh from './assets/team/durgessh-nayak.png';
-import sachin from './assets/team/sachin-nayak.jpg';
+import { getArtistDisplayImage, normalizeArtists } from './artists.js';
 import { galleryFallbackItems } from './galleryFallback.js';
 import { usePublicGallery } from './usePublicGallery.js';
 import { usePublicCms } from './usePublicCms.js';
@@ -39,7 +37,6 @@ import lip from './assets/piercing/lip.jpg';
 import tongue from './assets/piercing/tongue.jpg';
 import nose from './assets/piercing/nose.jpg';
 import eyebrow from './assets/piercing/eyebrow.jpg';
-
 
 function WhatsAppLogo({ size = 25 }) {
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2a9.84 9.84 0 0 0-8.48 14.82L2 22l5.3-1.52A9.96 9.96 0 1 0 12.04 2Zm0 17.9a8.02 8.02 0 0 1-4.08-1.12l-.29-.17-3.15.9.92-3.05-.19-.31A7.91 7.91 0 1 1 12.04 19.9Zm4.35-5.91c-.24-.12-1.42-.7-1.64-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.93-1.19-.71-.63-1.19-1.41-1.33-1.65-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.69 2.58 4.1 3.62.57.25 1.02.39 1.37.5.58.18 1.1.16 1.51.1.46-.07 1.42-.58 1.62-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z"/></svg>;
@@ -54,7 +51,6 @@ function FacebookLogo({ size = 25 }) {
 const phone = '918445702782';
 const mapLink = 'https://share.google/Ot0WZGKQFZkWTcSll';
 const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent('Hi Divine Ink Tattoos, I want to book a consultation.')}`;
-const artistFilters = ['All Artists', 'Durgessh Nayak', 'Sachin Nayak'];
 
 const services = [
   ['Custom Tattoos', 'Original concepts designed around your idea, placement and style.'],
@@ -99,6 +95,9 @@ function App() {
     : [];
   const aboutMainImage = aboutImages[0] || reception;
   const aboutFloatingImage = aboutImages[1] || artistWorking;
+  const artists = normalizeArtists(homepageSettings?.artists);
+  const visibleArtists = artists.filter((artist) => artist.active && artist.name);
+  const artistFilters = ['All Artists', ...visibleArtists.map((artist) => artist.name)];
   const filters = ['All', ...new Set(galleryItems.map((item) => item.category))];
   const filtered = useMemo(
     () => galleryItems.filter((item) => {
@@ -279,8 +278,17 @@ function App() {
             <h2>Experience guided by your idea</h2>
           </div>
           <div className="artist-grid">
-            <article className="artist-card"><img src={durgessh} alt="Durgessh Nayak"/><div><p>Founder & Head Tattoo Artist</p><h3>Durgessh Nayak</h3><span>Custom concepts, realism, portrait work, religious tattoos and cover-up planning.</span><button className="btn secondary" style={{ marginTop: 18 }} onClick={() => viewArtistPortfolio('Durgessh Nayak')} type="button">View Portfolio</button></div></article>
-            <article className="artist-card"><img src={sachin} alt="Sachin Nayak"/><div><p>Senior Tattoo Artist</p><h3>Sachin Nayak</h3><span>Minimal, geometric, lettering, black-and-grey, color and detailed custom tattoo work.</span><button className="btn secondary" style={{ marginTop: 18 }} onClick={() => viewArtistPortfolio('Sachin Nayak')} type="button">View Portfolio</button></div></article>
+            {visibleArtists.map((artist) => (
+              <article className="artist-card" key={artist.id}>
+                <img src={getArtistDisplayImage(artist)} alt={artist.name}/>
+                <div>
+                  <p>{artist.role}</p>
+                  <h3>{artist.name}</h3>
+                  <span>{artist.bio}</span>
+                  <button className="btn secondary" style={{ marginTop: 18 }} onClick={() => viewArtistPortfolio(artist.name)} type="button">View Portfolio</button>
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 

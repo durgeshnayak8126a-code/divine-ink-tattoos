@@ -8,6 +8,7 @@ import ProtectedAdminRoute from './ProtectedAdminRoute.jsx';
 import './admin.css';
 
 const GalleryPage = lazy(() => import('./gallery/GalleryPage.jsx'));
+const ArtistsPage = lazy(() => import('./artists/ArtistsPage.jsx'));
 const CollectionCmsPage = lazy(() => import('./cms/CollectionCmsPage.jsx'));
 const SettingsCmsPage = lazy(() => import('./cms/SettingsCmsPage.jsx'));
 
@@ -32,6 +33,14 @@ export default function AdminApp() {
               element={
                 <LazyPage>
                   <GalleryPage />
+                </LazyPage>
+              }
+            />
+            <Route
+              path="artists/"
+              element={
+                <LazyPage>
+                  <ArtistsPage />
                 </LazyPage>
               }
             />

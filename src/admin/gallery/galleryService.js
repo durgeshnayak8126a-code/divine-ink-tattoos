@@ -24,6 +24,7 @@ export const GALLERY_UPLOAD_FOLDERS = Object.freeze({
   gallery: 'gallery',
   beforeAfter: 'before-after',
   featured: 'featured',
+  artists: 'artists',
 });
 
 function timestampValue(value) {

@@ -12,8 +12,6 @@ import {
   uploadGalleryImage,
 } from './galleryService.js';
 
-const ARTIST_OPTIONS = ['Durgessh Nayak', 'Sachin Nayak'];
-
 const emptyValues = {
   title: '',
   category: '',
@@ -30,7 +28,7 @@ const emptyValues = {
   afterImage: '',
 };
 
-export default function GalleryForm({ item, onCancel, onSaved }) {
+export default function GalleryForm({ artistOptions = [], item, onCancel, onSaved }) {
   const [values, setValues] = useState(emptyValues);
   const [files, setFiles] = useState({
     image: null,
@@ -141,6 +139,9 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
   const hasLegacyCategory = Boolean(
     values.category && !GALLERY_CATEGORIES.includes(values.category),
   );
+  const hasLegacyArtist = Boolean(
+    values.artist && !artistOptions.includes(values.artist),
+  );
 
   return (
     <section className="gallery-editor" aria-labelledby="gallery-editor-title">
@@ -185,7 +186,10 @@ export default function GalleryForm({ item, onCancel, onSaved }) {
           <label>Artist
             <select name="artist" onChange={updateValue} value={values.artist}>
               <option value="">Studio / Unassigned</option>
-              {ARTIST_OPTIONS.map((artist) => (
+              {hasLegacyArtist && (
+                <option value={values.artist}>{values.artist} (legacy)</option>
+              )}
+              {artistOptions.map((artist) => (
                 <option key={artist} value={artist}>{artist}</option>
               ))}
             </select>
