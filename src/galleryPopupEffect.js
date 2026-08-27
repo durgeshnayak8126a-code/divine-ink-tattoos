@@ -6,11 +6,22 @@ function prefersReducedMotion() {
 }
 
 async function playGalleryPopup(image) {
-  if (!(image instanceof HTMLImageElement) || prefersReducedMotion()) return;
+  if (!(image instanceof HTMLImageElement)) return;
 
   const token = Symbol('gallery-popup');
   popupTokens.set(image, token);
   image.getAnimations?.().forEach((animation) => animation.cancel());
+
+  if (prefersReducedMotion()) {
+    image.style.visibility = 'visible';
+    image.style.opacity = '';
+    return;
+  }
+
+  // Hide the image immediately while the next source is decoding so the browser
+  // never exposes a temporary placeholder/baseline line between gallery images.
+  image.style.visibility = 'hidden';
+  image.style.opacity = '0';
 
   try {
     if (typeof image.decode === 'function') {
@@ -24,6 +35,9 @@ async function playGalleryPopup(image) {
 
   requestAnimationFrame(() => {
     if (!image.isConnected || popupTokens.get(image) !== token) return;
+
+    image.style.visibility = 'visible';
+    image.style.opacity = '';
 
     image.animate(
       [
