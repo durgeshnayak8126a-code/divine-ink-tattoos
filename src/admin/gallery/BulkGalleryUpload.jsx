@@ -18,10 +18,11 @@ function titleFromFile(fileName) {
     .replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
-export default function BulkGalleryUpload({ onUploaded }) {
+export default function BulkGalleryUpload({ artistOptions = [], onUploaded }) {
   const inputRef = useRef(null);
   const [busy, setBusy] = useState(false);
   const [category, setCategory] = useState(DEFAULT_GALLERY_CATEGORY);
+  const [artist, setArtist] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
@@ -40,17 +41,18 @@ export default function BulkGalleryUpload({ onUploaded }) {
           const file = await prepareGalleryImage(originalFile);
           uploadedUrl = await uploadGalleryImage(file, GALLERY_UPLOAD_FOLDERS.gallery);
           const title = titleFromFile(originalFile.name);
+          const internalTitle = [title, artist].filter(Boolean).join(' — ');
           await createGalleryItem({
             image: uploadedUrl,
             beforeImage: '',
             afterImage: '',
-            title,
+            title: internalTitle || title,
             category,
             bodyPart: 'Not specified',
             tattooStyle: 'Custom',
-            artist: 'Divine Ink',
+            artist,
             price: 'Contact studio',
-            altText: `${title} tattoo by Divine Ink Tattoos`,
+            altText: artist ? `${title} tattoo by ${artist}` : `${title} tattoo by Divine Ink Tattoos`,
             description: '',
             featured: false,
             published: true,
@@ -87,6 +89,14 @@ export default function BulkGalleryUpload({ onUploaded }) {
                 <option key={categoryOption} value={categoryOption}>{categoryOption}</option>
               ))}
             </optgroup>
+          ))}
+        </select>
+      </label>
+      <label>Artist
+        <select disabled={busy} onChange={(event) => setArtist(event.target.value)} value={artist}>
+          <option value="">Studio / Unassigned</option>
+          {artistOptions.map((artistOption) => (
+            <option key={artistOption} value={artistOption}>{artistOption}</option>
           ))}
         </select>
       </label>
