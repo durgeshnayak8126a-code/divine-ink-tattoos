@@ -5,9 +5,12 @@
 }
 
 .lightbox img {
+  display: block;
   transform-origin: center center;
   will-change: transform, opacity;
   backface-visibility: hidden;
+  border: 0;
+  outline: 0;
 }
 
 .lightbox button {
