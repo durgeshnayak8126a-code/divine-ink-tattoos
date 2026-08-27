@@ -5,8 +5,21 @@
 
 .lightbox img {
   display: block;
-  will-change: transform, opacity;
+  width: min(90vw, 1180px);
+  height: 82vh;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  will-change: transform;
   backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+@media (max-width: 780px) {
+  .lightbox img {
+    width: 94vw;
+    height: 78vh;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
