@@ -25,22 +25,22 @@ function createAdminHtml(title, description) {
 }
 
 const pages = [
-  {
-    path: ['admin'],
-    title: 'Admin Dashboard | Divine Ink Tattoos',
-    description: 'Private administration area for Divine Ink Tattoos.',
-  },
-  {
-    path: ['admin', 'login'],
-    title: 'Admin Login | Divine Ink Tattoos',
-    description: 'Secure administrator login for Divine Ink Tattoos.',
-  },
-  {
-    path: ['admin', 'gallery'],
-    title: 'Gallery CMS | Divine Ink Tattoos',
-    description: 'Private gallery content management for Divine Ink Tattoos.',
-  },
-];
+  ['admin', 'Admin Dashboard', 'Private administration area for Divine Ink Tattoos.'],
+  ['admin/login', 'Admin Login', 'Secure administrator login for Divine Ink Tattoos.'],
+  ['admin/gallery', 'Gallery CMS', 'Private gallery content management for Divine Ink Tattoos.'],
+  ['admin/artists', 'Artists CMS', 'Private artist profile management for Divine Ink Tattoos.'],
+  ['admin/services', 'Services CMS', 'Private service content management for Divine Ink Tattoos.'],
+  ['admin/homepage', 'Homepage CMS', 'Private homepage content management for Divine Ink Tattoos.'],
+  ['admin/reviews', 'Reviews CMS', 'Private review content management for Divine Ink Tattoos.'],
+  ['admin/faqs', 'FAQs CMS', 'Private FAQ content management for Divine Ink Tattoos.'],
+  ['admin/offers', 'Offers CMS', 'Private offer content management for Divine Ink Tattoos.'],
+  ['admin/contact', 'Contact CMS', 'Private contact content management for Divine Ink Tattoos.'],
+  ['admin/seo', 'SEO CMS', 'Private SEO configuration for Divine Ink Tattoos.'],
+].map(([path, title, description]) => ({
+  path: path.split('/'),
+  title: `${title} | Divine Ink Tattoos`,
+  description,
+}));
 
 for (const page of pages) {
   const directory = resolve(distDirectory, ...page.path);
