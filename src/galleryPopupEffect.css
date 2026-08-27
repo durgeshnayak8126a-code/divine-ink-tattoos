@@ -1,0 +1,52 @@
+/* Gallery popup/lightbox effect only. Gallery cards and all other sections stay unchanged. */
+
+.lightbox {
+  animation: gallery-backdrop-in 220ms ease-out both;
+}
+
+.lightbox img {
+  transform-origin: center center;
+  animation: gallery-popup-in 320ms cubic-bezier(.2,.8,.2,1) both;
+  will-change: transform, opacity;
+}
+
+.lightbox button {
+  transition: transform 160ms ease, opacity 160ms ease;
+}
+
+.lightbox button:hover {
+  transform: scale(1.08);
+}
+
+@keyframes gallery-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes gallery-popup-in {
+  0% {
+    opacity: 0;
+    transform: scale(.86) translateY(14px);
+  }
+  62% {
+    opacity: 1;
+    transform: scale(1.018) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (max-width: 780px) {
+  .lightbox img {
+    animation-duration: 280ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox,
+  .lightbox img {
+    animation: none;
+  }
+}
