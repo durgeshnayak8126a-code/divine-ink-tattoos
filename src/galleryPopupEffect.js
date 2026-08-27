@@ -10,13 +10,13 @@ function playGalleryPopup(image) {
   image.getAnimations?.().forEach((animation) => animation.cancel());
   image.animate(
     [
-      { opacity: 0, transform: 'scale(0.72) translateY(24px)', filter: 'blur(4px)' },
-      { opacity: 1, transform: 'scale(1.045) translateY(0)', filter: 'blur(0)' },
+      { opacity: 0, transform: 'scale(0.82) translateY(12px)', filter: 'blur(2px)' },
+      { opacity: 1, transform: 'scale(1.018) translateY(0)', filter: 'blur(0)' },
       { opacity: 1, transform: 'scale(1) translateY(0)', filter: 'blur(0)' },
     ],
     {
-      duration: 460,
-      easing: 'cubic-bezier(.18,.85,.22,1)',
+      duration: 700,
+      easing: 'cubic-bezier(.16,1,.3,1)',
       fill: 'both',
     },
   );
