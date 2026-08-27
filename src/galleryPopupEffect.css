@@ -6,8 +6,7 @@
 
 .lightbox img {
   transform-origin: center center;
-  animation: gallery-popup-in 320ms cubic-bezier(.2,.8,.2,1) both;
-  will-change: transform, opacity;
+  will-change: transform, opacity, filter;
 }
 
 .lightbox button {
@@ -23,30 +22,8 @@
   to { opacity: 1; }
 }
 
-@keyframes gallery-popup-in {
-  0% {
-    opacity: 0;
-    transform: scale(.86) translateY(14px);
-  }
-  62% {
-    opacity: 1;
-    transform: scale(1.018) translateY(0);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-@media (max-width: 780px) {
-  .lightbox img {
-    animation-duration: 280ms;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .lightbox,
-  .lightbox img {
+  .lightbox {
     animation: none;
   }
 }
