@@ -1,7 +1,7 @@
 /* Gallery popup/lightbox effect only. Gallery cards and all other sections stay unchanged. */
 
 .lightbox {
-  animation: gallery-backdrop-in 220ms ease-out both;
+  animation: gallery-backdrop-in 340ms ease-out both;
 }
 
 .lightbox img {
@@ -10,11 +10,11 @@
 }
 
 .lightbox button {
-  transition: transform 160ms ease, opacity 160ms ease;
+  transition: transform 180ms ease, opacity 180ms ease;
 }
 
 .lightbox button:hover {
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 
 @keyframes gallery-backdrop-in {
