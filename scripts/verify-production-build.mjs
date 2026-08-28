@@ -176,7 +176,8 @@ expect(appSource.includes("const phone = '918445702782';"), 'Homepage phone cons
 expect(appSource.includes('Shop No. 155, Basement, Near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001'), 'Homepage studio address changed unexpectedly.');
 expect(appSource.includes('Open 24x7'), 'Homepage 24x7 availability signal changed unexpectedly.');
 expect(appSource.includes('data-embed-id="25698491"'), 'Google Reviews embed ID changed unexpectedly.');
-expect(appSource.includes('getPublicPiercingGallery(homepageSettings?.piercingItems)'), 'Public piercing section must remain connected to managed piercing data with built-in fallback.');
+expect(!appSource.includes('Filter portfolio by artist'), 'Public gallery must not show the artist filter button row.');
+expect(appSource.includes('getPreviewPiercingItems(homepageSettings?.piercingItems)'), 'Public piercing section must remain connected to managed piercing data with built-in fallback.');
 
 if (failures.length) {
   console.error('\nRegression check FAILED:\n');

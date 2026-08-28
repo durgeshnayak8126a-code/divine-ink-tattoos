@@ -28,7 +28,7 @@ import { getArtistDisplayImage, normalizeArtists } from './artists.js';
 import { galleryFallbackItems } from './galleryFallback.js';
 import { usePublicGallery } from './usePublicGallery.js';
 import { usePublicCms } from './usePublicCms.js';
-import { getPublicPiercingGallery } from './piercingData.js';
+import { getPreviewPiercingItems, getPublicPiercingGallery } from './piercingData.js';
 
 function WhatsAppLogo({ size = 25 }) {
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2a9.84 9.84 0 0 0-8.48 14.82L2 22l5.3-1.52A9.96 9.96 0 1 0 12.04 2Zm0 17.9a8.02 8.02 0 0 1-4.08-1.12l-.29-.17-3.15.9.92-3.05-.19-.31A7.91 7.91 0 1 1 12.04 19.9Zm4.35-5.91c-.24-.12-1.42-.7-1.64-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.93-1.19-.71-.63-1.19-1.41-1.33-1.65-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.69 2.58 4.1 3.62.57.25 1.02.39 1.37.5.58.18 1.1.16 1.51.1.46-.07 1.42-.58 1.62-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z"/></svg>;
@@ -75,7 +75,8 @@ function App() {
   const lightboxTriggerRef = useRef(null);
   const galleryItems = usePublicGallery(galleryFallbackItems);
   const { homepage: homepageSettings } = usePublicCms();
-  const piercingGallery = getPublicPiercingGallery(homepageSettings?.piercingItems);
+  const managedPiercingItems = getPreviewPiercingItems(homepageSettings?.piercingItems);
+  const piercingGallery = getPublicPiercingGallery(managedPiercingItems);
 
   const aboutImages = Array.isArray(homepageSettings?.featuredImages)
     ? homepageSettings.featuredImages
@@ -84,7 +85,6 @@ function App() {
   const aboutFloatingImage = aboutImages[1] || artistWorking;
   const artists = normalizeArtists(homepageSettings?.artists);
   const visibleArtists = artists.filter((artist) => artist.active && artist.name);
-  const artistFilters = ['All Artists', ...visibleArtists.map((artist) => artist.name)];
   const filters = ['All', ...new Set(galleryItems.map((item) => item.category))];
   const filtered = useMemo(
     () => galleryItems.filter((item) => {
@@ -285,11 +285,8 @@ function App() {
             <h2>Real work. Different stories.</h2>
             <p>Browse selected tattoos created across portrait, realism, religious, minimal, floral, geometric and color styles.</p>
           </div>
-          <div className="filter-row" aria-label="Filter portfolio by artist">
-            {artistFilters.map((artist) => <button key={artist} className={activeArtist === artist ? 'active' : ''} onClick={() => setActiveArtist(artist)}>{artist}</button>)}
-          </div>
           <div className="filter-row">
-            {filters.map((filter) => <button key={filter} className={activeFilter === filter ? 'active' : ''} onClick={() => setActiveFilter(filter)}>{filter}</button>)}
+            {filters.map((filter) => <button key={filter} className={activeFilter === filter ? 'active' : ''} onClick={() => { setActiveFilter(filter); setActiveArtist('All Artists'); }}>{filter}</button>)}
           </div>
           {filtered.length === 0 ? (
             <p style={{ textAlign: 'center', color: 'var(--muted)' }}>No portfolio images are assigned to this artist yet.</p>
@@ -314,7 +311,7 @@ function App() {
             <p>Lobe, helix, septum, nose, belly, eyebrow, lip and tongue piercing services are available by appointment.</p>
           </div>
           <div className="piercing-grid">
-            {piercingGallery.map(([src,title]) => <figure key={title}><img src={src} alt={title} loading="lazy"/><figcaption>{title}</figcaption></figure>)}
+            {piercingGallery.map(({ id, src, title }) => <figure key={id}><img src={src} alt={title} loading="lazy"/><figcaption>{title}</figcaption></figure>)}
           </div>
           <div className="center-action"><a className="btn primary" href={whatsappLink} target="_blank" rel="noreferrer">Ask About Piercing <MessageCircle size={18}/></a></div>
         </section>
