@@ -251,11 +251,11 @@ function App({ view = 'all' }) {
           <div><strong>Sector 31</strong><span>Prime Gurugram location</span></div>
         </section>
 
-        {showSection('about') && (
-          <>
           </>
         )}
 
+        {showSection('about') && (
+          <>
         <section id="about" className="section split-section">
           <div className="image-stack">
             <img className="main-image" src={aboutMainImage} alt="Divine Ink studio reception" />
@@ -275,11 +275,11 @@ function App({ view = 'all' }) {
           </div>
         </section>
 
-        {showSection('services') && (
-          <>
           </>
         )}
 
+        {showSection('services') && (
+          <>
         <section id="services" className="section dark-panel">
           <div className="section-heading center">
             <p className="eyebrow">What We Do</p>
@@ -296,11 +296,11 @@ function App({ view = 'all' }) {
           </div>
         </section>
 
-        {showSection('artists') && (
-          <>
           </>
         )}
 
+        {showSection('artists') && (
+          <>
         <section id="artists" className="section">
           <div className="section-heading center">
             <p className="eyebrow">Meet The Artists</p>
@@ -321,11 +321,11 @@ function App({ view = 'all' }) {
           </div>
         </section>
 
-        {showSection('gallery') && (
-          <>
           </>
         )}
 
+        {showSection('gallery') && (
+          <>
         <section id="gallery" className="section gallery-section">
           <div className="section-heading center">
             <p className="eyebrow">Tattoo Portfolio</p>
@@ -354,11 +354,11 @@ function App({ view = 'all' }) {
           )}
         </section>
 
-        {showSection('piercing') && (
-          <>
           </>
         )}
 
+        {showSection('piercing') && (
+          <>
         <section id="piercing" className="section piercing-section">
           <div className="section-heading center">
             <p className="eyebrow">Professional Piercing</p>
@@ -371,11 +371,11 @@ function App({ view = 'all' }) {
           <div className="center-action"><a className="btn primary" href={whatsappLink} target="_blank" rel="noreferrer">Ask About Piercing <MessageCircle size={18}/></a></div>
         </section>
 
-        {showSection('reviews') && (
-          <>
           </>
         )}
 
+        {showSection('reviews') && (
+          <>
         <section id="reviews" className="section reviews-section">
           <div className="section-heading center">
             <p className="eyebrow">Client Feedback</p>
@@ -386,11 +386,11 @@ function App({ view = 'all' }) {
           <div className="reviews-widget-wrap"><div className="sk-ww-google-reviews" data-embed-id="25698491"></div></div>
         </section>
 
-        {showSection('faq') && (
-          <>
           </>
         )}
 
+        {showSection('faq') && (
+          <>
         <section id="faq" className="section faq-section">
           <div className="section-heading center"><p className="eyebrow">Before You Book</p><h2>Frequently asked questions</h2></div>
           <div className="faq-list">
@@ -403,11 +403,11 @@ function App({ view = 'all' }) {
           </div>
         </section>
 
-        {showSection('contact') && (
-          <>
           </>
         )}
 
+        {showSection('contact') && (
+          <>
         <section id="contact" className="section contact-section">
           <div className="contact-card">
             <div>
