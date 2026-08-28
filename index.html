@@ -140,11 +140,72 @@
     }
     </script>
 
-    <script src="https://widgets.sociablekit.com/google-reviews/widget.js" defer></script>
+    <style id="reviews-widget-loading-style">
+      .reviews-widget-wrap {
+        min-height: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+      }
+    </style>
   </head>
 
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      (() => {
+        const widgetSelector = '.sk-ww-google-reviews';
+        const widgetScriptSrc = 'https://widgets.sociablekit.com/google-reviews/widget.js';
+        const loadingStyle = document.getElementById('reviews-widget-loading-style');
+        const startedAt = Date.now();
+
+        const waitForWidget = () => {
+          const widget = document.querySelector(widgetSelector);
+          if (!widget) {
+            if (Date.now() - startedAt < 10000) {
+              window.requestAnimationFrame(waitForWidget);
+            }
+            return;
+          }
+
+          const wrapper = widget.closest('.reviews-widget-wrap');
+          const hasRenderedReviews = () => widget.childElementCount > 0 || Boolean(widget.querySelector('iframe'));
+          let fallbackTimer;
+
+          const markReady = () => {
+            if (!hasRenderedReviews()) return;
+            if (wrapper) wrapper.hidden = false;
+            loadingStyle?.remove();
+            window.clearTimeout(fallbackTimer);
+            observer.disconnect();
+          };
+
+          const observer = new MutationObserver(markReady);
+          observer.observe(widget, { childList: true, subtree: true });
+
+          const script = document.createElement('script');
+          script.src = widgetScriptSrc;
+          script.async = true;
+          script.dataset.sociablekitGoogleReviews = 'true';
+          script.onload = () => {
+            markReady();
+            fallbackTimer = window.setTimeout(() => {
+              if (!hasRenderedReviews() && wrapper) wrapper.hidden = true;
+            }, 12000);
+          };
+          script.onerror = () => {
+            observer.disconnect();
+            if (wrapper) wrapper.hidden = true;
+          };
+          document.body.appendChild(script);
+        };
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', waitForWidget, { once: true });
+        } else {
+          waitForWidget();
+        }
+      })();
+    </script>
   </body>
 </html>
