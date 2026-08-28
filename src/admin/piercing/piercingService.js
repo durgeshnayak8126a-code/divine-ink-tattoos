@@ -8,6 +8,15 @@ import {
 
 const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME?.trim();
 const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET?.trim();
+const PIERCING_UPDATE_KEY = 'divine-ink-piercing-updated-at';
+
+function notifyPiercingUpdate() {
+  try {
+    localStorage.setItem(PIERCING_UPDATE_KEY, String(Date.now()));
+  } catch {
+    // Storage notifications are best-effort only.
+  }
+}
 
 export function isPiercingPreviewMode() {
   if (typeof window === 'undefined') return true;
@@ -52,6 +61,7 @@ export async function savePiercingItems(items) {
 
   if (isPiercingPreviewMode()) {
     localStorage.setItem(PREVIEW_STORAGE_KEY, JSON.stringify(payload));
+    notifyPiercingUpdate();
     return payload;
   }
 
@@ -62,6 +72,7 @@ export async function savePiercingItems(items) {
     { piercingItems: payload, updatedAt: serverTimestamp() },
     { merge: true },
   );
+  notifyPiercingUpdate();
   return payload;
 }
 

@@ -135,8 +135,35 @@ export default function PiercingPage() {
     }));
   };
 
-  const removeSavedPhoto = (item, photoUrl) => {
-    updateItem(item.id, { images: item.images.filter((url) => url !== photoUrl) });
+  const removeSavedPhoto = async (item, photoUrl) => {
+    if (!window.confirm('Remove this photo from this piercing type?')) return;
+    setSaving(true);
+    setError('');
+    setSuccess('');
+    try {
+      const nextItems = normalizePiercingItems(items).map((currentItem) => ({
+        ...currentItem,
+        images: currentItem.id === item.id
+          ? currentItem.images.filter((url) => url !== photoUrl)
+          : [...currentItem.images],
+      }));
+      const saved = await savePiercingItems(nextItems);
+      const normalized = normalizePiercingItems(saved);
+      setItems(normalized);
+      setOriginalItems(normalized);
+      setSuccess(previewMode
+        ? 'Photo removed from this preview piercing type.'
+        : 'Photo removed from the live piercing section.');
+      try {
+        await deletePiercingImage(photoUrl);
+      } catch {
+        setError('The photo was removed from the website, but its Cloudinary file could not be cleaned up.');
+      }
+    } catch (removeError) {
+      setError(removeError.message || 'Photo could not be removed.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   const saveAll = async () => {

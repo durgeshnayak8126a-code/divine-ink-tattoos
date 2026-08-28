@@ -82,11 +82,16 @@ export function getPreviewPiercingItems(fallbackItems) {
 export function getPublicPiercingGallery(items) {
   return normalizePiercingItems(items)
     .filter((item) => item.active && item.title)
-    .flatMap((item) => getPiercingImages(item).map((src, photoIndex) => ({
-      id: `${item.id}-${photoIndex}`,
-      src,
-      title: item.title,
-    })));
+    .map((item) => {
+      const images = getPiercingImages(item);
+      return {
+        id: item.id,
+        src: images[0] || '',
+        images,
+        title: item.title,
+      };
+    })
+    .filter((item) => item.images.length > 0);
 }
 
 export { PREVIEW_STORAGE_KEY };
