@@ -28,15 +28,7 @@ import { getArtistDisplayImage, normalizeArtists } from './artists.js';
 import { galleryFallbackItems } from './galleryFallback.js';
 import { usePublicGallery } from './usePublicGallery.js';
 import { usePublicCms } from './usePublicCms.js';
-
-import lobePiercing from './assets/piercing/lobe.jpg';
-import helixPiercing from './assets/piercing/helix.jpg';
-import septumPiercing from './assets/piercing/septum.jpg';
-import belly from './assets/piercing/belly.jpg';
-import lip from './assets/piercing/lip.jpg';
-import tongue from './assets/piercing/tongue.jpg';
-import nose from './assets/piercing/nose.jpg';
-import eyebrow from './assets/piercing/eyebrow.jpg';
+import { getPublicPiercingGallery } from './piercingData.js';
 
 function WhatsAppLogo({ size = 25 }) {
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2a9.84 9.84 0 0 0-8.48 14.82L2 22l5.3-1.52A9.96 9.96 0 1 0 12.04 2Zm0 17.9a8.02 8.02 0 0 1-4.08-1.12l-.29-.17-3.15.9.92-3.05-.19-.31A7.91 7.91 0 1 1 12.04 19.9Zm4.35-5.91c-.24-.12-1.42-.7-1.64-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.93-1.19-.71-.63-1.19-1.41-1.33-1.65-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.69 2.58 4.1 3.62.57.25 1.02.39 1.37.5.58.18 1.1.16 1.51.1.46-.07 1.42-.58 1.62-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z"/></svg>;
@@ -63,12 +55,6 @@ const services = [
   ['Professional Piercing', 'Ear, nose, eyebrow, lip, tongue and belly piercing with hygiene-first care.']
 ];
 
-const piercingGallery = [
-  [lobePiercing, 'Lobe Piercing'], [helixPiercing, 'Helix Piercing'], [septumPiercing, 'Septum Piercing'],
-  [nose, 'Nose Piercing'], [belly, 'Belly Piercing'], [eyebrow, 'Eyebrow Piercing'],
-  [lip, 'Lip Piercing'], [tongue, 'Tongue Piercing']
-];
-
 const faqs = [
   ['How do I get an exact tattoo price?', 'Send the design reference, approximate size in inches and body placement on WhatsApp. Final pricing depends on detail, size, style, placement and time required.'],
   ['Do you provide custom tattoo designs?', 'Yes. We discuss your idea, placement and style before preparing a custom concept.'],
@@ -89,6 +75,7 @@ function App() {
   const lightboxTriggerRef = useRef(null);
   const galleryItems = usePublicGallery(galleryFallbackItems);
   const { homepage: homepageSettings } = usePublicCms();
+  const piercingGallery = getPublicPiercingGallery(homepageSettings?.piercingItems);
 
   const aboutImages = Array.isArray(homepageSettings?.featuredImages)
     ? homepageSettings.featuredImages

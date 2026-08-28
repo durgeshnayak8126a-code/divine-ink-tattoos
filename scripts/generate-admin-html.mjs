@@ -29,6 +29,7 @@ const pages = [
   ['admin/login', 'Admin Login', 'Secure administrator login for Divine Ink Tattoos.'],
   ['admin/gallery', 'Gallery CMS', 'Private gallery content management for Divine Ink Tattoos.'],
   ['admin/artists', 'Artists CMS', 'Private artist profile management for Divine Ink Tattoos.'],
+  ['admin/piercing', 'Piercing CMS', 'Private piercing content and photo management for Divine Ink Tattoos.'],
   ['admin/services', 'Services CMS', 'Private service content management for Divine Ink Tattoos.'],
   ['admin/homepage', 'Homepage CMS', 'Private homepage content management for Divine Ink Tattoos.'],
   ['admin/reviews', 'Reviews CMS', 'Private review content management for Divine Ink Tattoos.'],
