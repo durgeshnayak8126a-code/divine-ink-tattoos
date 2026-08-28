@@ -35,22 +35,33 @@ function uniqueImageUrls(values) {
   return [...new Set((Array.isArray(values) ? values : []).map((value) => String(value || '').trim()).filter(Boolean))];
 }
 
+function normalizePiercingItem(item, index) {
+  const builtinKey = String(item?.builtinKey || '').trim();
+  const legacyImage = String(item?.image || '').trim();
+  return {
+    id: String(item?.id || `piercing-${index + 1}`),
+    title: String(item?.title || '').trim(),
+    builtinKey,
+    images: uniqueImageUrls(Array.isArray(item?.images) ? item.images : legacyImage ? [legacyImage] : []),
+    includeOriginal: Boolean(builtinKey) && item?.includeOriginal !== false,
+    active: item?.active !== false,
+    order: Number.isFinite(Number(item?.order)) ? Number(item.order) : index,
+  };
+}
+
 export function normalizePiercingItems(items) {
   const source = Array.isArray(items) ? items : defaultPiercingItems;
-  return source
-    .map((item, index) => {
-      const builtinKey = String(item?.builtinKey || '').trim();
-      const legacyImage = String(item?.image || '').trim();
-      return {
-        id: String(item?.id || `piercing-${index + 1}`),
-        title: String(item?.title || '').trim(),
-        builtinKey,
-        images: uniqueImageUrls(Array.isArray(item?.images) ? item.images : legacyImage ? [legacyImage] : []),
-        includeOriginal: Boolean(builtinKey) && item?.includeOriginal !== false,
-        active: item?.active !== false,
-        order: Number.isFinite(Number(item?.order)) ? Number(item.order) : index,
-      };
-    })
+  const normalized = source.map(normalizePiercingItem);
+  const presentBuiltinKeys = new Set(normalized.map((item) => item.builtinKey).filter(Boolean));
+
+  // Built-in piercing categories are permanent foundations of the website.
+  // If one was accidentally removed from CMS data (for example Lobe), restore
+  // the category with its original bundled photo instead of letting it vanish.
+  const restoredBuiltins = defaultPiercingItems
+    .filter((item) => !presentBuiltinKeys.has(item.builtinKey))
+    .map((item, index) => normalizePiercingItem(item, normalized.length + index));
+
+  return [...normalized, ...restoredBuiltins]
     .sort((a, b) => a.order - b.order);
 }
 
@@ -82,11 +93,16 @@ export function getPreviewPiercingItems(fallbackItems) {
 export function getPublicPiercingGallery(items) {
   return normalizePiercingItems(items)
     .filter((item) => item.active && item.title)
-    .flatMap((item) => getPiercingImages(item).map((src, photoIndex) => ({
-      id: `${item.id}-${photoIndex}`,
-      src,
-      title: item.title,
-    })));
+    .map((item) => {
+      const images = getPiercingImages(item);
+      return {
+        id: item.id,
+        src: images[0] || '',
+        images,
+        title: item.title,
+      };
+    })
+    .filter((item) => item.images.length > 0);
 }
 
 export { PREVIEW_STORAGE_KEY };

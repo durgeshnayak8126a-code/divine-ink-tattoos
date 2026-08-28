@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { isFirebaseConfigured } from './firebase/env.js';
 
+const PIERCING_UPDATE_KEY = 'divine-ink-piercing-updated-at';
+
 const initialState = {
   homepage: null,
   contact: null,
@@ -55,8 +57,15 @@ export function usePublicCms() {
       }
     }
 
+    const handleStorage = (event) => {
+      if (event.key === PIERCING_UPDATE_KEY) load();
+    };
+    window.addEventListener('storage', handleStorage);
     load();
-    return () => { active = false; };
+    return () => {
+      active = false;
+      window.removeEventListener('storage', handleStorage);
+    };
   }, []);
 
   return content;

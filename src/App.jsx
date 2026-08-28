@@ -69,6 +69,7 @@ function App() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [activeArtist, setActiveArtist] = useState('All Artists');
   const [lightbox, setLightbox] = useState(null);
+  const [piercingLightbox, setPiercingLightbox] = useState(null);
   const [openFaq, setOpenFaq] = useState(0);
   const [booking, setBooking] = useState({ name: '', mobile: '', service: 'Tattoo', budget: '₹999–₹2,999', date: '', details: '' });
   const lightboxCloseRef = useRef(null);
@@ -119,6 +120,14 @@ function App() {
     });
   };
 
+  const showAdjacentPiercingImage = (direction) => {
+    setPiercingLightbox((current) => {
+      if (!current || current.images.length < 2) return current;
+      const index = (current.index + direction + current.images.length) % current.images.length;
+      return { ...current, index };
+    });
+  };
+
   useEffect(() => {
     if (!lightbox) return undefined;
 
@@ -144,6 +153,17 @@ function App() {
       lightboxTriggerRef.current?.focus();
     };
   }, [lightbox, filtered]);
+
+  useEffect(() => {
+    if (!piercingLightbox) return undefined;
+    const handlePiercingKeyDown = (event) => {
+      if (event.key === 'Escape') setPiercingLightbox(null);
+      if (event.key === 'ArrowLeft') showAdjacentPiercingImage(-1);
+      if (event.key === 'ArrowRight') showAdjacentPiercingImage(1);
+    };
+    document.addEventListener('keydown', handlePiercingKeyDown);
+    return () => document.removeEventListener('keydown', handlePiercingKeyDown);
+  }, [piercingLightbox]);
 
   useEffect(() => {
     if (!menuOpen) return undefined;
@@ -320,7 +340,20 @@ function App() {
             <p>Lobe, helix, septum, nose, belly, eyebrow, lip and tongue piercing services are available by appointment.</p>
           </div>
           <div className="piercing-grid">
-            {piercingGallery.map(({ id, src, title }) => <figure key={id}><img src={src} alt={title} loading="lazy"/><figcaption>{title}</figcaption></figure>)}
+            {piercingGallery.map(({ id, src, title, images }) => (
+              <figure key={id}>
+                <button
+                  className="piercing-card-open"
+                  onClick={() => setPiercingLightbox({ id, title, images, index: 0 })}
+                  type="button"
+                  aria-label={`Open ${title} photos`}
+                >
+                  <img src={src} alt={title} loading="lazy"/>
+                  {images.length > 1 && <span className="piercing-photo-count">{images.length} photos</span>}
+                </button>
+                <figcaption>{title}</figcaption>
+              </figure>
+            ))}
           </div>
           <div className="center-action"><a className="btn primary" href={whatsappLink} target="_blank" rel="noreferrer">Ask About Piercing <MessageCircle size={18}/></a></div>
         </section>
@@ -406,6 +439,16 @@ function App() {
         {filtered.length > 1 && <button aria-label="Previous image" onClick={(event) => { event.stopPropagation(); showAdjacentLightboxItem(-1); }} style={{ left: 24, right: 'auto', top: '50%', transform: 'translateY(-50%)', fontSize: 46, lineHeight: 1 }}>‹</button>}
         <img src={lightbox.src} alt={lightbox.altText || lightbox.category || 'Tattoo portfolio image'} onClick={(event) => event.stopPropagation()}/>
         {filtered.length > 1 && <button aria-label="Next image" onClick={(event) => { event.stopPropagation(); showAdjacentLightboxItem(1); }} style={{ left: 'auto', right: 24, top: '50%', transform: 'translateY(-50%)', fontSize: 46, lineHeight: 1 }}>›</button>}
+      </div>}
+
+      {piercingLightbox && <div className="lightbox" role="dialog" aria-modal="true" aria-label={`${piercingLightbox.title} photo preview`} onClick={() => setPiercingLightbox(null)}>
+        <button onClick={() => setPiercingLightbox(null)} aria-label="Close piercing photos"><X/></button>
+        {piercingLightbox.images.length > 1 && <button aria-label="Previous piercing photo" onClick={(event) => { event.stopPropagation(); showAdjacentPiercingImage(-1); }} style={{ left: 24, right: 'auto', top: '50%', transform: 'translateY(-50%)', fontSize: 46, lineHeight: 1 }}>‹</button>}
+        <div className="piercing-lightbox-content" onClick={(event) => event.stopPropagation()}>
+          <img src={piercingLightbox.images[piercingLightbox.index]} alt={`${piercingLightbox.title} ${piercingLightbox.index + 1}`}/>
+          <p>{piercingLightbox.title}{piercingLightbox.images.length > 1 ? ` · ${piercingLightbox.index + 1}/${piercingLightbox.images.length}` : ''}</p>
+        </div>
+        {piercingLightbox.images.length > 1 && <button aria-label="Next piercing photo" onClick={(event) => { event.stopPropagation(); showAdjacentPiercingImage(1); }} style={{ left: 'auto', right: 24, top: '50%', transform: 'translateY(-50%)', fontSize: 46, lineHeight: 1 }}>›</button>}
       </div>}
     </div>
   );

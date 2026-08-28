@@ -179,6 +179,14 @@ expect(appSource.includes('data-embed-id="25698491"'), 'Google Reviews embed ID 
 expect(!appSource.includes('Filter portfolio by artist'), 'Public gallery must not show the artist filter button row.');
 expect(appSource.includes("['Portfolio', '#gallery']"), 'Top navigation must label the tattoo gallery destination as Portfolio.');
 expect(appSource.includes('getPreviewPiercingItems(homepageSettings?.piercingItems)'), 'Public piercing section must remain connected to managed piercing data with built-in fallback.');
+expect(appSource.includes('piercingGallery.map(({ id, src, title, images })'), 'Piercing types must render as one grouped public card per type.');
+expect(appSource.includes('piercingLightbox.images[piercingLightbox.index]'), 'Grouped piercing photos must be viewable inside the piercing lightbox.');
+const piercingDataSource = await read(resolve('src', 'piercingData.js'));
+expect(!piercingDataSource.includes('.flatMap((item) => getPiercingImages(item)'), 'Piercing photos must not flatten into separate public category cards.');
+const piercingAdminSource = await read(resolve('src', 'admin', 'piercing', 'PiercingPage.jsx'));
+expect(piercingAdminSource.includes('Photo removed from the live piercing section.'), 'Saved piercing photo removal must persist immediately.');
+const publicCmsSource = await read(resolve('src', 'usePublicCms.js'));
+expect(publicCmsSource.includes('divine-ink-piercing-updated-at'), 'Public site must refresh piercing data when another live tab saves piercing changes.');
 
 if (failures.length) {
   console.error('\nRegression check FAILED:\n');
