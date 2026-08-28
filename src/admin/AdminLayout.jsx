@@ -14,7 +14,7 @@ export default function AdminLayout() {
     <div className="admin-shell">
       <header className="admin-header">
         <a className="admin-header-brand" href="/">
-          <img src="/divine-ink-logo.png" alt="" />
+          <img src="/divine-ink-logo.webp" alt="" />
           <span>Divine Ink Admin</span>
         </a>
         <div className="admin-account">

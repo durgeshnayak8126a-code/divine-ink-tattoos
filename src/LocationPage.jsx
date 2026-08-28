@@ -16,7 +16,7 @@ export default function LocationPage() {
       <LocationSeoManager location={location} />
       <header className="site-header">
         <a className="brand" href="/" aria-label="Divine Ink home">
-          <img src="/divine-ink-logo.png" alt="Divine Ink Tattoos & Piercing Studio logo" />
+          <img src="/divine-ink-logo.webp" alt="Divine Ink Tattoos & Piercing Studio logo" />
         </a>
         <a className="nav-cta" href={whatsappLink} rel="noreferrer" target="_blank">Book Now</a>
       </header>
@@ -106,7 +106,7 @@ export default function LocationPage() {
 
       <footer className="footer">
         <div>
-          <img src="/divine-ink-logo.png" alt="Divine Ink logo" />
+          <img src="/divine-ink-logo.webp" alt="Divine Ink logo" />
           <p>Custom tattoos and professional piercing in Sector 31, Gurugram.</p>
         </div>
         <div>

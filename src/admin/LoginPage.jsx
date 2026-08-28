@@ -57,7 +57,7 @@ export default function LoginPage() {
       <section className="admin-login-card" aria-labelledby="admin-login-title">
         <a className="admin-brand" href="/" aria-label="Return to Divine Ink website">
           <img
-            src="/divine-ink-logo.png"
+            src="/divine-ink-logo.webp"
             alt="Divine Ink Tattoos & Piercing Studio"
           />
         </a>

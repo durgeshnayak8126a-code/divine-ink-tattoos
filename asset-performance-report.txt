@@ -1,0 +1,12 @@
+Hero/logo performance preview
+Hero dimensions: 1448x1086
+Hero PNG: 2314.7 KB
+Hero WebP: 220.9 KB
+Hero reduction: 90.5%
+Logo dimensions: 715x714
+Logo PNG: 649.3 KB
+Logo WebP lossless: 322.2 KB
+Logo reduction: 50.4%
+Public logo WebP lossless: 322.2 KB
+Visible layout/CSS/content: unchanged
+Original PNG files retained as fallback/social/PWA assets

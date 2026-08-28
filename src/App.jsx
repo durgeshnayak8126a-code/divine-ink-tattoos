@@ -18,8 +18,8 @@ const Star = (p) => <SvgIcon {...p}><path d="m12 2 3 6 6.5 1-4.7 4.6 1.1 6.4-5.9
 const Mail = (p) => <SvgIcon {...p}><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></SvgIcon>;
 const MapPin = (p) => <SvgIcon {...p}><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="2"/></SvgIcon>;
 
-import logo from './assets/logo.png';
-import hero from './assets/hero.png';
+import logo from './assets/logo.webp';
+import hero from './assets/hero.webp';
 import reception from './assets/studio/reception.jpg';
 import artistWorking from './assets/studio/artist-working.jpg';
 import shopFront1 from './assets/studio/shop-front-1.jpg';

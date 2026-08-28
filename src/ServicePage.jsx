@@ -21,7 +21,7 @@ export default function ServicePage() {
       <header className="site-header">
         <a className="brand" href="/" aria-label="Divine Ink home">
           <img
-            src="/divine-ink-logo.png"
+            src="/divine-ink-logo.webp"
             alt="Divine Ink Tattoos & Piercing Studio logo"
           />
         </a>
@@ -119,7 +119,7 @@ export default function ServicePage() {
 
       <footer className="footer">
         <div>
-          <img src="/divine-ink-logo.png" alt="Divine Ink logo" />
+          <img src="/divine-ink-logo.webp" alt="Divine Ink logo" />
           <p>
             Custom tattoos and professional piercing in Sector 31, Gurugram.
           </p>
