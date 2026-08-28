@@ -2,6 +2,7 @@ import { access, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { locationPages } from '../src/locationData.js';
 import { servicePages } from '../src/serviceData.js';
+import { mainPages } from '../src/sitePages.js';
 
 const dist = resolve('dist');
 const failures = [];
@@ -80,6 +81,18 @@ if (await exists(homepagePath)) {
   );
 }
 
+for (const page of mainPages) {
+  const pagePath = resolve(dist, page.slug, 'index.html');
+  expect(await exists(pagePath), `Missing generated top-level page: /${page.slug}/.`);
+  if (!(await exists(pagePath))) continue;
+
+  const html = await read(pagePath);
+  const canonical = `https://divineinktattoos.in/${page.slug}/`;
+  expect(html.includes(`<title>${page.metaTitle}</title>`), `Wrong SEO title for /${page.slug}/.`);
+  expect(html.includes(`rel="canonical" href="${canonical}"`), `Wrong canonical for /${page.slug}/.`);
+  expect(!html.includes('content="noindex, nofollow, noarchive"'), `Public page /${page.slug}/ must remain indexable.`);
+}
+
 for (const service of servicePages) {
   const pagePath = resolve(dist, 'services', service.slug, 'index.html');
   expect(await exists(pagePath), `Missing generated service page: ${service.slug}.`);
@@ -145,6 +158,7 @@ if (await exists(sitemapPath)) {
   const sitemap = await read(sitemapPath);
   const expectedPublicUrls = [
     'https://divineinktattoos.in/',
+    ...mainPages.map((page) => `https://divineinktattoos.in/${page.slug}/`),
     ...servicePages.map((service) => `https://divineinktattoos.in/services/${service.slug}/`),
     ...locationPages.map((location) => `https://divineinktattoos.in/locations/${location.slug}/`),
   ];
@@ -182,4 +196,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`Regression check passed: ${servicePages.length} service pages, ${locationPages.length} location pages, ${adminRoutes.length} admin routes, sitemap, robots, SEO locks, reviews loader, and critical business details verified.`);
+console.log(`Regression check passed: ${mainPages.length} top-level pages, ${servicePages.length} service pages, ${locationPages.length} location pages, ${adminRoutes.length} admin routes, sitemap, robots, SEO locks, reviews loader, and critical business details verified.`);
