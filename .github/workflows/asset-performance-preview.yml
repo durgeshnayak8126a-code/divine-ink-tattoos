@@ -96,9 +96,7 @@ jobs:
           NODE
 
       - name: Build and run regression checks
-        run: |
-          npm run build
-          npm run check:regression
+        run: npm run check
 
       - name: Commit generated preview assets
         run: |
