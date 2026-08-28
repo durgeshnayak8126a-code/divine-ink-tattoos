@@ -312,10 +312,15 @@ export default function PiercingPage() {
 
         {items.length === 0 && <div className="gallery-empty">No piercing types. Use “Add piercing type” to create one.</div>}
 
-        <div style={{ marginTop: 28 }}>
+        <div style={{ marginTop: 28, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           <button className="admin-primary-button" disabled={saving} onClick={saveAll} type="button">
             {saving ? 'Uploading and saving…' : 'Save piercing changes'}
           </button>
+          {previewMode && (
+            <a className="admin-secondary-button" href="/#piercing" target="_blank" rel="noreferrer">
+              View piercing on preview website
+            </a>
+          )}
         </div>
       </section>
     </>

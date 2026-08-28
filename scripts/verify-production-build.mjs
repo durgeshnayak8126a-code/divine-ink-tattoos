@@ -177,6 +177,7 @@ expect(appSource.includes('Shop No. 155, Basement, Near Apollo Pharmacy, Main HU
 expect(appSource.includes('Open 24x7'), 'Homepage 24x7 availability signal changed unexpectedly.');
 expect(appSource.includes('data-embed-id="25698491"'), 'Google Reviews embed ID changed unexpectedly.');
 expect(!appSource.includes('Filter portfolio by artist'), 'Public gallery must not show the artist filter button row.');
+expect(appSource.includes("['Portfolio', '#gallery']"), 'Top navigation must label the tattoo gallery destination as Portfolio.');
 expect(appSource.includes('getPreviewPiercingItems(homepageSettings?.piercingItems)'), 'Public piercing section must remain connected to managed piercing data with built-in fallback.');
 
 if (failures.length) {

@@ -188,8 +188,17 @@ function App() {
           <img src={logo} alt="Divine Ink Tattoos & Piercing Studio logo" />
         </a>
         <nav id="main-navigation" className={menuOpen ? 'nav open' : 'nav'} aria-label="Main navigation">
-          {['Home','About','Services','Artists','Gallery','Piercing','Reviews','Contact'].map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`} onClick={closeMenu}>{item}</a>
+          {[
+            ['Home', '#home'],
+            ['About', '#about'],
+            ['Services', '#services'],
+            ['Artists', '#artists'],
+            ['Portfolio', '#gallery'],
+            ['Piercing', '#piercing'],
+            ['Reviews', '#reviews'],
+            ['Contact', '#contact'],
+          ].map(([label, href]) => (
+            <a key={label} href={href} onClick={closeMenu}>{label}</a>
           ))}
           <a className="nav-cta" href={whatsappLink} target="_blank" rel="noreferrer">Book Now</a>
         </nav>
