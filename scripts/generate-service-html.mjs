@@ -25,8 +25,24 @@ function replaceMeta(html, attribute, key, content) {
   );
 }
 
+function getServiceSeo(service) {
+  if (service.slug === 'fine-line-tattoos') {
+    return {
+      metaTitle: 'Fine Line Tattoo Artist in Gurgaon (Gurugram) | Divine Ink',
+      description:
+        'Looking for a fine line tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 offers fine line tattoo planning, sizing and placement guidance.',
+    };
+  }
+
+  return {
+    metaTitle: service.metaTitle,
+    description: service.description,
+  };
+}
+
 for (const service of servicePages) {
   const canonical = `https://divineinktattoos.in/services/${service.slug}/`;
+  const { metaTitle, description } = getServiceSeo(service);
   const schema = [
     {
       '@context': 'https://schema.org',
@@ -52,7 +68,7 @@ for (const service of servicePages) {
       '@id': `${canonical}#service`,
       name: service.name,
       serviceType: service.name,
-      description: service.description,
+      description,
       url: canonical,
       areaServed: {
         '@type': 'City',
@@ -65,21 +81,21 @@ for (const service of servicePages) {
   ];
 
   let html = homepageHtml
-    .replace(/<title>[\s\S]*?<\/title>/i, `<title>${service.metaTitle}</title>`)
+    .replace(/<title>[\s\S]*?<\/title>/i, `<title>${metaTitle}</title>`)
     .replace(
       /<link rel="canonical" href="[^"]*"\s*\/?>/i,
       `<link rel="canonical" href="${canonical}">`,
     );
 
-  html = replaceMeta(html, 'name', 'description', service.description);
-  html = replaceMeta(html, 'property', 'og:title', service.metaTitle);
-  html = replaceMeta(html, 'property', 'og:description', service.description);
+  html = replaceMeta(html, 'name', 'description', description);
+  html = replaceMeta(html, 'property', 'og:title', metaTitle);
+  html = replaceMeta(html, 'property', 'og:description', description);
   html = replaceMeta(html, 'property', 'og:url', canonical);
   html = replaceMeta(html, 'property', 'og:type', 'website');
   html = replaceMeta(html, 'property', 'og:image', socialImage);
   html = replaceMeta(html, 'name', 'twitter:card', 'summary');
-  html = replaceMeta(html, 'name', 'twitter:title', service.metaTitle);
-  html = replaceMeta(html, 'name', 'twitter:description', service.description);
+  html = replaceMeta(html, 'name', 'twitter:title', metaTitle);
+  html = replaceMeta(html, 'name', 'twitter:description', description);
   html = replaceMeta(html, 'name', 'twitter:image', socialImage);
   html = html.replace(
     '</head>',
