@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './index.css';
 import './gallerySliderEffect.css';
 import './gallerySliderEffect.js';
+import { mainPages } from './sitePages.js';
 
 const App = lazy(() => import('./App.jsx'));
 const AdminApp = lazy(() => import('./admin/AdminApp.jsx'));
@@ -16,6 +17,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Suspense fallback={null}>
         <Routes>
           <Route path="/" element={<App />} />
+          {mainPages.map((page) => (
+            <Route key={page.slug} path={`/${page.slug}/`} element={<App view={page.view} />} />
+          ))}
           <Route path="/admin/*" element={<AdminApp />} />
           <Route path="/services/:slug/" element={<ServicePage />} />
           <Route path="/locations/:slug/" element={<LocationPage />} />

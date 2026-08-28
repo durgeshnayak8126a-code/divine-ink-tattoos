@@ -3,6 +3,7 @@ import { writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { locationPages } from '../src/locationData.js';
 import { servicePages } from '../src/serviceData.js';
+import { mainPages } from '../src/sitePages.js';
 
 const siteUrl = 'https://divineinktattoos.in';
 const distSitemap = resolve('dist', 'sitemap.xml');
@@ -42,6 +43,13 @@ const homepageLastmod = latestGitDate([
   'src/usePublicGallery.js',
 ]);
 
+const mainPageLastmod = latestGitDate([
+  'src/App.jsx',
+  'src/main.jsx',
+  'src/sitePages.js',
+  'scripts/generate-main-page-html.mjs',
+]);
+
 const serviceLastmod = latestGitDate([
   'src/serviceData.js',
   'src/ServicePage.jsx',
@@ -58,6 +66,7 @@ const locationLastmod = latestGitDate([
 
 const entries = [
   urlEntry('/', homepageLastmod),
+  ...mainPages.map((page) => urlEntry(`/${page.slug}/`, mainPageLastmod)),
   ...servicePages.map((service) => urlEntry(`/services/${service.slug}/`, serviceLastmod)),
   ...locationPages.map((location) => urlEntry(`/locations/${location.slug}/`, locationLastmod)),
 ];

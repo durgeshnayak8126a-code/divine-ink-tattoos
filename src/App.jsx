@@ -28,6 +28,7 @@ import { getArtistDisplayImage, normalizeArtists } from './artists.js';
 import { galleryFallbackItems } from './galleryFallback.js';
 import { usePublicGallery } from './usePublicGallery.js';
 import { usePublicCms } from './usePublicCms.js';
+import { mainPages } from './sitePages.js';
 
 import lobePiercing from './assets/piercing/lobe.jpg';
 import helixPiercing from './assets/piercing/helix.jpg';
@@ -78,10 +79,11 @@ const faqs = [
   ['Can I book a piercing appointment?', 'Yes. Send the piercing type and preferred time on WhatsApp to confirm availability.']
 ];
 
-function App() {
+function App({ view = 'all' }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState('All');
-  const [activeArtist, setActiveArtist] = useState('All Artists');
+  const requestedArtist = new URLSearchParams(window.location.search).get('artist');
+  const [activeArtist, setActiveArtist] = useState(requestedArtist || 'All Artists');
   const [lightbox, setLightbox] = useState(null);
   const [openFaq, setOpenFaq] = useState(0);
   const [booking, setBooking] = useState({ name: '', mobile: '', service: 'Tattoo', budget: '₹999–₹2,999', date: '', details: '' });
@@ -109,12 +111,22 @@ function App() {
   );
 
   const closeMenu = () => setMenuOpen(false);
+  const showSection = (section) => view === 'all' || view === section;
+  const headerNavigation = [
+    { label: 'Home', path: '/' },
+    ...mainPages.filter((page) => page.slug !== 'faq').map((page) => ({ label: page.label, path: `/${page.slug}/` })),
+  ];
 
   const viewArtistPortfolio = (artist) => {
     setActiveArtist(artist);
     setActiveFilter('All');
     window.requestAnimationFrame(() => {
-      document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const gallerySection = document.getElementById('gallery');
+      if (gallerySection) {
+        gallerySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+      window.location.assign(`/gallery/?artist=${encodeURIComponent(artist)}`);
     });
   };
 
@@ -197,12 +209,12 @@ function App() {
   return (
     <div className="site-shell">
       <header className="site-header">
-        <a className="brand" href="#home" onClick={closeMenu} aria-label="Divine Ink home">
+        <a className="brand" href="/" onClick={closeMenu} aria-label="Divine Ink home">
           <img src={logo} alt="Divine Ink Tattoos & Piercing Studio logo" />
         </a>
         <nav id="main-navigation" className={menuOpen ? 'nav open' : 'nav'} aria-label="Main navigation">
-          {['Home','About','Services','Artists','Gallery','Piercing','Reviews','Contact'].map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`} onClick={closeMenu}>{item}</a>
+          {headerNavigation.map((item) => (
+            <a key={item.label} href={item.path} onClick={closeMenu}>{item.label}</a>
           ))}
           <a className="nav-cta" href={whatsappLink} target="_blank" rel="noreferrer">Book Now</a>
         </nav>
@@ -212,6 +224,8 @@ function App() {
       </header>
 
       <main>
+        {showSection('home') && (
+          <>
         <section id="home" className="hero" style={{ backgroundImage: `linear-gradient(90deg, rgba(5,5,5,.96) 0%, rgba(5,5,5,.72) 45%, rgba(5,5,5,.2) 100%), url(${hero})` }}>
           <div className="hero-content">
             <p className="eyebrow">Premium Tattoo & Piercing Studio · Gurugram</p>
@@ -237,6 +251,11 @@ function App() {
           <div><strong>Sector 31</strong><span>Prime Gurugram location</span></div>
         </section>
 
+          </>
+        )}
+
+        {showSection('about') && (
+          <>
         <section id="about" className="section split-section">
           <div className="image-stack">
             <img className="main-image" src={aboutMainImage} alt="Divine Ink studio reception" />
@@ -256,6 +275,11 @@ function App() {
           </div>
         </section>
 
+          </>
+        )}
+
+        {showSection('services') && (
+          <>
         <section id="services" className="section dark-panel">
           <div className="section-heading center">
             <p className="eyebrow">What We Do</p>
@@ -272,6 +296,11 @@ function App() {
           </div>
         </section>
 
+          </>
+        )}
+
+        {showSection('artists') && (
+          <>
         <section id="artists" className="section">
           <div className="section-heading center">
             <p className="eyebrow">Meet The Artists</p>
@@ -292,6 +321,11 @@ function App() {
           </div>
         </section>
 
+          </>
+        )}
+
+        {showSection('gallery') && (
+          <>
         <section id="gallery" className="section gallery-section">
           <div className="section-heading center">
             <p className="eyebrow">Tattoo Portfolio</p>
@@ -320,6 +354,11 @@ function App() {
           )}
         </section>
 
+          </>
+        )}
+
+        {showSection('piercing') && (
+          <>
         <section id="piercing" className="section piercing-section">
           <div className="section-heading center">
             <p className="eyebrow">Professional Piercing</p>
@@ -332,6 +371,11 @@ function App() {
           <div className="center-action"><a className="btn primary" href={whatsappLink} target="_blank" rel="noreferrer">Ask About Piercing <MessageCircle size={18}/></a></div>
         </section>
 
+          </>
+        )}
+
+        {showSection('reviews') && (
+          <>
         <section id="reviews" className="section reviews-section">
           <div className="section-heading center">
             <p className="eyebrow">Client Feedback</p>
@@ -342,6 +386,11 @@ function App() {
           <div className="reviews-widget-wrap"><div className="sk-ww-google-reviews" data-embed-id="25698491"></div></div>
         </section>
 
+          </>
+        )}
+
+        {showSection('faq') && (
+          <>
         <section id="faq" className="section faq-section">
           <div className="section-heading center"><p className="eyebrow">Before You Book</p><h2>Frequently asked questions</h2></div>
           <div className="faq-list">
@@ -354,6 +403,11 @@ function App() {
           </div>
         </section>
 
+          </>
+        )}
+
+        {showSection('contact') && (
+          <>
         <section id="contact" className="section contact-section">
           <div className="contact-card">
             <div>
@@ -393,11 +447,14 @@ function App() {
           </div>
           <iframe title="Divine Ink Tattoos location" loading="lazy" referrerPolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Shop%20No.%20155%20Near%20Apollo%20Pharmacy%20Main%20HUDA%20Market%20Sector%2031%20Gurugram%20Haryana%20122001&output=embed"></iframe>
         </section>
+          </>
+        )}
+
       </main>
 
       <footer className="footer">
         <div><img src={logo} alt="Divine Ink logo"/><p>Custom tattoos and professional piercing in Sector 31, Gurugram.</p></div>
-        <div><h4>Quick Links</h4><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#artists">Artists</a><a href="#reviews">Reviews</a></div>
+        <div><h4>Quick Links</h4><a href="/services/">Services</a><a href="/gallery/">Gallery</a><a href="/artists/">Artists</a><a href="/reviews/">Reviews</a></div>
         <div><h4>Contact</h4><a href="tel:+918445702782">+91 84457 02782</a><a href="mailto:divinetattoostudio1@gmail.com">divinetattoostudio1@gmail.com</a><a href={mapLink} target="_blank" rel="noreferrer">Get Directions</a></div>
         <div className="copyright">© {new Date().getFullYear()} Divine Ink Tattoos & Piercing Studio. All rights reserved.</div>
       </footer>
