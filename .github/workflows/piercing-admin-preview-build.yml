@@ -1,0 +1,41 @@
+name: Prepare piercing admin preview
+
+on:
+  push:
+    branches:
+      - task-piercing-admin-preview
+
+permissions:
+  contents: write
+
+jobs:
+  build_preview:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out preview branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+
+      - name: Apply piercing admin source changes
+        run: node scripts/apply-piercing-admin-preview.mjs
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build and run regression checks
+        run: npm run check
+
+      - name: Commit preview implementation
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/App.jsx src/piercingData.js src/admin/AdminApp.jsx src/admin/AdminLayout.jsx src/admin/piercing scripts/generate-admin-html.mjs scripts/verify-production-build.mjs
+          git commit -m "Add preview-only piercing management"
+          git push
