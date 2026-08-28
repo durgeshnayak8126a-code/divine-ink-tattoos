@@ -1,28 +1,20 @@
-# Divine Ink Tattoos & Piercing Studio Website V2
+# Divine Ink Tattoos Website
 
-A fresh React + Vite website built from the supplied original assets.
+Production source for https://divineinktattoos.in/
 
-## Run locally
+## Development
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-## Production build
+## Build
 
 ```bash
 npm run build
 ```
 
-The production-ready output will be generated in the `dist` folder.
+## Admin
 
-## Business details included
-- WhatsApp / phone: +91 84457 02782
-- Email: divinetattoostudio1@gmail.com
-- Instagram: @divineinktattoos1
-- Facebook page link
-- Google Maps link and embedded map
-- Address: Shop No. 155, Basement, Near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001
-- Opening hours: 24x7
-- SociableKIT Google Reviews embed ID: 25698491
+Private admin routes are under `/admin/` and are generated with `noindex` metadata.
