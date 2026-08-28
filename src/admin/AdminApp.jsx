@@ -9,6 +9,7 @@ import './admin.css';
 
 const GalleryPage = lazy(() => import('./gallery/GalleryPage.jsx'));
 const ArtistsPage = lazy(() => import('./artists/ArtistsPage.jsx'));
+const PiercingPage = lazy(() => import('./piercing/PiercingPage.jsx'));
 const CollectionCmsPage = lazy(() => import('./cms/CollectionCmsPage.jsx'));
 const SettingsCmsPage = lazy(() => import('./cms/SettingsCmsPage.jsx'));
 
@@ -41,6 +42,14 @@ export default function AdminApp() {
               element={
                 <LazyPage>
                   <ArtistsPage />
+                </LazyPage>
+              }
+            />
+            <Route
+              path="piercing/"
+              element={
+                <LazyPage>
+                  <PiercingPage />
                 </LazyPage>
               }
             />
