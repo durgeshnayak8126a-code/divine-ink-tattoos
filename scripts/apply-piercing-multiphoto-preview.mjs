@@ -54,9 +54,17 @@ await update('src/App.jsx', (source) => {
 });
 
 await update('scripts/verify-production-build.mjs', (source) => {
+  let verifier = source;
+  verifier = replaceRequired(
+    verifier,
+    "expect(appSource.includes('getPublicPiercingGallery(homepageSettings?.piercingItems)'), 'Public piercing section must remain connected to managed piercing data with built-in fallback.');",
+    "expect(appSource.includes('getPreviewPiercingItems(homepageSettings?.piercingItems)'), 'Public piercing section must remain connected to managed piercing data with built-in fallback.');",
+    'existing piercing regression check',
+  );
   const needle = "expect(appSource.includes('data-embed-id=\"25698491\"'), 'Google Reviews embed ID changed unexpectedly.');";
-  const replacement = `${needle}\nexpect(appSource.includes('getPreviewPiercingItems(homepageSettings?.piercingItems)'), 'Piercing preview/managed data binding is missing.');\nexpect(!appSource.includes('Filter portfolio by artist'), 'Public gallery must not show the artist filter button row.');`;
-  return replaceRequired(source, needle, replacement, 'regression protections');
+  const replacement = `${needle}\nexpect(!appSource.includes('Filter portfolio by artist'), 'Public gallery must not show the artist filter button row.');`;
+  verifier = replaceRequired(verifier, needle, replacement, 'portfolio filter regression protection');
+  return verifier;
 });
 
 console.log('Piercing multi-photo and portfolio filter preview patch applied.');
