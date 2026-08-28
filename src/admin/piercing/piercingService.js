@@ -1,10 +1,13 @@
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore/lite';
 import { firebaseAuth, getFirestoreDb } from '../../firebase/config.js';
-import { defaultPiercingItems, normalizePiercingItems } from '../../piercingData.js';
+import {
+  defaultPiercingItems,
+  normalizePiercingItems,
+  PREVIEW_STORAGE_KEY,
+} from '../../piercingData.js';
 
 const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME?.trim();
 const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET?.trim();
-const PREVIEW_STORAGE_KEY = 'divine-ink-piercing-preview-v1';
 
 export function isPiercingPreviewMode() {
   if (typeof window === 'undefined') return true;
@@ -16,7 +19,8 @@ function sanitizeItems(items) {
     id: item.id,
     title: item.title,
     builtinKey: item.builtinKey,
-    image: item.image,
+    images: item.images,
+    includeOriginal: Boolean(item.includeOriginal),
     active: Boolean(item.active),
     order: index,
   }));
@@ -25,7 +29,9 @@ function sanitizeItems(items) {
 function loadPreviewItems() {
   try {
     const stored = JSON.parse(localStorage.getItem(PREVIEW_STORAGE_KEY) || 'null');
-    return Array.isArray(stored) ? normalizePiercingItems(stored) : normalizePiercingItems(defaultPiercingItems);
+    return Array.isArray(stored)
+      ? normalizePiercingItems(stored)
+      : normalizePiercingItems(defaultPiercingItems);
   } catch {
     return normalizePiercingItems(defaultPiercingItems);
   }
@@ -59,9 +65,18 @@ export async function savePiercingItems(items) {
   return payload;
 }
 
+function fileToDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ''));
+    reader.onerror = () => reject(new Error('Preview image could not be read.'));
+    reader.readAsDataURL(file);
+  });
+}
+
 export async function uploadPiercingImage(file) {
   if (isPiercingPreviewMode()) {
-    return URL.createObjectURL(file);
+    return fileToDataUrl(file);
   }
 
   if (!cloudName || !uploadPreset) {
@@ -99,10 +114,7 @@ function cloudinaryPublicIdFromUrl(url) {
 }
 
 export async function deletePiercingImage(url) {
-  if (isPiercingPreviewMode()) {
-    if (url?.startsWith('blob:')) URL.revokeObjectURL(url);
-    return;
-  }
+  if (isPiercingPreviewMode()) return;
 
   const publicId = cloudinaryPublicIdFromUrl(url);
   if (!publicId) return;
