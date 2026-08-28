@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && node scripts/generate-service-html.mjs && node scripts/generate-location-html.mjs && node scripts/generate-admin-html.mjs && node scripts/generate-sitemap.mjs",
+    "check": "npm run build && node scripts/verify-production-build.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
