@@ -100,8 +100,19 @@ function App() {
   } = usePublicCms();
   useManagedSeo(seoSettings);
 
-  const phoneDisplay = String(contactSettings?.phone || defaultPhoneDisplay).trim();
-  const phone = String(contactSettings?.phone || defaultPhone).replace(/\D/g, '') || defaultPhone;
+  const phoneRecords = Array.isArray(contactSettings?.phones)
+    ? contactSettings.phones
+        .filter((item) => item && typeof item === 'object' && String(item.number || '').trim())
+        .map((item, index) => ({
+          id: item.id || `phone-${index}`,
+          number: String(item.number || '').trim(),
+          label: String(item.label || (index === 0 ? 'Primary' : 'Phone')).trim(),
+          primary: Boolean(item.primary),
+        }))
+    : [{ id: 'legacy-primary', number: String(contactSettings?.phone || defaultPhoneDisplay).trim(), label: 'Primary', primary: true }];
+  const primaryPhoneRecord = phoneRecords.find((item) => item.primary) || phoneRecords[0] || null;
+  const phoneDisplay = primaryPhoneRecord?.number || '';
+  const phone = phoneDisplay.replace(/\D/g, '');
   const whatsappPhone = String(contactSettings?.whatsapp || phone).replace(/\D/g, '') || defaultPhone;
   const mapLink = String(contactSettings?.googleMapsUrl || defaultMapLink).trim();
   const address = String(contactSettings?.address || defaultAddress).trim();
@@ -286,7 +297,7 @@ function App() {
             <p className="hero-copy">Custom tattoos, cover-ups, realism, portraits, minimal designs and professional piercing in a hygiene-focused studio at Sector 31, Gurugram.</p>
             <div className="hero-actions">
               <a className="btn primary" href={whatsappLink} target="_blank" rel="noreferrer"><MessageCircle size={19}/> {heroCtaText}</a>
-              <a className="btn primary" href={`tel:+${phone}`}><Phone size={18}/> Book on Call</a>
+              {phone && <a className="btn primary" href={`tel:+${phone}`}><Phone size={18}/> Book on Call</a>}
             </div>
             <div className="hero-points">
               <span><Clock3 size={17}/> {openingHours}</span>
@@ -471,7 +482,10 @@ function App() {
               <h2>Send your idea, size and placement.</h2>
               <p>For faster consultation, send a clear reference image, approximate size and body placement on WhatsApp.</p>
               <div className="contact-list">
-                <a href={`tel:+${phone}`}><Phone/> {phoneDisplay}</a>
+                {phoneRecords.map((item) => {
+                  const digits = item.number.replace(/\D/g, '');
+                  return digits ? <a key={item.id} href={`tel:+${digits}`}><Phone/> {item.label ? `${item.label}: ` : ''}{item.number}</a> : null;
+                })}
                 <a href="mailto:divinetattoostudio1@gmail.com"><Mail/> divinetattoostudio1@gmail.com</a>
                 <a href={mapLink} target="_blank" rel="noreferrer"><MapPin/> {address}</a>
                 <span><Clock3/> {openingHours}</span>
@@ -508,7 +522,7 @@ function App() {
       <footer className="footer">
         <div><img src={logo} alt="Divine Ink logo"/><p>Custom tattoos and professional piercing in Sector 31, Gurugram.</p></div>
         <div><h4>Quick Links</h4><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#artists">Artists</a><a href="#reviews">Reviews</a></div>
-        <div><h4>Contact</h4><a href={`tel:+${phone}`}>{phoneDisplay}</a><a href="mailto:divinetattoostudio1@gmail.com">divinetattoostudio1@gmail.com</a><a href={mapLink} target="_blank" rel="noreferrer">Get Directions</a></div>
+        <div><h4>Contact</h4>{phoneRecords.map((item) => { const digits = item.number.replace(/\D/g, ''); return digits ? <a key={item.id} href={`tel:+${digits}`}>{item.number}</a> : null; })}<a href="mailto:divinetattoostudio1@gmail.com">divinetattoostudio1@gmail.com</a><a href={mapLink} target="_blank" rel="noreferrer">Get Directions</a></div>
         <div className="copyright">© {new Date().getFullYear()} Divine Ink Tattoos & Piercing Studio. All rights reserved.</div>
       </footer>
 

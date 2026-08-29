@@ -183,7 +183,12 @@ expect(appSource.includes('useManagedSeo(seoSettings)'), 'Homepage SEO admin set
 expect(appSource.includes('cmsFaqs.length'), 'FAQ admin content must be connected to the public FAQ section.');
 expect(appSource.includes('activeOffers.map'), 'Offers admin content must be connected to the public site.');
 expect(appSource.includes('managedReviews.map'), 'Reviews admin content must be connected to the public site.');
-expect(appSource.includes('contactSettings?.phone'), 'Contact admin settings must be connected to public contact details.');
+expect(appSource.includes('contactSettings?.phone'), 'Legacy contact phone must remain supported as a fallback.');
+expect(appSource.includes('contactSettings?.phones'), 'Public contact area must support multiple managed phone numbers.');
+const contactAdminSource = await read(resolve('src', 'admin', 'contact', 'ContactPage.jsx'));
+expect(contactAdminSource.includes('Add phone number'), 'Contact admin must let the owner add phone numbers individually.');
+expect(contactAdminSource.includes('removePhone'), 'Contact admin must let the owner remove phone numbers individually.');
+expect(contactAdminSource.includes('setPrimaryPhone'), 'Contact admin must let the owner choose the primary call number.');
 expect(appSource.includes('homepageServices.map'), 'Services admin content must be connected to homepage service cards.');
 
 const servicePageSource = await read(resolve('src', 'ServicePage.jsx'));
