@@ -22,6 +22,10 @@ jobs:
         with:
           node-version: 22.12.0
           cache: npm
+      - name: Fix temporary verification helper
+        run: |
+          sed -i 's/const publicCmsSource/const cmsLoaderSource/g' scripts/apply-admin-cms-wiring.mjs
+          sed -i 's/publicCmsSource.includes/cmsLoaderSource.includes/g' scripts/apply-admin-cms-wiring.mjs
       - name: Apply CMS wiring
         run: node scripts/apply-admin-cms-wiring.mjs
       - name: Install dependencies
