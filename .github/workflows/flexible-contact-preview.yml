@@ -1,0 +1,33 @@
+name: Flexible contact preview
+
+on:
+  push:
+    branches: [task-connect-admin-cms-preview]
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: task-connect-admin-cms-preview
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+          cache: npm
+      - name: Apply flexible contact changes
+        run: node scripts/apply-flexible-contact-preview.mjs
+      - run: npm ci
+      - run: npm run check
+      - name: Commit verified contact changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/App.jsx scripts/verify-production-build.mjs
+          git commit -m "Support independent contact fields and multiple phones"
+          git push
