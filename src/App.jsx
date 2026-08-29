@@ -248,7 +248,7 @@ function App() {
       alert('Please enter your name and mobile number.');
       return;
     }
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(bookingMessage())}`, '_blank', 'noopener,noreferrer');
+    window.open(`https://wa.me/${whatsappPhone}?text=${encodeURIComponent(bookingMessage())}`, '_blank', 'noopener,noreferrer');
   };
 
   return (
