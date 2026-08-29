@@ -27,7 +27,9 @@ jobs:
           sed -i 's/const publicCmsSource/const cmsLoaderSource/g' scripts/apply-admin-cms-wiring.mjs
           sed -i 's/publicCmsSource.includes/cmsLoaderSource.includes/g' scripts/apply-admin-cms-wiring.mjs
       - name: Apply CMS wiring
-        run: node scripts/apply-admin-cms-wiring.mjs
+        run: |
+          node scripts/apply-admin-cms-wiring.mjs
+          sed -i "s/const phone = '918445702782';/const defaultPhone = '918445702782';/" scripts/verify-production-build.mjs
       - name: Install dependencies
         run: npm ci
       - name: Build and verify
