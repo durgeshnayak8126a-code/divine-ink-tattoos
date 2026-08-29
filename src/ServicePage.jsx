@@ -2,17 +2,58 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import './App.css';
 import SeoManager from './SeoManager.jsx';
 import { servicePageMap } from './serviceData.js';
+import { usePublicCms } from './usePublicCms.js';
 
-const whatsappLink =
-  'https://wa.me/918445702782?text=Hi%20Divine%20Ink%20Tattoos%2C%20I%20want%20to%20book%20a%20consultation.';
+const fallbackPhone = '+91 84457 02782';
+const fallbackWhatsapp = '918445702782';
+const fallbackAddress = 'Shop No. 155, Basement, near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001';
+
+function phoneDigits(value, fallback = '') {
+  const digits = String(value || '').replace(/\D/g, '');
+  return digits || fallback;
+}
+
+function normalizeServiceFaqs(value) {
+  if (!Array.isArray(value)) return [];
+  return value.map((item, index) => {
+    if (Array.isArray(item)) return { question: String(item[0] || ''), answer: String(item[1] || ''), id: `faq-${index}` };
+    if (item && typeof item === 'object') {
+      return {
+        question: String(item.question || item.q || ''),
+        answer: String(item.answer || item.a || ''),
+        id: String(item.id || `faq-${index}`),
+      };
+    }
+    return null;
+  }).filter((item) => item?.question && item?.answer);
+}
 
 export default function ServicePage() {
   const { slug } = useParams();
-  const service = servicePageMap.get(slug);
+  const staticService = servicePageMap.get(slug);
+  const { contact, services: cmsServices } = usePublicCms();
 
-  if (!service) {
+  if (!staticService) {
     return <Navigate replace to="/" />;
   }
+
+  const managed = cmsServices.find((item) => item.slug === slug);
+  const service = {
+    ...staticService,
+    name: managed?.title || staticService.name,
+    title: managed?.title || staticService.title,
+    intro: managed?.description || staticService.intro,
+    metaTitle: slug === 'fine-line-tattoos' ? staticService.metaTitle : (managed?.metaTitle || staticService.metaTitle),
+    description: managed?.metaDescription || staticService.description,
+  };
+  const pricing = String(managed?.pricing || '').trim();
+  const managedFaqs = normalizeServiceFaqs(managed?.faqs);
+
+  const displayPhone = String(contact?.phone || fallbackPhone).trim();
+  const telNumber = phoneDigits(displayPhone, fallbackWhatsapp);
+  const whatsappNumber = phoneDigits(contact?.whatsapp || displayPhone, fallbackWhatsapp);
+  const address = String(contact?.address || fallbackAddress).trim();
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hi Divine Ink Tattoos, I want to book a consultation.')}`;
 
   return (
     <div className="site-shell">
@@ -41,6 +82,7 @@ export default function ServicePage() {
             <p className="eyebrow">{service.eyebrow}</p>
             <h1>{service.title}</h1>
             <p>{service.intro}</p>
+            {pricing && <p><strong>Pricing:</strong> {pricing}</p>}
           </div>
           <a
             className="btn primary"
@@ -71,6 +113,23 @@ export default function ServicePage() {
           </div>
         </section>
 
+        {managedFaqs.length > 0 && (
+          <section className="section faq-section">
+            <div className="section-heading">
+              <p className="eyebrow">Service FAQs</p>
+              <h2>Questions about {service.name.toLowerCase()}</h2>
+            </div>
+            <div className="faq-list">
+              {managedFaqs.map((item) => (
+                <article className="open" key={item.id}>
+                  <button aria-expanded="true" type="button"><span>{item.question}</span></button>
+                  <div className="faq-answer" style={{ maxHeight: 'none' }}><p>{item.answer}</p></div>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+
         <section className="section">
           <div className="section-heading">
             <p className="eyebrow">Related services</p>
@@ -100,13 +159,9 @@ export default function ServicePage() {
             <div>
               <p className="eyebrow">Visit Divine Ink</p>
               <h2>Confirm your appointment before travelling</h2>
-              <p>
-                Divine Ink Tattoos & Piercing Studio is at Shop No. 155,
-                Basement, near Apollo Pharmacy, Main HUDA Market, Sector 31,
-                Gurugram, Haryana 122001.
-              </p>
+              <p>Divine Ink Tattoos & Piercing Studio is at {address}.</p>
               <div className="contact-list">
-                <a href="tel:+918445702782">Call +91 84457 02782</a>
+                <a href={`tel:+${telNumber}`}>Call {displayPhone}</a>
                 <a href={whatsappLink} rel="noreferrer" target="_blank">
                   Send your reference on WhatsApp
                 </a>
@@ -120,9 +175,7 @@ export default function ServicePage() {
       <footer className="footer">
         <div>
           <img src="/divine-ink-logo.png" alt="Divine Ink logo" />
-          <p>
-            Custom tattoos and professional piercing in Sector 31, Gurugram.
-          </p>
+          <p>Custom tattoos and professional piercing in Sector 31, Gurugram.</p>
         </div>
         <div>
           <h4>Services</h4>
@@ -137,14 +190,11 @@ export default function ServicePage() {
         </div>
         <div>
           <h4>Contact</h4>
-          <a href="tel:+918445702782">+91 84457 02782</a>
-          <a href={whatsappLink} rel="noreferrer" target="_blank">
-            WhatsApp
-          </a>
+          <a href={`tel:+${telNumber}`}>{displayPhone}</a>
+          <a href={whatsappLink} rel="noreferrer" target="_blank">WhatsApp</a>
         </div>
         <div className="copyright">
-          © {new Date().getFullYear()} Divine Ink Tattoos & Piercing Studio.
-          All rights reserved.
+          © {new Date().getFullYear()} Divine Ink Tattoos & Piercing Studio. All rights reserved.
         </div>
       </footer>
     </div>

@@ -172,13 +172,35 @@ if (await exists(robotsPath)) {
 }
 
 const appSource = await read(resolve('src', 'App.jsx'));
-expect(appSource.includes("const phone = '918445702782';"), 'Homepage phone constant changed unexpectedly.');
+expect(appSource.includes("const defaultPhone = '918445702782';"), 'Homepage phone constant changed unexpectedly.');
 expect(appSource.includes('Shop No. 155, Basement, Near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001'), 'Homepage studio address changed unexpectedly.');
 expect(appSource.includes('Open 24x7'), 'Homepage 24x7 availability signal changed unexpectedly.');
 expect(appSource.includes('data-embed-id="25698491"'), 'Google Reviews embed ID changed unexpectedly.');
 expect(!appSource.includes('Filter portfolio by artist'), 'Public gallery must not show the artist filter button row.');
 expect(appSource.includes("['Portfolio', '#gallery']"), 'Top navigation must label the tattoo gallery destination as Portfolio.');
 expect(appSource.includes('getPreviewPiercingItems(homepageSettings?.piercingItems)'), 'Public piercing section must remain connected to managed piercing data with built-in fallback.');
+expect(appSource.includes('useManagedSeo(seoSettings)'), 'Homepage SEO admin settings must be connected to the public site.');
+expect(appSource.includes('cmsFaqs.length'), 'FAQ admin content must be connected to the public FAQ section.');
+expect(appSource.includes('activeOffers.map'), 'Offers admin content must be connected to the public site.');
+expect(appSource.includes('managedReviews.map'), 'Reviews admin content must be connected to the public site.');
+expect(appSource.includes('contactSettings?.phone'), 'Legacy contact phone must remain supported as a fallback.');
+expect(appSource.includes('contactSettings?.phones'), 'Public contact area must support multiple managed phone numbers.');
+const contactAdminSource = await read(resolve('src', 'admin', 'contact', 'ContactPage.jsx'));
+expect(contactAdminSource.includes('Add phone number'), 'Contact admin must let the owner add phone numbers individually.');
+expect(contactAdminSource.includes('removePhone'), 'Contact admin must let the owner remove phone numbers individually.');
+expect(contactAdminSource.includes('setPrimaryPhone'), 'Contact admin must let the owner choose the primary call number.');
+expect(appSource.includes('homepageServices.map'), 'Services admin content must be connected to homepage service cards.');
+
+const servicePageSource = await read(resolve('src', 'ServicePage.jsx'));
+expect(servicePageSource.includes('usePublicCms()'), 'Service pages must read managed CMS service data.');
+expect(servicePageSource.includes('managed?.pricing'), 'Service page pricing must be connected to admin service data.');
+expect(servicePageSource.includes('normalizeServiceFaqs'), 'Service page FAQs must be connected to admin service data.');
+
+const cmsLoaderSource = await read(resolve('src', 'usePublicCms.js'));
+expect(cmsLoaderSource.includes("collection(db, 'reviews')"), 'Public CMS loader must load published reviews.');
+expect(cmsLoaderSource.includes("collection(db, 'offers')"), 'Public CMS loader must load active offers.');
+expect(cmsLoaderSource.includes('admin-managed-seo-schema'), 'Managed SEO schema must be isolated from the built-in LocalBusiness schema.');
+expect(cmsLoaderSource.includes("normalized.includes('noindex')"), 'Managed SEO must block accidental noindex publishing.');
 expect(appSource.includes('piercingGallery.map(({ id, src, title, images })'), 'Piercing types must render as one grouped public card per type.');
 expect(appSource.includes('piercingLightbox.images[piercingLightbox.index]'), 'Grouped piercing photos must be viewable inside the piercing lightbox.');
 const piercingDataSource = await read(resolve('src', 'piercingData.js'));
