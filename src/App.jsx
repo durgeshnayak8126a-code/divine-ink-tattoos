@@ -121,8 +121,8 @@ function App() {
   const facebookLink = String(contactSettings?.facebook || defaultFacebook).trim();
   const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`;
   const whatsappLink = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent('Hi Divine Ink Tattoos, I want to book a consultation.')}`;
-  const heroEyebrow = String(homepageSettings?.bannerText || 'Premium Tattoo & Piercing Studio · Gurugram').trim();
-  const heroCtaText = String(homepageSettings?.ctaText || 'Book on WhatsApp').trim();
+  const heroEyebrow = 'Premium Tattoo & Piercing Studio · Gurugram';
+  const heroCtaText = 'Book on WhatsApp';
   const homepageServices = defaultServices.map((fallback, index) => {
     const managed = cmsServices.find((item) => item.slug === homepageServiceSlugs[index]);
     return [managed?.title || fallback[0], managed?.description || fallback[1]];
