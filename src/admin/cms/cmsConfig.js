@@ -68,16 +68,16 @@ export const SETTINGS_MODULES = Object.freeze({
   },
   contact: {
     title: 'Contact settings',
-    intro: 'Manage customer contact information and studio availability.',
+    intro: 'Change only the contact fields you need. Any field left empty keeps the current built-in website value.',
     documentId: 'contact',
     fields: [
-      { name: 'phone', label: 'Phone', required: true },
-      { name: 'whatsapp', label: 'WhatsApp', required: true },
-      { name: 'address', label: 'Address', type: 'textarea', required: true },
+      { name: 'phone', label: 'Phone' },
+      { name: 'whatsapp', label: 'WhatsApp' },
+      { name: 'address', label: 'Address', type: 'textarea' },
       { name: 'instagram', label: 'Instagram URL', type: 'url' },
       { name: 'facebook', label: 'Facebook URL', type: 'url' },
-      { name: 'openingHours', label: 'Opening hours', required: true },
-      { name: 'googleMapsUrl', label: 'Google Maps URL', type: 'url', required: true },
+      { name: 'openingHours', label: 'Opening hours' },
+      { name: 'googleMapsUrl', label: 'Google Maps URL', type: 'url' },
     ],
   },
   seo: {
