@@ -31,15 +31,19 @@ function normalizePhones(record) {
   return defaultContact.phones.map((item) => ({ ...item }));
 }
 
+function settingValue(record, key, fallback) {
+  return record && Object.prototype.hasOwnProperty.call(record, key) ? String(record[key] ?? '') : fallback;
+}
+
 function normalizeRecord(record) {
   return {
     phones: normalizePhones(record),
-    whatsapp: String(record?.whatsapp || defaultContact.whatsapp),
-    address: String(record?.address || defaultContact.address),
-    instagram: String(record?.instagram || defaultContact.instagram),
-    facebook: String(record?.facebook || defaultContact.facebook),
-    openingHours: String(record?.openingHours || defaultContact.openingHours),
-    googleMapsUrl: String(record?.googleMapsUrl || defaultContact.googleMapsUrl),
+    whatsapp: settingValue(record, 'whatsapp', defaultContact.whatsapp),
+    address: settingValue(record, 'address', defaultContact.address),
+    instagram: settingValue(record, 'instagram', defaultContact.instagram),
+    facebook: settingValue(record, 'facebook', defaultContact.facebook),
+    openingHours: settingValue(record, 'openingHours', defaultContact.openingHours),
+    googleMapsUrl: settingValue(record, 'googleMapsUrl', defaultContact.googleMapsUrl),
   };
 }
 
@@ -127,6 +131,7 @@ export default function ContactPage() {
       await saveSettingsDocument('contact', {
         phones,
         phone: primary?.number || '',
+        noCallNumbers: phones.length === 0,
         whatsapp: values.whatsapp.trim(),
         address: values.address.trim(),
         instagram: values.instagram.trim(),
