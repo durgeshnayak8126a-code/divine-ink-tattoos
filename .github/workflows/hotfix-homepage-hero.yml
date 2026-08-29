@@ -1,0 +1,45 @@
+name: Restore homepage hero text
+
+on:
+  push:
+    branches: [hotfix-restore-homepage-hero-text]
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: hotfix-restore-homepage-hero-text
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+          cache: npm
+      - name: Restore original homepage hero text
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('src/App.jsx')
+          s = p.read_text()
+          old1 = "  const heroEyebrow = String(homepageSettings?.bannerText || 'Premium Tattoo & Piercing Studio · Gurugram').trim();"
+          old2 = "  const heroCtaText = String(homepageSettings?.ctaText || 'Book on WhatsApp').trim();"
+          new1 = "  const heroEyebrow = 'Premium Tattoo & Piercing Studio · Gurugram';"
+          new2 = "  const heroCtaText = 'Book on WhatsApp';"
+          if old1 not in s or old2 not in s:
+              raise SystemExit('Expected managed hero lines not found')
+          p.write_text(s.replace(old1, new1, 1).replace(old2, new2, 1))
+          PY
+      - run: npm ci
+      - run: npm run check
+      - name: Commit verified hotfix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/App.jsx
+          git commit -m "Restore original homepage hero text"
+          git push
