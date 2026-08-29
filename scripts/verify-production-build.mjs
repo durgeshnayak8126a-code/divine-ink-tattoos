@@ -172,7 +172,19 @@ if (await exists(robotsPath)) {
 }
 
 const appSource = await read(resolve('src', 'App.jsx'));
-expect(appSource.includes("const phone = '918445702782';"), 'Homepage phone constant changed unexpectedly.');
+expect(appSource.includes("const defaultPhone = '918445702782';"), 'Default homepage phone changed unexpectedly.');
+expect(appSource.includes("const { homepage: homepageSettings, contact: contactSettings } = usePublicCms();"), 'Contact settings must be connected without enabling other CMS sections.');
+expect(appSource.includes('Array.isArray(contactSettings?.phones)'), 'Public site must support multiple managed phone numbers.');
+expect(appSource.includes('primaryPhoneDigits'), 'Public site must support a primary managed Call number.');
+expect(appSource.includes('whatsappDigits'), 'Public site must support an independently managed WhatsApp number.');
+expect(appSource.includes('<Phone size={18}/> Book on Call'), 'Original Book on Call CTA must remain present.');
+expect(appSource.includes('<MessageCircle size={19}/> Book on WhatsApp'), 'Original Book on WhatsApp CTA must remain present.');
+expect(!appSource.includes('cmsServices') && !appSource.includes('cmsFaqs') && !appSource.includes('cmsReviews') && !appSource.includes('cmsOffers') && !appSource.includes('useManagedSeo'), 'Only Contact CMS may be newly connected in this change.');
+const contactAdminSource = await read(resolve('src', 'admin', 'contact', 'ContactPage.jsx'));
+expect(contactAdminSource.includes('Add phone number'), 'Contact admin must allow adding phone numbers.');
+expect(contactAdminSource.includes('removePhone'), 'Contact admin must allow removing phone numbers.');
+expect(contactAdminSource.includes('setPrimaryPhone'), 'Contact admin must allow choosing the primary number.');
+expect(contactAdminSource.includes('settingValue'), 'Contact fields must remain independently editable/removable.');
 expect(appSource.includes('Shop No. 155, Basement, Near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001'), 'Homepage studio address changed unexpectedly.');
 expect(appSource.includes('Open 24x7'), 'Homepage 24x7 availability signal changed unexpectedly.');
 expect(appSource.includes('data-embed-id="25698491"'), 'Google Reviews embed ID changed unexpectedly.');
