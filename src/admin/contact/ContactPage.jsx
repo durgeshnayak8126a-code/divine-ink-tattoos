@@ -131,6 +131,7 @@ export default function ContactPage() {
       await saveSettingsDocument('contact', {
         phones,
         phone: primary?.number || '',
+        noCallNumbers: phones.length === 0,
         whatsapp: values.whatsapp.trim(),
         address: values.address.trim(),
         instagram: values.instagram.trim(),

@@ -81,7 +81,7 @@ function App() {
   const galleryItems = usePublicGallery(galleryFallbackItems);
   const { homepage: homepageSettings, contact: contactSettings } = usePublicCms();
   const hasContactValue = (key) => Boolean(contactSettings && Object.prototype.hasOwnProperty.call(contactSettings, key));
-  const phoneRecords = Array.isArray(contactSettings?.phones)
+  const managedPhoneRecords = Array.isArray(contactSettings?.phones)
     ? contactSettings.phones
         .filter((item) => item && typeof item === 'object' && String(item.number || '').trim())
         .map((item, index) => ({
@@ -90,9 +90,15 @@ function App() {
           label: String(item.label || (index === 0 ? 'Primary' : 'Phone')).trim(),
           primary: Boolean(item.primary),
         }))
-    : hasContactValue('phone') && String(contactSettings.phone || '').trim()
-      ? [{ id: 'legacy-primary', number: String(contactSettings.phone).trim(), label: 'Primary', primary: true }]
-      : [{ id: 'default-primary', number: defaultPhoneDisplay, label: 'Primary', primary: true }];
+    : [];
+  const legacyPhone = hasContactValue('phone') ? String(contactSettings.phone || '').trim() : '';
+  const phoneRecords = managedPhoneRecords.length
+    ? managedPhoneRecords
+    : legacyPhone
+      ? [{ id: 'legacy-primary', number: legacyPhone, label: 'Primary', primary: true }]
+      : contactSettings?.noCallNumbers === true
+        ? []
+        : [{ id: 'default-primary', number: defaultPhoneDisplay, label: 'Primary', primary: true }];
   const primaryPhoneRecord = phoneRecords.find((item) => item.primary) || phoneRecords[0] || null;
   const primaryPhoneDigits = String(primaryPhoneRecord?.number || '').replace(/\D/g, '');
   const whatsappDigits = hasContactValue('whatsapp') ? String(contactSettings.whatsapp || '').replace(/\D/g, '') : defaultPhone;

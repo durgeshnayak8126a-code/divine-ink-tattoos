@@ -176,6 +176,7 @@ expect(appSource.includes("const defaultPhone = '918445702782';"), 'Default home
 expect(appSource.includes("const { homepage: homepageSettings, contact: contactSettings } = usePublicCms();"), 'Contact settings must be connected without enabling other CMS sections.');
 expect(appSource.includes('Array.isArray(contactSettings?.phones)'), 'Public site must support multiple managed phone numbers.');
 expect(appSource.includes('primaryPhoneDigits'), 'Public site must support a primary managed Call number.');
+expect(appSource.includes("contactSettings?.noCallNumbers === true"), 'Call buttons may hide only after an explicit no-call-numbers save.');
 expect(appSource.includes('whatsappDigits'), 'Public site must support an independently managed WhatsApp number.');
 expect(appSource.includes('<Phone size={18}/> Book on Call'), 'Original Book on Call CTA must remain present.');
 expect(appSource.includes('<MessageCircle size={19}/> Book on WhatsApp'), 'Original Book on WhatsApp CTA must remain present.');
