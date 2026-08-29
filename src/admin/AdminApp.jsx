@@ -10,6 +10,7 @@ import './admin.css';
 const GalleryPage = lazy(() => import('./gallery/GalleryPage.jsx'));
 const ArtistsPage = lazy(() => import('./artists/ArtistsPage.jsx'));
 const PiercingPage = lazy(() => import('./piercing/PiercingPage.jsx'));
+const ContactPage = lazy(() => import('./contact/ContactPage.jsx'));
 const CollectionCmsPage = lazy(() => import('./cms/CollectionCmsPage.jsx'));
 const SettingsCmsPage = lazy(() => import('./cms/SettingsCmsPage.jsx'));
 
@@ -64,7 +65,15 @@ export default function AdminApp() {
                 }
               />
             ))}
-            {['homepage', 'contact', 'seo'].map((moduleName) => (
+            <Route
+              path="contact/"
+              element={
+                <LazyPage>
+                  <ContactPage />
+                </LazyPage>
+              }
+            />
+            {['homepage', 'seo'].map((moduleName) => (
               <Route
                 key={moduleName}
                 path={`${moduleName}/`}
