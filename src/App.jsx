@@ -49,14 +49,14 @@ const defaultInstagram = 'https://www.instagram.com/divineinktattoos1/';
 const defaultFacebook = 'https://www.facebook.com/profile.php?id=100078466583354';
 
 const services = [
-  ['Custom Tattoos', 'Original concepts designed around your idea, placement and style.'],
-  ['Cover-up Tattoos', 'Strategic designs created to conceal or transform an existing tattoo.'],
-  ['Realism & Portraits', 'Detailed black-and-grey and realistic portrait-focused artwork.'],
-  ['Minimal Tattoos', 'Clean, elegant and placement-conscious fine-line concepts.'],
-  ['Religious Tattoos', 'Respectful, thoughtfully composed spiritual and devotional designs.'],
-  ['Couple & Name Tattoos', 'Personalized matching designs, names and meaningful lettering.'],
-  ['Sleeve Tattoos', 'Large-scale compositions planned for flow, balance and future expansion.'],
-  ['Professional Piercing', 'Ear, nose, eyebrow, lip, tongue and belly piercing with hygiene-first care.']
+  ['Custom Tattoos', 'Original concepts designed around your idea, placement and style.', '/services/custom-tattoos/'],
+  ['Cover-up Tattoos', 'Strategic designs created to conceal or transform an existing tattoo.', '/services/cover-up-tattoos/'],
+  ['Realism & Portraits', 'Detailed black-and-grey and realistic portrait-focused artwork.', '/services/portrait-tattoos/'],
+  ['Minimal Tattoos', 'Clean, elegant and placement-conscious fine-line concepts.', '/services/minimal-tattoos/'],
+  ['Religious Tattoos', 'Respectful, thoughtfully composed spiritual and devotional designs.', '/services/religious-tattoos/'],
+  ['Couple & Name Tattoos', 'Personalized matching designs, names and meaningful lettering.', '/services/name-tattoos/'],
+  ['Sleeve Tattoos', 'Large-scale compositions planned for flow, balance and future expansion.', '/services/sleeve-tattoos/'],
+  ['Professional Piercing', 'Ear, nose, eyebrow, lip, tongue and belly piercing with hygiene-first care.', '/services/ear-piercing/']
 ];
 
 const faqs = [
@@ -265,7 +265,7 @@ function App() {
         <section id="home" className="hero" style={{ backgroundImage: `linear-gradient(90deg, rgba(5,5,5,.96) 0%, rgba(5,5,5,.72) 45%, rgba(5,5,5,.2) 100%), url(${hero})` }}>
           <div className="hero-content">
             <p className="eyebrow">Premium Tattoo & Piercing Studio · Gurugram</p>
-            <h1>Ink Your Story At<br/><span>Divine Ink Tattoos</span></h1>
+            <h1>Tattoo &amp; Piercing Studio<br/><span>in Gurgaon (Gurugram)</span></h1>
             <p className="hero-tagline">Your Personal Tattoo Studio</p>
             <p className="hero-copy">Custom tattoos, cover-ups, realism, portraits, minimal designs and professional piercing in a hygiene-focused studio at Sector 31, Gurugram.</p>
             <div className="hero-actions">
@@ -313,10 +313,12 @@ function App() {
             <p>Every design is evaluated for size, placement, detail and long-term readability before the session begins.</p>
           </div>
           <div className="service-grid">
-            {services.map(([title, text], index) => (
+            {services.map(([title, text, href], index) => (
               <article className="service-card" key={title}>
                 <span className="service-number">{String(index + 1).padStart(2,'0')}</span>
-                <h3>{title}</h3><p>{text}</p>
+                <h3>{title}</h3>
+                <p>{text}</p>
+                <a className="text-link service-card-link" href={href}>View service <ChevronRight size={18}/></a>
               </article>
             ))}
           </div>
@@ -461,7 +463,7 @@ function App() {
 
       <footer className="footer">
         <div><img src={logo} alt="Divine Ink logo"/><p>Custom tattoos and professional piercing in Sector 31, Gurugram.</p></div>
-        <div><h4>Quick Links</h4><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#artists">Artists</a><a href="#reviews">Reviews</a></div>
+        <div><h4>Popular Services</h4><a href="/services/custom-tattoos/">Custom Tattoos</a><a href="/services/cover-up-tattoos/">Cover Up Tattoos</a><a href="/services/ear-piercing/">Ear Piercing</a><a href="/locations/sector-31/">Tattoo Studio in Sector 31</a></div>
         <div><h4>Contact</h4>{phoneRecords.map((item) => { const digits = item.number.replace(/\D/g, ''); return digits ? <a key={item.id} href={`tel:+${digits}`}>{item.number}</a> : null; })}<a href="mailto:divinetattoostudio1@gmail.com">divinetattoostudio1@gmail.com</a>{mapLink && <a href={mapLink} target="_blank" rel="noreferrer">Get Directions</a>}</div>
         <div className="copyright">© {new Date().getFullYear()} Divine Ink Tattoos & Piercing Studio. All rights reserved.</div>
       </footer>
