@@ -54,7 +54,7 @@ expect(await exists(homepagePath), 'dist/index.html must exist after build.');
 if (await exists(homepagePath)) {
   const homepage = await read(homepagePath);
   expect(
-    homepage.includes('<title>Tattoo Studio in Gurgaon (Gurugram) | Divine Ink Tattoos</title>'),
+    homepage.includes('<title>Tattoo Shop in Gurgaon | Tattoos & Piercing | Divine Ink</title>'),
     'Homepage SEO title changed unexpectedly.',
   );
   expect(
@@ -191,6 +191,9 @@ expect(appSource.includes('Open 24x7'), 'Homepage 24x7 availability signal chang
 expect(appSource.includes('data-embed-id="25698491"'), 'Google Reviews embed ID changed unexpectedly.');
 expect(!appSource.includes('Filter portfolio by artist'), 'Public gallery must not show the artist filter button row.');
 expect(appSource.includes("['Portfolio', '#gallery']"), 'Top navigation must label the tattoo gallery destination as Portfolio.');
+expect(appSource.includes("'/services/custom-tattoos/'"), 'Homepage must link to the custom tattoo service page.');
+expect(appSource.includes("'/services/ear-piercing/'"), 'Homepage must link to the ear piercing service page.');
+expect(appSource.includes('href="/locations/sector-31/"'), 'Homepage footer must link to the real Sector 31 location page.');
 expect(appSource.includes('getPreviewPiercingItems(homepageSettings?.piercingItems)'), 'Public piercing section must remain connected to managed piercing data with built-in fallback.');
 expect(appSource.includes('piercingGallery.map(({ id, src, title, images })'), 'Piercing types must render as one grouped public card per type.');
 expect(appSource.includes('piercingLightbox.images[piercingLightbox.index]'), 'Grouped piercing photos must be viewable inside the piercing lightbox.');
