@@ -230,3 +230,11 @@ button.btn.primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(37, 211, 102, 0.35);
 }
+
+.service-card-link {
+  margin-top: 20px;
+  gap: 6px;
+}
+.service-card-link:hover {
+  color: #f1cf7a;
+}
