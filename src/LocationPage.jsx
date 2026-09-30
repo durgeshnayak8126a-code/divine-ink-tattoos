@@ -100,6 +100,7 @@ export default function LocationPage() {
                 <Link to="/services/fine-line-tattoos/">Explore fine line tattoos</Link>
                 <Link to="/services/ear-piercing/">Explore ear piercing</Link>
                 <Link to="/services/nose-piercing/">Explore nose piercing</Link>
+                <Link to="/services/industrial-piercing/">Explore industrial piercing</Link>
                 <Link to="/services/cover-up-tattoos/">Explore cover-up tattoos</Link>
                 <a href="/">Return to the homepage</a>
               </div>
