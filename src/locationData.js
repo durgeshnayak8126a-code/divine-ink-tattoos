@@ -9,7 +9,7 @@ export const locationPages = [
     metaTitle: 'Tattoo Shop in Sector 31 Gurugram | Divine Ink',
     description: 'Visit Divine Ink Tattoos & Piercing Studio in Sector 31 Gurugram for custom tattoos, cover-ups and professional piercing by appointment.',
     eyebrow: 'Our home neighbourhood · HUDA Market',
-    intro: `Divine Ink is based at ${studioAddress}, making this the studio’s dedicated local page for clients in Sector 31.`,
+    intro: `Divine Ink is a tattoo shop and piercing studio based at ${studioAddress}, making this the studio’s dedicated local page for clients in Sector 31.`,
     local: 'The studio is in Main HUDA Market, close to Apollo Pharmacy. Clients can discuss custom concepts, tattoo placement, existing tattoo cover-ups and suitable piercing options before confirming an appointment.',
     travel: 'If you are coming from elsewhere in Gurugram, ask the team for the current map pin before travelling. Market traffic and parking conditions can vary during busy periods.',
     faq: [
