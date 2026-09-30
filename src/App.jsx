@@ -297,7 +297,7 @@ function App() {
             <p className="eyebrow">About Divine Ink</p>
             <h2>A private, focused space for meaningful body art.</h2>
             <p>Divine Ink Tattoos & Piercing Studio combines design consultation, placement planning and careful execution to create tattoos that look intentional—not generic.</p>
-            <p>Our studio is located in the basement near Apollo Pharmacy in Main HUDA Market, Sector 31, Gurugram. Every appointment is handled with clear communication, hygiene-conscious preparation and aftercare guidance.</p>
+            <p>Our studio is located in the basement near Apollo Pharmacy in Main HUDA Market, <a href="/locations/sector-31/">Sector 31, Gurugram</a>. Every appointment is handled with clear communication, hygiene-conscious preparation and aftercare guidance.</p>
             <div className="feature-list">
               <span><ShieldCheck/> Single-use needles & fresh consumables</span>
               <span><CalendarCheck/> Appointment-based consultation</span>
