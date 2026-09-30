@@ -21,8 +21,8 @@ export const locationPages = [
   {
     slug: 'huda-city-centre',
     name: 'HUDA City Centre',
-    title: 'Tattoo Studio near HUDA City Centre',
-    metaTitle: 'Tattoo Studio near HUDA City Centre | Divine Ink',
+    title: 'Tattoo Shop near HUDA City Centre, Gurugram',
+    metaTitle: 'Tattoo Shop near HUDA City Centre Gurugram | Divine Ink',
     description: 'Looking for a tattoo studio near HUDA City Centre? Book Divine Ink in Sector 31 Gurugram for custom tattoos and professional piercing.',
     eyebrow: 'Central Gurugram · appointment-led studio',
     intro: 'Clients around HUDA City Centre can book tattoo and piercing consultations at Divine Ink’s established Sector 31 studio.',
