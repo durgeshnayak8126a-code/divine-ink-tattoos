@@ -5,7 +5,7 @@ export const locationPages = [
   {
     slug: 'sector-31',
     name: 'Sector 31',
-    title: 'Tattoo Studio in Sector 31, Gurugram',
+    title: 'Tattoo Shop in Sector 31, Gurugram',
     metaTitle: 'Tattoo Shop in Sector 31 Gurugram | Divine Ink',
     description: 'Visit Divine Ink Tattoos & Piercing Studio in Sector 31 Gurugram for custom tattoos, cover-ups and professional piercing by appointment.',
     eyebrow: 'Our home neighbourhood · HUDA Market',
