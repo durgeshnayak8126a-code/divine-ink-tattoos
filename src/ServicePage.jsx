@@ -97,7 +97,7 @@ export default function ServicePage() {
         <section className="section dark-panel">
           <div className="split-section">
             <article className="section-copy">
-              <p className="eyebrow">Divine Ink · Sector 31</p>
+              <p className="eyebrow"><Link to="/locations/sector-31/">Divine Ink · Sector 31</Link></p>
               <h2>Planning your {service.name.toLowerCase()}</h2>
               <p>{service.overview}</p>
               <p>{service.planning}</p>
