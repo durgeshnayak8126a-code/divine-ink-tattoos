@@ -163,7 +163,7 @@ export const servicePages = [
     slug: 'nose-piercing',
     name: 'Nose Piercing',
     title: 'Nose Piercing in Gurugram',
-    metaTitle: 'Professional Nose Piercing Gurugram | Divine Ink',
+    metaTitle: 'Nose Piercing in Gurgaon (Gurugram) | Divine Ink',
     description: 'Book a hygienic nose piercing in Gurugram with placement assessment and practical aftercare at Divine Ink Studio in Sector 31.',
     eyebrow: 'Balanced placement · practical aftercare',
     intro: 'Nose piercing placement is chosen around your anatomy, preferred side and the jewellery style you may want after healing.',
