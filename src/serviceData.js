@@ -37,7 +37,7 @@ export const servicePages = [
     slug: 'fine-line-tattoos',
     name: 'Fine Line Tattoos',
     title: 'Fine Line Tattoos in Gurugram',
-    metaTitle: 'Fine Line Tattoo Artist Gurugram | Divine Ink',
+    metaTitle: 'Fine Line Tattoo Artist in Gurgaon (Gurugram) | Divine Ink',
     description: 'Get a fine line tattoo in Gurugram with careful sizing, clean line planning and placement guidance at Divine Ink Tattoos, Sector 31.',
     eyebrow: 'Delicate lines · deliberate sizing',
     intro: 'Fine line tattoos rely on restraint and precision, but successful work also depends on choosing a size that can heal and age clearly.',
