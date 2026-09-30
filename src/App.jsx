@@ -53,6 +53,7 @@ const services = [
   ['Cover-up Tattoos', 'Strategic designs created to conceal or transform an existing tattoo.', '/services/cover-up-tattoos/'],
   ['Realism & Portraits', 'Detailed black-and-grey and realistic portrait-focused artwork.', '/services/portrait-tattoos/'],
   ['Minimal Tattoos', 'Clean, elegant and placement-conscious fine-line concepts.', '/services/minimal-tattoos/'],
+  ['Fine Line Tattoos', 'Delicate, precise tattoo work with sizing and placement planned for long-term readability.', '/services/fine-line-tattoos/'],
   ['Religious Tattoos', 'Respectful, thoughtfully composed spiritual and devotional designs.', '/services/religious-tattoos/'],
   ['Couple & Name Tattoos', 'Personalized matching designs, names and meaningful lettering.', '/services/name-tattoos/'],
   ['Sleeve Tattoos', 'Large-scale compositions planned for flow, balance and future expansion.', '/services/sleeve-tattoos/'],
