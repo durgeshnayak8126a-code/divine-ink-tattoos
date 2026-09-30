@@ -39,6 +39,7 @@ export default function LocationPage() {
               <p className="eyebrow">Divine Ink · Sector 31 Gurugram</p>
               <h2>Tattoo and piercing appointments for {location.name}</h2>
               <p>{location.local}</p>
+              <p>Explore tattoo styles and piercing options before booking: custom tattoos, fine line tattoos, cover-ups, ear piercing, nose piercing and industrial piercing.</p>
               <p>{location.travel}</p>
             </article>
             <aside className="service-card">
