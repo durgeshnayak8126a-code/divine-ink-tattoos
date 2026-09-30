@@ -97,6 +97,9 @@ export default function LocationPage() {
                 <a href="tel:+918445702782">Call +91 84457 02782</a>
                 <a href={whatsappLink} rel="noreferrer" target="_blank">Book on WhatsApp</a>
                 <Link to="/services/custom-tattoos/">Explore custom tattoos</Link>
+                <Link to="/services/fine-line-tattoos/">Explore fine line tattoos</Link>
+                <Link to="/services/ear-piercing/">Explore ear piercing</Link>
+                <Link to="/services/cover-up-tattoos/">Explore cover-up tattoos</Link>
                 <a href="/">Return to the homepage</a>
               </div>
             </div>
