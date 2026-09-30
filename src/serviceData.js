@@ -8,9 +8,9 @@ export const servicePages = [
   {
     slug: 'custom-tattoos',
     name: 'Custom Tattoos',
-    title: 'Custom Tattoos in Gurugram',
-    metaTitle: 'Custom Tattoo Artist in Gurugram | Divine Ink',
-    description: 'Plan a custom tattoo in Gurugram with Divine Ink. Get design consultation, placement guidance and appointment-led tattooing in Sector 31.',
+    title: 'Custom Tattoos in Gurgaon (Gurugram)',
+    metaTitle: 'Custom Tattoo Artist in Gurgaon (Gurugram) | Divine Ink',
+    description: 'Plan a custom tattoo in Gurgaon (Gurugram) with Divine Ink. Get design consultation, placement guidance and appointment-led tattooing in Sector 31.',
     eyebrow: 'Original concepts · considered placement',
     intro: 'A custom tattoo should be built around your story, body placement and visual preferences—not copied without thought from a catalogue.',
     overview: 'At Divine Ink Tattoos & Piercing Studio, custom tattoo planning begins by identifying what the design needs to communicate. References are used to understand style, composition and mood, then adjusted for the available skin area and long-term readability.',
