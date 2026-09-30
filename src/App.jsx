@@ -268,7 +268,7 @@ function App() {
             <p className="eyebrow">Premium Tattoo & Piercing Studio · Gurugram</p>
             <h1>Ink Your Story At<br/><span>Divine Ink Tattoos</span></h1>
             <p className="hero-tagline">Your Personal Tattoo Studio</p>
-            <p className="hero-copy">Custom tattoos, cover-ups, realism, portraits, minimal designs and professional piercing in a hygiene-focused studio at Sector 31, Gurugram.</p>
+            <p className="hero-copy">Custom tattoos, cover-ups, realism, portraits, minimal designs and professional piercing in a hygiene-focused studio at <a href="/locations/sector-31/">Sector 31, Gurugram</a>.</p>
             <div className="hero-actions">
               {whatsappLink && <a className="btn primary" href={whatsappLink} target="_blank" rel="noreferrer"><MessageCircle size={19}/> Book on WhatsApp</a>}
               {primaryPhoneDigits && <a className="btn primary" href={`tel:+${primaryPhoneDigits}`}><Phone size={18}/> Book on Call</a>}
