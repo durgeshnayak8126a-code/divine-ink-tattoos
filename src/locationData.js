@@ -150,7 +150,7 @@ export const locationPages = [
     slug: 'golf-course-road',
     name: 'Golf Course Road',
     title: 'Tattoo Studio near Golf Course Road, Gurugram',
-    metaTitle: 'Tattoo Studio near Golf Course Road | Divine Ink',
+    metaTitle: 'Tattoo Studio near Golf Course Road | Divine Ink Gurugram',
     description: 'Book a custom tattoo consultation near Golf Course Road Gurugram with Divine Ink, an appointment-led studio in Sector 31.',
     eyebrow: 'Serving Golf Course Road clients',
     intro: 'Divine Ink welcomes Golf Course Road clients seeking original tattoo planning, cover-up assessment or professional piercing.',
@@ -247,4 +247,3 @@ export const locationPages = [
 export const locationPageMap = new Map(
   locationPages.map((location) => [location.slug, location]),
 );
-
