@@ -464,7 +464,7 @@ function App() {
 
       <footer className="footer">
         <div><img src={logo} alt="Divine Ink logo"/><p>Custom tattoos and professional piercing in Sector 31, Gurugram.</p></div>
-        <div><h4>Popular Services</h4><a href="/services/custom-tattoos/">Custom Tattoos</a><a href="/services/cover-up-tattoos/">Cover Up Tattoos</a><a href="/services/ear-piercing/">Ear Piercing</a><a href="/locations/sector-31/">Tattoo Studio in Sector 31</a></div>
+        <div><h4>Popular Services</h4><a href="/services/custom-tattoos/">Custom Tattoos</a><a href="/services/cover-up-tattoos/">Cover Up Tattoos</a><a href="/services/ear-piercing/">Ear Piercing</a><a href="/locations/sector-31/">Tattoo Shop in Sector 31</a></div>
         <div><h4>Contact</h4>{phoneRecords.map((item) => { const digits = item.number.replace(/\D/g, ''); return digits ? <a key={item.id} href={`tel:+${digits}`}>{item.number}</a> : null; })}<a href="mailto:divinetattoostudio1@gmail.com">divinetattoostudio1@gmail.com</a>{mapLink && <a href={mapLink} target="_blank" rel="noreferrer">Get Directions</a>}</div>
         <div className="copyright">© {new Date().getFullYear()} Divine Ink Tattoos & Piercing Studio. All rights reserved.</div>
       </footer>
