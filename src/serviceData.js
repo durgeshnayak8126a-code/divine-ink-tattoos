@@ -148,7 +148,7 @@ export const servicePages = [
   {
     slug: 'ear-piercing',
     name: 'Ear Piercing',
-    title: 'Ear Piercing in Gurugram',
+    title: 'Ear Piercing in Gurgaon (Gurugram)',
     metaTitle: 'Ear Piercing in Gurgaon (Gurugram) | Divine Ink',
     description: 'Book professional ear piercing in Gurugram with anatomy-led placement and aftercare guidance at Divine Ink Studio, Sector 31.',
     eyebrow: 'Lobe and cartilage placement',
