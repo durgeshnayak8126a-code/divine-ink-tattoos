@@ -150,7 +150,7 @@ export const servicePages = [
     name: 'Ear Piercing',
     title: 'Ear Piercing in Gurgaon (Gurugram)',
     metaTitle: 'Ear Piercing in Gurgaon (Gurugram) | Divine Ink',
-    description: 'Book professional ear piercing in Gurgaon (Gurugram) with anatomy-led placement and aftercare guidance at Divine Ink Studio, Sector 31.',
+    description: 'Book professional ear piercing in Gurgaon (Gurugram) with anatomy-led placement, current pricing guidance and aftercare at Divine Ink Studio, Sector 31.',
     eyebrow: 'Lobe and cartilage placement',
     intro: 'Ear piercing placement should suit your ear anatomy, jewellery plan and the way you sleep, work and use headphones.',
     overview: 'Divine Ink offers appointment-led consultation for lobe and suitable cartilage placements. We discuss spacing for single or multiple piercings and explain why not every ear supports every reference layout.',
