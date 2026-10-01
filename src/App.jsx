@@ -311,6 +311,7 @@ function App() {
           <div className="section-heading center">
             <p className="eyebrow">What We Do</p>
             <h2>Tattoo styles and services</h2>
+            <p>Looking for a tattoo artist in Gurgaon (Gurugram)? Explore the studio's tattoo styles and piercing services, then choose the service page that fits your idea.</p>
             <p>Every design is evaluated for size, placement, detail and long-term readability before the session begins.</p>
           </div>
           <div className="service-grid">
