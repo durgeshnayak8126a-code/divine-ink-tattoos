@@ -154,7 +154,7 @@ export const servicePages = [
     eyebrow: 'Lobe and cartilage placement',
     intro: 'Ear piercing placement should suit your ear anatomy, jewellery plan and the way you sleep, work and use headphones.',
     overview: 'Divine Ink offers appointment-led consultation for lobe and suitable cartilage placements. We discuss spacing for single or multiple piercings and explain why not every ear supports every reference layout.',
-    planning: piercingConsultation,
+    planning: `${piercingConsultation} Pricing can vary by placement and jewellery, so confirm the current quote with the studio before booking.`,
     care: 'Healing time varies by placement, with cartilage generally requiring more patience than lobes. Avoid unnecessary touching and follow the cleaning guidance provided at the appointment.',
     highlights: ['Lobe and suitable cartilage assessment', 'Balanced multiple-piercing spacing', 'Fresh piercing consumables', 'Clear healing and cleaning guidance'],
     related: ['industrial-piercing', 'nose-piercing', 'eyebrow-piercing'],
