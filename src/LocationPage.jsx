@@ -39,6 +39,7 @@ export default function LocationPage() {
               <p className="eyebrow">Divine Ink · Sector 31 Gurugram</p>
               <h2>Tattoo and piercing appointments for {location.name}</h2>
               <p>{location.local}</p>
+              <p>Explore tattoo styles and piercing options before booking: custom tattoos, fine line tattoos, cover-ups, ear piercing, nose piercing and industrial piercing.</p>
               <p>{location.travel}</p>
             </article>
             <aside className="service-card">
@@ -97,6 +98,11 @@ export default function LocationPage() {
                 <a href="tel:+918445702782">Call +91 84457 02782</a>
                 <a href={whatsappLink} rel="noreferrer" target="_blank">Book on WhatsApp</a>
                 <Link to="/services/custom-tattoos/">Explore custom tattoos</Link>
+                <Link to="/services/fine-line-tattoos/">Explore fine line tattoos</Link>
+                <Link to="/services/ear-piercing/">Explore ear piercing</Link>
+                <Link to="/services/nose-piercing/">Explore nose piercing</Link>
+                <Link to="/services/industrial-piercing/">Explore industrial piercing</Link>
+                <Link to="/services/cover-up-tattoos/">Explore cover-up tattoos</Link>
                 <a href="/">Return to the homepage</a>
               </div>
             </div>

@@ -49,14 +49,15 @@ const defaultInstagram = 'https://www.instagram.com/divineinktattoos1/';
 const defaultFacebook = 'https://www.facebook.com/profile.php?id=100078466583354';
 
 const services = [
-  ['Custom Tattoos', 'Original concepts designed around your idea, placement and style.'],
-  ['Cover-up Tattoos', 'Strategic designs created to conceal or transform an existing tattoo.'],
-  ['Realism & Portraits', 'Detailed black-and-grey and realistic portrait-focused artwork.'],
-  ['Minimal Tattoos', 'Clean, elegant and placement-conscious fine-line concepts.'],
-  ['Religious Tattoos', 'Respectful, thoughtfully composed spiritual and devotional designs.'],
-  ['Couple & Name Tattoos', 'Personalized matching designs, names and meaningful lettering.'],
-  ['Sleeve Tattoos', 'Large-scale compositions planned for flow, balance and future expansion.'],
-  ['Professional Piercing', 'Ear, nose, eyebrow, lip, tongue and belly piercing with hygiene-first care.']
+  ['Custom Tattoos', 'Original concepts designed around your idea, placement and style.', '/services/custom-tattoos/'],
+  ['Cover-up Tattoos', 'Strategic designs created to conceal or transform an existing tattoo.', '/services/cover-up-tattoos/'],
+  ['Realism & Portraits', 'Detailed black-and-grey and realistic portrait-focused artwork.', '/services/portrait-tattoos/'],
+  ['Minimal Tattoos', 'Clean, elegant and placement-conscious fine-line concepts.', '/services/minimal-tattoos/'],
+  ['Fine Line Tattoos', 'Delicate, precise tattoo work with sizing and placement planned for long-term readability.', '/services/fine-line-tattoos/'],
+  ['Religious Tattoos', 'Respectful, thoughtfully composed spiritual and devotional designs.', '/services/religious-tattoos/'],
+  ['Couple & Name Tattoos', 'Personalized matching designs, names and meaningful lettering.', '/services/name-tattoos/'],
+  ['Sleeve Tattoos', 'Large-scale compositions planned for flow, balance and future expansion.', '/services/sleeve-tattoos/'],
+  ['Professional Piercing', 'Ear, nose, eyebrow, lip, tongue and belly piercing with hygiene-first care.', '/services/ear-piercing/']
 ];
 
 const faqs = [
@@ -267,7 +268,7 @@ function App() {
             <p className="eyebrow">Premium Tattoo & Piercing Studio · Gurugram</p>
             <h1>Ink Your Story At<br/><span>Divine Ink Tattoos</span></h1>
             <p className="hero-tagline">Your Personal Tattoo Studio</p>
-            <p className="hero-copy">Custom tattoos, cover-ups, realism, portraits, minimal designs and professional piercing in a hygiene-focused studio at Sector 31, Gurugram.</p>
+            <p className="hero-copy">Custom tattoos, cover-ups, realism, portraits, minimal designs and professional piercing in a hygiene-focused studio at <a href="/locations/sector-31/">Sector 31, Gurugram</a>.</p>
             <div className="hero-actions">
               {whatsappLink && <a className="btn primary" href={whatsappLink} target="_blank" rel="noreferrer"><MessageCircle size={19}/> Book on WhatsApp</a>}
               {primaryPhoneDigits && <a className="btn primary" href={`tel:+${primaryPhoneDigits}`}><Phone size={18}/> Book on Call</a>}
@@ -296,7 +297,7 @@ function App() {
             <p className="eyebrow">About Divine Ink</p>
             <h2>A private, focused space for meaningful body art.</h2>
             <p>Divine Ink Tattoos & Piercing Studio combines design consultation, placement planning and careful execution to create tattoos that look intentional—not generic.</p>
-            <p>Our studio is located in the basement near Apollo Pharmacy in Main HUDA Market, Sector 31, Gurugram. Every appointment is handled with clear communication, hygiene-conscious preparation and aftercare guidance.</p>
+            <p>Our studio is located in the basement near Apollo Pharmacy in Main HUDA Market, <a href="/locations/sector-31/">Sector 31, Gurugram</a>. Every appointment is handled with clear communication, hygiene-conscious preparation and aftercare guidance.</p>
             <div className="feature-list">
               <span><ShieldCheck/> Single-use needles & fresh consumables</span>
               <span><CalendarCheck/> Appointment-based consultation</span>
@@ -310,13 +311,15 @@ function App() {
           <div className="section-heading center">
             <p className="eyebrow">What We Do</p>
             <h2>Tattoo styles and services</h2>
+            <p>Looking for a tattoo artist in Gurgaon (Gurugram)? Explore the studio's tattoo styles and piercing services, then choose the service page that fits your idea.</p>
             <p>Every design is evaluated for size, placement, detail and long-term readability before the session begins.</p>
           </div>
           <div className="service-grid">
-            {services.map(([title, text], index) => (
+            {services.map(([title, text, href], index) => (
               <article className="service-card" key={title}>
                 <span className="service-number">{String(index + 1).padStart(2,'0')}</span>
                 <h3>{title}</h3><p>{text}</p>
+                <a className="text-link service-card-link" href={href}>View service <ChevronRight size={18}/></a>
               </article>
             ))}
           </div>
@@ -461,7 +464,7 @@ function App() {
 
       <footer className="footer">
         <div><img src={logo} alt="Divine Ink logo"/><p>Custom tattoos and professional piercing in Sector 31, Gurugram.</p></div>
-        <div><h4>Quick Links</h4><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#artists">Artists</a><a href="#reviews">Reviews</a></div>
+        <div><h4>Popular Services</h4><a href="/services/custom-tattoos/">Custom Tattoos</a><a href="/services/cover-up-tattoos/">Cover Up Tattoos</a><a href="/services/ear-piercing/">Ear Piercing</a><a href="/locations/sector-31/">Tattoo Shop in Sector 31</a></div>
         <div><h4>Contact</h4>{phoneRecords.map((item) => { const digits = item.number.replace(/\D/g, ''); return digits ? <a key={item.id} href={`tel:+${digits}`}>{item.number}</a> : null; })}<a href="mailto:divinetattoostudio1@gmail.com">divinetattoostudio1@gmail.com</a>{mapLink && <a href={mapLink} target="_blank" rel="noreferrer">Get Directions</a>}</div>
         <div className="copyright">© {new Date().getFullYear()} Divine Ink Tattoos & Piercing Studio. All rights reserved.</div>
       </footer>

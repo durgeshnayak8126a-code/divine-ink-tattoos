@@ -5,11 +5,11 @@ export const locationPages = [
   {
     slug: 'sector-31',
     name: 'Sector 31',
-    title: 'Tattoo Studio in Sector 31, Gurugram',
-    metaTitle: 'Tattoo Studio in Sector 31 Gurugram | Divine Ink',
+    title: 'Tattoo Shop in Sector 31, Gurugram',
+    metaTitle: 'Tattoo Shop in Sector 31 Gurugram | Divine Ink',
     description: 'Visit Divine Ink Tattoos & Piercing Studio in Sector 31 Gurugram for custom tattoos, cover-ups and professional piercing by appointment.',
     eyebrow: 'Our home neighbourhood · HUDA Market',
-    intro: `Divine Ink is based at ${studioAddress}, making this the studio’s dedicated local page for clients in Sector 31.`,
+    intro: `Divine Ink is a tattoo shop and piercing studio based at ${studioAddress}, making this the studio’s dedicated local page for clients in Sector 31.`,
     local: 'The studio is in Main HUDA Market, close to Apollo Pharmacy. Clients can discuss custom concepts, tattoo placement, existing tattoo cover-ups and suitable piercing options before confirming an appointment.',
     travel: 'If you are coming from elsewhere in Gurugram, ask the team for the current map pin before travelling. Market traffic and parking conditions can vary during busy periods.',
     faq: [
@@ -21,8 +21,8 @@ export const locationPages = [
   {
     slug: 'huda-city-centre',
     name: 'HUDA City Centre',
-    title: 'Tattoo Studio near HUDA City Centre',
-    metaTitle: 'Tattoo Studio near HUDA City Centre | Divine Ink',
+    title: 'Tattoo Shop near HUDA City Centre, Gurugram',
+    metaTitle: 'Tattoo Shop near HUDA City Centre Gurugram | Divine Ink',
     description: 'Looking for a tattoo studio near HUDA City Centre? Book Divine Ink in Sector 31 Gurugram for custom tattoos and professional piercing.',
     eyebrow: 'Central Gurugram · appointment-led studio',
     intro: 'Clients around HUDA City Centre can book tattoo and piercing consultations at Divine Ink’s established Sector 31 studio.',
@@ -150,7 +150,7 @@ export const locationPages = [
     slug: 'golf-course-road',
     name: 'Golf Course Road',
     title: 'Tattoo Studio near Golf Course Road, Gurugram',
-    metaTitle: 'Tattoo Studio near Golf Course Road | Divine Ink',
+    metaTitle: 'Tattoo Studio near Golf Course Road | Divine Ink Gurugram',
     description: 'Book a custom tattoo consultation near Golf Course Road Gurugram with Divine Ink, an appointment-led studio in Sector 31.',
     eyebrow: 'Serving Golf Course Road clients',
     intro: 'Divine Ink welcomes Golf Course Road clients seeking original tattoo planning, cover-up assessment or professional piercing.',
@@ -247,4 +247,3 @@ export const locationPages = [
 export const locationPageMap = new Map(
   locationPages.map((location) => [location.slug, location]),
 );
-
