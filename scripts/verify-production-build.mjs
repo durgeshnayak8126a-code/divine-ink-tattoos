@@ -54,7 +54,7 @@ expect(await exists(homepagePath), 'dist/index.html must exist after build.');
 if (await exists(homepagePath)) {
   const homepage = await read(homepagePath);
   expect(
-    homepage.includes('<title>Tattoo Studio in Gurgaon (Gurugram) | Divine Ink Tattoos</title>'),
+    homepage.includes('<title>Tattoo Shop & Studio in Gurgaon (Gurugram) | Divine Ink Tattoos</title>'),
     'Homepage SEO title changed unexpectedly.',
   );
   expect(
