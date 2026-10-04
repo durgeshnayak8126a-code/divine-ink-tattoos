@@ -121,7 +121,7 @@ export default function LocationPage() {
       <footer className="footer">
         <div>
           <img src="/divine-ink-logo.png" alt="Divine Ink logo" />
-          <p>Custom tattoos and professional piercing in Sector 31, Gurugram.</p>
+          <p>Tattoo-focused studio in Sector 31, Gurugram for custom, fine line, realism, portrait, black & grey, cover-up and sleeve tattoos, with professional piercing.</p>
         </div>
         <div>
           <h4>Nearby areas</h4>
@@ -140,4 +140,3 @@ export default function LocationPage() {
     </div>
   );
 }
-
