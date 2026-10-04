@@ -331,7 +331,7 @@ function App() {
           <div className="section-heading center">
             <p className="eyebrow">Meet The Artists</p>
             <h2>Tattoo Artists in Gurgaon (Gurugram)</h2>
-            <p>Choose an artist based on the style and portfolio that fit your tattoo idea. If you are comparing the <strong>best tattoo artist in Gurgaon</strong>, <strong>best tattoo shop in Gurgaon</strong> or <strong>best tattoo studio in Gurgaon</strong>, use the portfolio and service pages to compare the work that actually matches your requested style. For people researching a <strong>top tattoo artist in Gurgaon</strong> or <strong>top tattoo studio in Gurgaon</strong>, portfolio fit and consultation quality are more useful than a generic ranking.</p>
+            <p>Choose an artist based on the style and portfolio that fit your tattoo idea. If you are comparing the <strong>best tattoo artist in Gurgaon</strong>, <strong>best tattoo shop in Gurgaon</strong> or <strong>best tattoo studio in Gurgaon</strong>, use the portfolio and service pages to compare the work that actually matches your requested style. For people researching a <strong>top tattoo artist in Gurgaon</strong> or <strong>top tattoo studio in Gurgaon</strong>, portfolio fit and consultation quality are more useful than a generic ranking. If you are comparing a <strong>top tattoo artist near me</strong> or <strong>top tattoo studio near me</strong>, use the same portfolio, style and consultation checks before choosing.</p>
           </div>
           <div className="artist-grid">
             {visibleArtists.map((artist) => (
