@@ -62,6 +62,8 @@ const services = [
 
 const faqs = [
   ['How do I get an exact tattoo price?', 'Send the design reference, approximate size in inches and body placement on WhatsApp. Final pricing depends on detail, size, style, placement and time required.'],
+  ['How do I choose a tattoo artist in Gurgaon?', 'Review the artists and portfolio on this page, then send your reference, preferred style, size and placement for a consultation. The right artist depends on the artwork and style you want.'],
+  ['How do I find a tattoo studio near me in Gurgaon?', 'Divine Ink is located in Sector 31, Gurugram. Use the Sector 31 location page and the service pages to check the tattoo or piercing service that matches your requirement.'],
   ['Do you provide custom tattoo designs?', 'Yes. We discuss your idea, placement and style before preparing a custom concept.'],
   ['Do you do cover-up tattoos?', 'Yes. Cover-up feasibility depends on the darkness, size, location and age of the existing tattoo. A clear photo is required for assessment.'],
   ['Is the studio open 24x7?', 'Yes, the studio accepts bookings 24x7. Advance confirmation is recommended before visiting, especially for late-night appointments.'],
@@ -311,8 +313,8 @@ function App() {
           <div className="section-heading center">
             <p className="eyebrow">What We Do</p>
             <h2>Tattoo styles and services</h2>
-            <p>Looking for a tattoo artist in Gurgaon (Gurugram)? Explore the studio's tattoo styles and piercing services, then choose the service page that fits your idea.</p>
-            <p>Every design is evaluated for size, placement, detail and long-term readability before the session begins.</p>
+            <p>Looking for a tattoo artist or tattoo studio in Gurgaon (Gurugram)? Divine Ink in Sector 31 offers custom tattoos, cover-ups, realism, fine line, minimal and other tattoo styles, plus professional piercing.</p>
+            <p>If you are searching for a tattoo studio near you, start with the service and location pages below. Every design is evaluated for size, placement, detail and long-term readability before the session begins.</p>
           </div>
           <div className="service-grid">
             {services.map(([title, text, href], index) => (
@@ -328,7 +330,8 @@ function App() {
         <section id="artists" className="section">
           <div className="section-heading center">
             <p className="eyebrow">Meet The Artists</p>
-            <h2>Experience guided by your idea</h2>
+            <h2>Tattoo Artists in Gurgaon (Gurugram)</h2>
+            <p>Choose an artist based on the style and portfolio that fit your tattoo idea. Divine Ink serves clients looking for experienced tattoo artists and a professional tattoo studio in Sector 31.</p>
           </div>
           <div className="artist-grid">
             {visibleArtists.map((artist) => (
