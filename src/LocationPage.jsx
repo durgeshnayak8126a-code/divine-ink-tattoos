@@ -41,6 +41,11 @@ export default function LocationPage() {
               <p>{location.local}</p>
               <p>Divine Ink is a tattoo-focused studio serving Gurugram from Sector 31. Explore custom tattoos, fine line tattoos, realism and portrait tattoos, black & grey work, cover-ups and sleeve tattoos before booking.</p>
               <p>{location.travel}</p>
+              <div className="service-grid">
+                <article className="service-card"><span className="service-number">01</span><h3>Custom Tattoo Artist in Gurgaon</h3><p>Start with a custom concept, placement and size plan for a tattoo designed around you.</p><Link className="text-link" to="/services/custom-tattoos/">Explore custom tattoos</Link></article>
+                <article className="service-card"><span className="service-number">02</span><h3>Fine Line &amp; Minimal Tattoos</h3><p>Review fine-line and minimal tattoo options with practical sizing for long-term readability.</p><Link className="text-link" to="/services/fine-line-tattoos/">Explore fine line tattoos</Link></article>
+                <article className="service-card"><span className="service-number">03</span><h3>Realism, Portraits &amp; Cover-ups</h3><p>Compare realism, portrait and cover-up approaches before confirming your appointment.</p><Link className="text-link" to="/services/portrait-tattoos/">Explore realism &amp; portrait tattoos</Link></article>
+              </div>
             </article>
             <aside className="service-card">
               <span className="service-number">Plan your visit</span>
