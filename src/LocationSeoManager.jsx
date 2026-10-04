@@ -53,6 +53,17 @@ export function createLocationSchema(location) {
         addressCountry: 'IN',
       },
       areaServed: { '@type': 'Place', name: `${location.name}, Gurugram` },
+      knowsAbout: [
+        'Tattoo art',
+        'Custom tattoos',
+        'Fine line tattoos',
+        'Realism tattoos',
+        'Portrait tattoos',
+        'Black and grey tattoos',
+        'Cover-up tattoos',
+        'Sleeve tattoos',
+        'Minimal tattoos',
+      ],
     },
     {
       '@context': 'https://schema.org',
