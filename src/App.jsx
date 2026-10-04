@@ -313,8 +313,8 @@ function App() {
           <div className="section-heading center">
             <p className="eyebrow">What We Do</p>
             <h2>Tattoo styles and services</h2>
-            <p>Looking for a tattoo artist or tattoo studio in Gurgaon (Gurugram)? Divine Ink in Sector 31 offers custom tattoos, cover-ups, realism, fine line, minimal and other tattoo styles, plus professional piercing.</p>
-            <p>If you are searching for a tattoo studio near you, start with the service and location pages below. Every design is evaluated for size, placement, detail and long-term readability before the session begins.</p>
+            <p>Looking for a <strong>tattoo shop in Gurgaon</strong>, <strong>tattoo artist in Gurgaon</strong> or <strong>tattoo studio in Gurgaon</strong>? Divine Ink in Sector 31 offers custom tattoos, cover-ups, realism, fine line, minimal and other tattoo styles, plus professional piercing.</p>
+            <p>If you are searching for a <strong>tattoo shop near me</strong>, <strong>tattoo artist near me</strong> or <strong>tattoo studio near me</strong> in Gurugram, use the service and location pages below to find the most relevant option for your tattoo idea. Every design is evaluated for size, placement, detail and long-term readability before the session begins.</p>
           </div>
           <div className="service-grid">
             {services.map(([title, text, href], index) => (
@@ -331,7 +331,7 @@ function App() {
           <div className="section-heading center">
             <p className="eyebrow">Meet The Artists</p>
             <h2>Tattoo Artists in Gurgaon (Gurugram)</h2>
-            <p>Choose an artist based on the style and portfolio that fit your tattoo idea. Divine Ink serves clients looking for experienced tattoo artists and a professional tattoo studio in Sector 31.</p>
+            <p>Choose an artist based on the style and portfolio that fit your tattoo idea. If you are comparing the <strong>best tattoo artist in Gurgaon</strong>, <strong>best tattoo shop in Gurgaon</strong> or <strong>best tattoo studio in Gurgaon</strong>, use the portfolio and service pages to compare the work that actually matches your requested style.</p>
           </div>
           <div className="artist-grid">
             {visibleArtists.map((artist) => (
