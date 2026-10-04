@@ -327,6 +327,38 @@ function App() {
           </div>
         </section>
 
+        <section id="tattoo-gurgaon" className="section">
+          <div className="section-heading center">
+            <p className="eyebrow">Tattoo Studio · Gurugram</p>
+            <h2>Tattoo Shop in Gurgaon for Custom, Fine Line & Realism Work</h2>
+            <p>For anyone comparing a tattoo shop in Gurgaon, tattoo artist in Gurgaon or tattoo studio in Gurgaon, the most useful starting point is the tattoo style you actually want. Divine Ink in Sector 31 handles custom tattoos, fine line, realism and portraits, black & grey, cover-ups, minimal designs, religious tattoos, name tattoos and sleeve planning.</p>
+            <p>From a first tattoo to a detailed cover-up or large sleeve, consultation covers reference quality, size, placement, composition and how the design should read on the body. If you are looking for a tattoo shop near me in Gurugram, the studio is in Main HUDA Market, Sector 31, near Apollo Pharmacy.</p>
+          </div>
+          <div className="service-grid">
+            <article className="service-card">
+              <span className="service-number">01</span>
+              <h3>Custom & Fine Line</h3>
+              <p>Start with your idea, reference and placement, then choose the closest tattoo style.</p>
+              <a className="text-link service-card-link" href="/services/custom-tattoos/">Custom tattoos <ChevronRight size={18}/></a>
+              <a className="text-link service-card-link" href="/services/fine-line-tattoos/">Fine line tattoos <ChevronRight size={18}/></a>
+            </article>
+            <article className="service-card">
+              <span className="service-number">02</span>
+              <h3>Realism & Portraits</h3>
+              <p>Reference quality, scale and contrast matter when planning a realistic portrait tattoo.</p>
+              <a className="text-link service-card-link" href="/services/portrait-tattoos/">Portrait & realism tattoos <ChevronRight size={18}/></a>
+              <a className="text-link service-card-link" href="/services/black-grey-tattoos/">Black & grey tattoos <ChevronRight size={18}/></a>
+            </article>
+            <article className="service-card">
+              <span className="service-number">03</span>
+              <h3>Cover-ups & Sleeves</h3>
+              <p>Existing ink, available space and future expansion are considered before the design is finalised.</p>
+              <a className="text-link service-card-link" href="/services/cover-up-tattoos/">Cover-up tattoos <ChevronRight size={18}/></a>
+              <a className="text-link service-card-link" href="/services/sleeve-tattoos/">Sleeve tattoos <ChevronRight size={18}/></a>
+            </article>
+          </div>
+        </section>
+
         <section id="artists" className="section">
           <div className="section-heading center">
             <p className="eyebrow">Meet The Artists</p>
