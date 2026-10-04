@@ -37,9 +37,9 @@ export default function LocationPage() {
           <div className="split-section">
             <article className="section-copy">
               <p className="eyebrow">Divine Ink · Sector 31 Gurugram</p>
-              <h2>Tattoo and piercing appointments for {location.name}</h2>
+              <h2>Tattoo appointments for {location.name}</h2>
               <p>{location.local}</p>
-              <p>Explore tattoo styles and piercing options before booking: custom tattoos, fine line tattoos, cover-ups, ear piercing, nose piercing and industrial piercing.</p>
+              <p>Divine Ink is a tattoo-focused studio serving Gurugram from Sector 31. Explore custom tattoos, fine line tattoos, realism and portrait tattoos, black & grey work, cover-ups and sleeve tattoos before booking.</p>
               <p>{location.travel}</p>
             </article>
             <aside className="service-card">
@@ -99,6 +99,9 @@ export default function LocationPage() {
                 <a href={whatsappLink} rel="noreferrer" target="_blank">Book on WhatsApp</a>
                 <Link to="/services/custom-tattoos/">Explore custom tattoos</Link>
                 <Link to="/services/fine-line-tattoos/">Explore fine line tattoos</Link>
+                <Link to="/services/portrait-tattoos/">Explore realism & portrait tattoos</Link>
+                <Link to="/services/black-grey-tattoos/">Explore black & grey tattoos</Link>
+                <Link to="/services/sleeve-tattoos/">Explore sleeve tattoos</Link>
                 <Link to="/services/ear-piercing/">Explore ear piercing</Link>
                 <Link to="/services/nose-piercing/">Explore nose piercing</Link>
                 <Link to="/services/industrial-piercing/">Explore industrial piercing</Link>
