@@ -3,6 +3,24 @@ const studioAddress =
 
 export const locationPages = [
   {
+    slug: 'gurgaon',
+    name: 'Gurgaon',
+    title: 'Tattoo Artist in Gurgaon (Gurugram)',
+    metaTitle: 'Tattoo Artist in Gurgaon | Tattoo Studio & Shop | Divine Ink',
+    description: 'Looking for a tattoo artist in Gurgaon (Gurugram)? Divine Ink offers custom, fine line, realism, portrait, black and grey, cover-up and sleeve tattoos from Sector 31.',
+    eyebrow: 'Tattoo artist · tattoo studio · Sector 31',
+    intro: 'Divine Ink is a tattoo-focused studio in Sector 31, Gurugram for clients comparing tattoo artists, tattoo shops and tattoo studios across Gurgaon.',
+    local: 'If you are searching for a best tattoo artist in Gurgaon, best tattoo artist in Gurugram or a tattoo studio near me, start by matching the artist and portfolio to the tattoo style you actually want. Divine Ink handles custom, fine line, realism, portrait, black and grey, cover-up, sleeve and minimal tattoo work from its Sector 31 studio.',
+    travel: 'The studio is at Shop No. 155, Basement, near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram. This page represents the single Sector 31 studio, not a separate Gurgaon branch.',
+    faq: [
+      ['How do I choose a tattoo artist in Gurgaon?', 'Compare the artist portfolio, tattoo style, healed-result quality, placement approach and consultation process for the design you want rather than choosing only by a generic ranking.'],
+      ['Where is the tattoo studio?', 'Divine Ink is located at Shop No. 155, Basement, near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001. Confirm the map pin before travelling.'],
+      ['Do you offer the best tattoo styles in Gurgaon?', 'Divine Ink offers consultation-led custom, fine line, realism, portrait, black and grey, cover-up, sleeve and minimal tattoo work. Suitability depends on the design, placement and requested style.'],
+      ['Can I find a tattoo shop near me in Gurgaon?', 'Divine Ink serves Gurgaon from its Sector 31 studio. Use the Sector 31 page and service pages to compare the tattoo service that matches your requirement.'],
+    ],
+    related: ['sector-31', 'huda-city-centre', 'mg-road'],
+  },
+  {
     slug: 'sector-31',
     name: 'Sector 31',
     title: 'Tattoo Shop in Sector 31, Gurugram',
