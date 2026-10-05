@@ -17,6 +17,8 @@ export const locationPages = [
       ['Where is the tattoo studio?', 'Divine Ink is located at Shop No. 155, Basement, near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001. Confirm the map pin before travelling.'],
       ['Do you offer the best tattoo styles in Gurgaon?', 'Divine Ink offers consultation-led custom, fine line, realism, portrait, black and grey, cover-up, sleeve and minimal tattoo work. Suitability depends on the design, placement and requested style.'],
       ['Can I find a tattoo shop near me in Gurgaon?', 'Divine Ink serves Gurgaon from its Sector 31 studio. Use the Sector 31 page and service pages to compare the tattoo service that matches your requirement.'],
+      ['What about the best tattoo studio in Gurgaon?', '“Best” depends on the tattoo style, artist portfolio, placement, hygiene practices, consultation and your individual requirements. Divine Ink provides custom tattoo and piercing services from Sector 31 for clients comparing Gurgaon studios.'],
+      ['How can I compare a top-rated tattoo artist near me?', 'Compare relevant portfolio work, the artist’s experience with your requested style, consultation quality and current local business information rather than relying on a generic “top-rated” label.'],
     ],
     related: ['sector-31', 'huda-city-centre', 'mg-road'],
   },
