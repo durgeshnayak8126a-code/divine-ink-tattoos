@@ -5,6 +5,7 @@ import { locationPageMap } from './locationData.js';
 
 const whatsappLink =
   'https://wa.me/918445702782?text=Hi%20Divine%20Ink%20Tattoos%2C%20I%20want%20to%20book%20a%20consultation.';
+const mapsLink = 'https://www.google.com/maps?cid=13259589601998313340';
 
 export default function LocationPage() {
   const { slug } = useParams();
@@ -41,6 +42,7 @@ export default function LocationPage() {
               <p>{location.local}</p>
               <p>Divine Ink is a tattoo-focused studio serving Gurugram from Sector 31. Explore custom tattoos, fine line tattoos, realism and portrait tattoos, black & grey work, cover-ups and sleeve tattoos before booking.</p>
               <p>{location.travel}</p>
+              <a className="text-link" href={mapsLink} rel="noreferrer" target="_blank">Open Divine Ink on Google Maps</a>
               <div className="service-grid">
                 <article className="service-card"><span className="service-number">01</span><h3>Custom Tattoo Artist in Gurgaon</h3><p>Start with a custom concept, placement and size plan for a tattoo designed around you.</p><Link className="text-link" to="/services/custom-tattoos/">Explore custom tattoos</Link></article>
                 <article className="service-card"><span className="service-number">02</span><h3>Fine Line &amp; Minimal Tattoos</h3><p>Review fine-line and minimal tattoo options with practical sizing for long-term readability.</p><Link className="text-link" to="/services/fine-line-tattoos/">Explore fine line tattoos</Link></article>
@@ -102,6 +104,7 @@ export default function LocationPage() {
               <div className="contact-list">
                 <a href="tel:+918445702782">Call +91 84457 02782</a>
                 <a href={whatsappLink} rel="noreferrer" target="_blank">Book on WhatsApp</a>
+                <a href={mapsLink} rel="noreferrer" target="_blank">Get Google Maps directions</a>
                 <Link to="/services/custom-tattoos/">Explore custom tattoos</Link>
                 <Link to="/services/fine-line-tattoos/">Explore fine line tattoos</Link>
                 <Link to="/services/portrait-tattoos/">Explore realism & portrait tattoos</Link>
