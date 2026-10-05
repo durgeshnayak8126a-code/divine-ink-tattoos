@@ -6,6 +6,7 @@
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      window.dataLayer = window.dataLayer || [];
       gtag('js', new Date());
       gtag('config', 'G-FZERVP69WE');
     </script>
@@ -19,19 +20,10 @@
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href="https://divineinktattoos.in/" />
 
-    <meta
-      name="robots"
-      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
-    />
-
-    <meta
-      name="description"
-      content="Divine Ink is a tattoo shop and studio in Gurgaon (Gurugram), Sector 31, offering custom, cover-up, portrait, fine line and minimal tattoos plus professional piercing."
-    />
-
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="description" content="Divine Ink is a tattoo shop and studio in Gurgaon (Gurugram), Sector 31, offering custom, cover-up, portrait, fine line and minimal tattoos plus professional piercing." />
     <title>Tattoo Shop & Studio in Gurgaon (Gurugram) | Divine Ink Tattoos</title>
 
-    <!-- Open Graph -->
     <meta property="og:title" content="Tattoo Shop & Studio in Gurgaon (Gurugram) | Divine Ink Tattoos" />
     <meta property="og:description" content="Custom tattoos, cover-ups, portraits, fine line and minimal tattoos plus professional piercing at Divine Ink in Sector 31, Gurgaon (Gurugram)." />
     <meta property="og:type" content="website" />
@@ -44,7 +36,6 @@
     <meta property="og:locale" content="en_IN" />
     <meta property="og:site_name" content="Divine Ink Tattoos & Piercing Studio" />
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Tattoo Shop & Studio in Gurgaon (Gurugram) | Divine Ink Tattoos" />
     <meta name="twitter:description" content="Custom tattoos and professional body piercing at Divine Ink in Sector 31, Gurgaon (Gurugram)." />
@@ -93,6 +84,7 @@
             "Minimal tattoos"
           ],
           "sameAs": [
+            "https://share.google/Ot0WZGKQFZkWTcSll",
             "https://www.instagram.com/divineinktattoos1/",
             "https://www.facebook.com/profile.php?id=100078466583354"
           ]
@@ -104,9 +96,7 @@
           "alternateName": "Divine Ink Tattoos",
           "url": "https://divineinktattoos.in/",
           "image": "https://divineinktattoos.in/divine-ink-logo.png",
-          "logo": {
-            "@id": "https://divineinktattoos.in/#logo"
-          },
+          "logo": { "@id": "https://divineinktattoos.in/#logo" },
           "telephone": "+918445702782",
           "email": "divinetattoostudio1@gmail.com",
           "description": "Divine Ink Tattoos is a tattoo studio in Sector 31, Gurugram, specializing in custom, fine line, realism, portrait, black and grey, cover-up, sleeve and minimal tattoos.",
@@ -122,9 +112,7 @@
             "name": "Gurugram",
             "alternateName": "Gurgaon"
           },
-          "parentOrganization": {
-            "@id": "https://divineinktattoos.in/#organization"
-          },
+          "parentOrganization": { "@id": "https://divineinktattoos.in/#organization" },
           "address": {
             "@type": "PostalAddress",
             "streetAddress": "Shop No. 155, Basement, Near Apollo Pharmacy, Main HUDA Market, Sector 31, Jharsa Road",
@@ -135,19 +123,12 @@
           },
           "openingHoursSpecification": {
             "@type": "OpeningHoursSpecification",
-            "dayOfWeek": [
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday",
-              "Saturday",
-              "Sunday"
-            ],
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
             "opens": "00:00",
             "closes": "23:59"
           },
           "sameAs": [
+            "https://share.google/Ot0WZGKQFZkWTcSll",
             "https://www.instagram.com/divineinktattoos1/",
             "https://www.facebook.com/profile.php?id=100078466583354"
           ],
@@ -169,12 +150,8 @@
           "url": "https://divineinktattoos.in/",
           "name": "Divine Ink Tattoos & Piercing Studio",
           "inLanguage": "en-IN",
-          "publisher": {
-            "@id": "https://divineinktattoos.in/#organization"
-          },
-          "about": {
-            "@id": "https://divineinktattoos.in/#localbusiness"
-          }
+          "publisher": { "@id": "https://divineinktattoos.in/#organization" },
+          "about": { "@id": "https://divineinktattoos.in/#localbusiness" }
         }
       ]
     }
@@ -202,9 +179,7 @@
         const waitForWidget = () => {
           const widget = document.querySelector(widgetSelector);
           if (!widget) {
-            if (Date.now() - startedAt < 10000) {
-              window.requestAnimationFrame(waitForWidget);
-            }
+            if (Date.now() - startedAt < 10000) window.requestAnimationFrame(waitForWidget);
             return;
           }
 
