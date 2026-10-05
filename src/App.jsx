@@ -267,9 +267,9 @@ function App() {
       <main>
         <section id="home" className="hero" style={{ backgroundImage: `linear-gradient(90deg, rgba(5,5,5,.96) 0%, rgba(5,5,5,.72) 45%, rgba(5,5,5,.2) 100%), url(${hero})` }}>
           <div className="hero-content">
-            <p className="eyebrow">Premium Tattoo & Piercing Studio · Gurugram</p>
-            <h1>Ink Your Story At<br/><span>Divine Ink Tattoos</span></h1>
-            <p className="hero-tagline">Tattoo Studio in Gurgaon · Sector 31</p>
+            <p className="eyebrow">Tattoo Shop & Piercing Studio · Gurugram</p>
+            <h1>Tattoo Shop in Gurgaon<br/><span>Divine Ink Tattoos</span></h1>
+            <p className="hero-tagline">Tattoo Artist · Tattoo Studio · Sector 31, Gurugram</p>
             <p className="hero-copy">Custom tattoos, cover-ups, realism, portraits, minimal designs and professional piercing in a hygiene-focused studio at <a href="/locations/sector-31/">Sector 31, Gurugram</a>.</p>
             <div className="hero-actions">
               {whatsappLink && <a className="btn primary" href={whatsappLink} target="_blank" rel="noreferrer"><MessageCircle size={19}/> Book on WhatsApp</a>}
@@ -297,7 +297,7 @@ function App() {
           </div>
           <div className="section-copy">
             <p className="eyebrow">About Divine Ink</p>
-            <h2>A tattoo studio in Gurgaon focused on meaningful body art.</h2>
+            <h2>A tattoo shop in Gurgaon focused on meaningful body art.</h2>
             <p>Divine Ink Tattoos & Piercing Studio is a tattoo-focused studio in Sector 31, Gurugram. We combine design consultation, placement planning and careful execution to create tattoos that look intentional—not generic.</p>
             <p>Our studio is located in the basement near Apollo Pharmacy in Main HUDA Market, <a href="/locations/sector-31/">Sector 31, Gurugram</a>. Every appointment is handled with clear communication, hygiene-conscious preparation and aftercare guidance.</p>
             <div className="feature-list">
