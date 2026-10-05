@@ -42,7 +42,7 @@ function FacebookLogo({ size = 25 }) {
 
 const defaultPhone = '918445702782';
 const defaultPhoneDisplay = '+91 84457 02782';
-const defaultMapLink = 'https://share.google/Ot0WZGKQFZkWTcSll';
+const defaultMapLink = 'https://www.google.com/maps?cid=13259589601998313340';
 const defaultAddress = 'Shop No. 155, Basement, Near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001';
 const defaultOpeningHours = 'Open 24x7 — advance confirmation recommended';
 const defaultInstagram = 'https://www.instagram.com/divineinktattoos1/';
