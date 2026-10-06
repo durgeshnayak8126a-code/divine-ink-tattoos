@@ -43,6 +43,12 @@ export function createLocationSchema(location) {
       name: 'Divine Ink Tattoos & Piercing Studio',
       url: canonical,
       telephone: '+918445702782',
+      hasMap: 'https://www.google.com/maps?cid=13259589601998313340',
+      sameAs: [
+        'https://www.google.com/maps?cid=13259589601998313340',
+        'https://www.instagram.com/divineinktattoos/',
+        'https://www.facebook.com/divineinktattoos/',
+      ],
       image: 'https://divineinktattoos.in/divine-ink-logo.png',
       address: {
         '@type': 'PostalAddress',
