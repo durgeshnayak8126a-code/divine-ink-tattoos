@@ -28,22 +28,37 @@ function createLocationSchema(location) {
     },
     {
       '@context': 'https://schema.org',
-      '@type': ['LocalBusiness', 'TattooParlor'],
+      '@type': ['TattooParlor', 'LocalBusiness'],
       '@id': 'https://divineinktattoos.in/#localbusiness',
       name: 'Divine Ink Tattoos & Piercing Studio',
-      url: canonical,
+      alternateName: 'Divine Ink Tattoos',
+      url: 'https://divineinktattoos.in/',
       telephone: '+918445702782',
+      hasMap: 'https://www.google.com/maps?cid=13259589601998313340',
+      sameAs: [
+        'https://www.google.com/maps?cid=13259589601998313340',
+        'https://www.instagram.com/divineinktattoos1/',
+        'https://www.facebook.com/profile.php?id=100078466583354'
+      ],
       image: socialImage,
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'Shop No. 155, Basement, near Apollo Pharmacy, Main HUDA Market, Sector 31',
+        streetAddress: 'Shop No. 155, Basement, Near Apollo Pharmacy, Main HUDA Market, Sector 31, Jharsa Road',
         addressLocality: 'Gurugram',
         addressRegion: 'Haryana',
         postalCode: '122001',
         addressCountry: 'IN',
       },
-      areaServed: { '@type': 'Place', name: `${location.name}, Gurugram` },
+      geo: { '@type': 'GeoCoordinates', latitude: 28.4529, longitude: 77.0508791 },
+      openingHoursSpecification: {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        opens: '00:00',
+        closes: '23:59',
+      },
+      areaServed: { '@type': 'City', name: 'Gurugram', alternateName: 'Gurgaon' },
     },
+
     {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
