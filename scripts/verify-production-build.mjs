@@ -72,7 +72,7 @@ if (await exists(homepagePath)) {
   );
   // Locked business/entity regression guards. These values may only change with explicit approval.
   // Normalize JSON-LD whitespace so formatting changes do not create false failures.
-  const normalizedHomepage = homepage.replace(/\\s+/g, '');
+  const normalizedHomepage = homepage.replace(/\s+/g, '');
   expect(normalizedHomepage.includes('"telephone":"+918445702782"'), 'Locked phone is missing or changed in homepage schema.');
   expect(normalizedHomepage.includes('"postalCode":"122001"'), 'Locked postal code is missing or changed in homepage schema.');
   expect(normalizedHomepage.includes('"addressLocality":"Gurugram"'), 'Locked city is missing or changed in homepage schema.');
