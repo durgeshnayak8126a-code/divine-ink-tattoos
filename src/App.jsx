@@ -313,8 +313,8 @@ function App() {
           <div className="section-heading center">
             <p className="eyebrow">What We Do</p>
             <h2>Tattoo styles and services</h2>
-            <p>Looking for a <strong>tattoo shop in Gurgaon</strong>, <strong>tattoo artist in Gurgaon</strong> or <strong>tattoo studio in Gurgaon</strong>? Divine Ink in Sector 31 offers custom tattoos, cover-ups, realism, fine line, minimal and other tattoo styles, plus professional piercing.</p>
-            <p>If you are searching for a <strong>tattoo shop near me</strong>, <strong>tattoo artist near me</strong> or <strong>tattoo studio near me</strong> in Gurugram, use the service and location pages below to find the most relevant option for your tattoo idea. Every design is evaluated for size, placement, detail and long-term readability before the session begins.</p>
+            <p>Divine Ink is a tattoo-focused studio in Sector 31, Gurugram, offering custom tattoos, cover-ups, realism, fine line, minimal and other tattoo styles, plus professional piercing.</p>
+            <p>Explore the service and location pages below to compare tattoo styles, understand the consultation process and choose the option that fits your idea, placement and size. Every design is evaluated for detail, placement and long-term readability before the session begins.</p>
           </div>
           <div className="service-grid">
             {services.map(([title, text, href], index) => (
