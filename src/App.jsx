@@ -314,7 +314,7 @@ function App() {
             <p className="eyebrow">Studio Identity</p>
             <h2>Divine Ink Tattoos in Sector 31, Gurugram</h2>
             <p>If you are searching for Divine Ink Tattoos in Gurgaon or Gurugram, the official website for this studio is <strong>divineinktattoos.in</strong>. The studio is at Shop No. 155, basement, near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001.</p>
-            <p>Use the Google Maps listing or the contact details on this website to confirm the same studio before visiting. This helps distinguish the Sector 31 Gurugram business from other businesses with similar “Divine Ink” names in different cities or countries.</p>
+            <p>Use the Google Maps listing or the contact details on this website to confirm the official Sector 31, Gurugram studio before visiting. The same business name, address and contact details are used consistently across this website and the studio’s local listing.</p>
             {mapLink && <a className="text-link" href={mapLink} target="_blank" rel="noreferrer">Open the Sector 31 Google Maps listing <ChevronRight size={18}/></a>}
           </div>
         </section>
