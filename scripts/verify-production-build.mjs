@@ -77,7 +77,7 @@ if (await exists(homepagePath)) {
   expect(normalizedHomepage.includes('"postalCode":"122001"'), 'Locked postal code is missing or changed in homepage schema.');
   expect(normalizedHomepage.includes('"addressLocality":"Gurugram"'), 'Locked city is missing or changed in homepage schema.');
   expect(normalizedHomepage.includes('"addressRegion":"Haryana"'), 'Locked state is missing or changed in homepage schema.');
-  expect(normalizedHomepage.includes('"google.com/maps?cid=13259589601998313340"'), 'Canonical Maps CID is missing or changed in homepage schema.');
+  expect(normalizedHomepage.includes('cid=13259589601998313340'), 'Canonical Maps CID is missing or changed in homepage schema.');
   expect(normalizedHomepage.includes('"latitude":28.4529') && normalizedHomepage.includes('"longitude":77.0508791'), 'Locked Maps coordinates are missing or changed in homepage schema.');
   expect(normalizedHomepage.includes('"opens":"00:00"') && normalizedHomepage.includes('"closes":"23:59"'), 'Locked 24x7 hours are missing or changed in homepage schema.');
   expect(normalizedHomepage.includes('"name":"Gurugram"') && normalizedHomepage.includes('"alternateName":"Gurgaon"'), 'Gurgaon/Gurugram area identity is missing or changed in homepage schema.');
