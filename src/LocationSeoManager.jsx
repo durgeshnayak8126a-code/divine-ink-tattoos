@@ -41,8 +41,10 @@ export function createLocationSchema(location) {
       '@type': ['LocalBusiness', 'TattooParlor'],
       '@id': 'https://divineinktattoos.in/#localbusiness',
       name: 'Divine Ink Tattoos & Piercing Studio',
+      alternateName: 'Divine Ink Tattoos',
       url: canonical,
       telephone: '+918445702782',
+      parentOrganization: { '@id': 'https://divineinktattoos.in/#organization' },
       hasMap: 'https://www.google.com/maps?cid=13259589601998313340',
       sameAs: [
         'https://www.google.com/maps?cid=13259589601998313340',
@@ -131,4 +133,3 @@ export default function LocationSeoManager({ location }) {
 
   return null;
 }
-
