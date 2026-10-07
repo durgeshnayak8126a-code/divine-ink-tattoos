@@ -52,6 +52,12 @@ export function createLocationSchema(location) {
         'https://www.facebook.com/profile.php?id=100078466583354',
       ],
       image: 'https://divineinktattoos.in/divine-ink-logo.png',
+      priceRange: '₹999 - ₹25000',
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 28.4529,
+        longitude: 77.0508791,
+      },
       address: {
         '@type': 'PostalAddress',
         streetAddress: 'Shop No. 155, Basement, near Apollo Pharmacy, Main HUDA Market, Sector 31',
@@ -59,6 +65,12 @@ export function createLocationSchema(location) {
         addressRegion: 'Haryana',
         postalCode: '122001',
         addressCountry: 'IN',
+      },
+      openingHoursSpecification: {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        opens: '00:00',
+        closes: '23:59',
       },
       areaServed: { '@type': 'Place', name: `${location.name}, Gurugram` },
       knowsAbout: [
