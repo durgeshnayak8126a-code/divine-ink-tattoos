@@ -119,6 +119,14 @@ for (const location of locationPages) {
   expect(html.includes(`<title>${location.metaTitle}</title>`), `Wrong SEO title for location ${location.slug}.`);
   expect(html.includes(`rel="canonical" href="${canonical}"`), `Wrong canonical for location ${location.slug}.`);
   expect(!html.includes('content="noindex, nofollow, noarchive"'), `Public location ${location.slug} must remain indexable.`);
+  expect(html.includes('"@type":["TattooParlor","LocalBusiness"]') || html.includes('"@type": ["TattooParlor", "LocalBusiness"]'), `LocalBusiness/TattooParlor schema missing for location ${location.slug}.`);
+  const normalizedLocation = html.replace(/\\s+/g, '');
+  expect(normalizedLocation.includes('"telephone":"+918445702782"'), `Locked phone is missing or changed on location ${location.slug}.`);
+  expect(normalizedLocation.includes('"postalCode":"122001"'), `Locked postal code is missing or changed on location ${location.slug}.`);
+  expect(normalizedLocation.includes('"addressLocality":"Gurugram"'), `Locked city is missing or changed on location ${location.slug}.`);
+  expect(normalizedLocation.includes('cid=13259589601998313340'), `Canonical Maps CID is missing or changed on location ${location.slug}.`);
+  expect(normalizedLocation.includes('"latitude":28.4529') && normalizedLocation.includes('"longitude":77.0508791"'), `Locked Maps coordinates are missing or changed on location ${location.slug}.`);
+  expect(normalizedLocation.includes('"opens":"00:00"') && normalizedLocation.includes('"closes":"23:59"'), `Locked 24x7 hours are missing or changed on location ${location.slug}.`);
   expect(html.includes('"@type":"FAQPage"'), `FAQ schema missing for location ${location.slug}.`);
 }
 
