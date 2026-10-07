@@ -46,8 +46,8 @@ export function createLocationSchema(location) {
       hasMap: 'https://www.google.com/maps?cid=13259589601998313340',
       sameAs: [
         'https://www.google.com/maps?cid=13259589601998313340',
-        'https://www.instagram.com/divineinktattoos/',
-        'https://www.facebook.com/divineinktattoos/',
+        'https://www.instagram.com/divineinktattoos1/',
+        'https://www.facebook.com/profile.php?id=100078466583354',
       ],
       image: 'https://divineinktattoos.in/divine-ink-logo.png',
       address: {
