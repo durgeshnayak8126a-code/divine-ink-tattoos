@@ -215,6 +215,9 @@ if (await exists(sitemapPath)) {
   const lastmods = [...sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map((match) => match[1]);
   expect(lastmods.length === urlCount, 'Every sitemap URL must have exactly one lastmod value.');
   expect(lastmods.every((value) => /^\d{4}-\d{2}-\d{2}$/.test(value)), 'Sitemap lastmod values must use ISO date format.');
+  const publicUrlBlocks = [...sitemap.matchAll(/<url>([\\s\\S]*?)<\\/url>/g)].map((match) => match[1]);
+  expect(publicUrlBlocks.length === urlCount, 'Sitemap URL block count must match URL count.');
+  expect(publicUrlBlocks.every((block) => (block.match(/<loc>/g) || []).length === 1 && (block.match(/<lastmod>/g) || []).length === 1), 'Each sitemap URL block must contain exactly one loc and one lastmod.');
   expect(!sitemap.includes('/admin/'), 'Sitemap must never include admin URLs.');
 }
 
