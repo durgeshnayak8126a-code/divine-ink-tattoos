@@ -38,13 +38,11 @@ export default function ServicePage() {
   }
 
   const managed = cmsServices.find((item) => item.slug === slug);
+  // SEO identity stays on the static service source-of-truth.
+  // CMS may still supply optional pricing/FAQ presentation, but cannot rewrite
+  // the crawlable service title, intro, canonical metadata, or description.
   const service = {
     ...staticService,
-    name: managed?.title || staticService.name,
-    title: managed?.title || staticService.title,
-    intro: managed?.description || staticService.intro,
-    metaTitle: slug === 'fine-line-tattoos' ? staticService.metaTitle : (managed?.metaTitle || staticService.metaTitle),
-    description: managed?.metaDescription || staticService.description,
   };
   const pricing = String(managed?.pricing || '').trim();
   const managedFaqs = normalizeServiceFaqs(managed?.faqs);
