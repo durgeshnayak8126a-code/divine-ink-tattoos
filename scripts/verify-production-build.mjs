@@ -14,8 +14,21 @@ function expect(condition, message) {
   if (!condition) fail(message);
 }
 
-function countOccurrences(text, needle) {
-  return text.split(needle).length - 1;
+function countJsonLdEntities(html, predicate) {
+  const scripts = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi)].map((match) => match[1]);
+  let count = 0;
+  for (const script of scripts) {
+    try {
+      const parsed = JSON.parse(script);
+      const entities = Array.isArray(parsed) ? parsed : [parsed];
+      for (const entity of entities) {
+        if (predicate(entity)) count += 1;
+      }
+    } catch {
+      // Other JSON-LD blocks are allowed; only matching page entities are counted.
+    }
+  }
+  return count;
 }
 
 async function exists(path) {
@@ -130,9 +143,9 @@ for (const service of servicePages) {
   expect(html.includes('"name":"Gurugram","alternateName":"Gurgaon"'), `Service area identity must include Gurgaon alias for ${service.slug}.`);
   expect(html.includes(`${canonical}#breadcrumb`), `Service breadcrumb entity link missing for ${service.slug}.`);
   expect(html.includes(`${canonical}#webpage`), `Service WebPage entity link missing for ${service.slug}.`);
-  expect(countOccurrences(html, `"@id":"${canonical}#breadcrumb"`) === 1, `Service ${service.slug} must publish exactly one page breadcrumb entity.`);
-  expect(countOccurrences(html, `"@id":"${canonical}#service"`) === 1, `Service ${service.slug} must publish exactly one service entity.`);
-  expect(countOccurrences(html, `"@id":"${canonical}#webpage"`) === 1, `Service ${service.slug} must publish exactly one WebPage entity.`);
+  expect(countJsonLdEntities(html, (entity) => entity?.['@id'] === `${canonical}#breadcrumb`) === 1, `Service ${service.slug} must publish exactly one page breadcrumb entity.`);
+  expect(countJsonLdEntities(html, (entity) => entity?.['@id'] === `${canonical}#service`) === 1, `Service ${service.slug} must publish exactly one service entity.`);
+  expect(countJsonLdEntities(html, (entity) => entity?.['@id'] === `${canonical}#webpage`) === 1, `Service ${service.slug} must publish exactly one WebPage entity.`);
 }
 
 for (const location of locationPages) {
