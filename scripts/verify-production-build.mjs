@@ -150,6 +150,15 @@ for (const service of servicePages) {
   expect(countJsonLdEntities(html, (entity) => entity?.['@id'] === `${canonical}#breadcrumb`) === 1, `Service ${service.slug} must publish exactly one page breadcrumb entity.`);
   expect(countJsonLdEntities(html, (entity) => entity?.['@id'] === `${canonical}#service`) === 1, `Service ${service.slug} must publish exactly one service entity.`);
   expect(countJsonLdEntities(html, (entity) => entity?.['@id'] === `${canonical}#webpage`) === 1, `Service ${service.slug} must publish exactly one WebPage entity.`);
+  const serviceSchema = getJsonLdEntities(html).find((entity) => entity?.['@id'] === `${canonical}#service`);
+  const serviceWebPageSchema = getJsonLdEntities(html).find((entity) => entity?.['@id'] === `${canonical}#webpage`);
+  expect(serviceSchema?.name === service.name, `Service schema name drifted from source for ${service.slug}.`);
+  expect(serviceSchema?.serviceType === service.name, `Service schema type label drifted from source for ${service.slug}.`);
+  expect(serviceSchema?.description === service.description, `Service schema description drifted from source for ${service.slug}.`);
+  expect(serviceSchema?.url === canonical, `Service schema URL drifted for ${service.slug}.`);
+  expect(serviceWebPageSchema?.name === service.metaTitle, `Service WebPage name drifted from source for ${service.slug}.`);
+  expect(serviceWebPageSchema?.description === service.description, `Service WebPage description drifted from source for ${service.slug}.`);
+  expect(serviceWebPageSchema?.mainEntity?.['@id'] === `${canonical}#service`, `Service WebPage mainEntity drifted for ${service.slug}.`);
 }
 
 for (const location of locationPages) {
@@ -177,6 +186,12 @@ for (const location of locationPages) {
   expect(html.includes(`${canonical}#webpage`), `Location WebPage entity link missing for ${location.slug}.`);
   expect(countJsonLdEntities(html, (entity) => entity?.['@id'] === `${canonical}#breadcrumb`) === 1, `Location ${location.slug} must publish exactly one page breadcrumb entity.`);
   expect(countJsonLdEntities(html, (entity) => entity?.['@id'] === `${canonical}#webpage`) === 1, `Location ${location.slug} must publish exactly one WebPage entity.`);
+  const locationWebPageSchema = getJsonLdEntities(html).find((entity) => entity?.['@id'] === `${canonical}#webpage`);
+  expect(locationWebPageSchema?.name === location.metaTitle, `Location WebPage name drifted from source for ${location.slug}.`);
+  expect(locationWebPageSchema?.description === location.description, `Location WebPage description drifted from source for ${location.slug}.`);
+  expect(locationWebPageSchema?.url === canonical, `Location WebPage URL drifted for ${location.slug}.`);
+  expect(locationWebPageSchema?.mainEntity?.['@id'] === 'https://divineinktattoos.in/#localbusiness', `Location WebPage mainEntity drifted for ${location.slug}.`);
+  expect(locationWebPageSchema?.breadcrumb?.['@id'] === `${canonical}#breadcrumb`, `Location WebPage breadcrumb drifted for ${location.slug}.`);
   expect(html.includes('"mainEntity":{"@id":"https://divineinktattoos.in/#localbusiness"}'), `Location WebPage must link the local business entity for ${location.slug}.`);
   const normalizedLocation = html.replace(/\s+/g, '');
   expect(normalizedLocation.includes('"telephone":"+918445702782"'), `Locked phone is missing or changed on location ${location.slug}.`);
