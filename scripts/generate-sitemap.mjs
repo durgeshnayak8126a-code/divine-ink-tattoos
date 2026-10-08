@@ -26,12 +26,15 @@ function latestGitDate(paths) {
 
 function urlEntry(pathname, lastmod = '') {
   const loc = `${siteUrl}${pathname}`;
+  if (!lastmod) {
+    throw new Error(`Missing sitemap lastmod for public URL: ${loc}`);
+  }
   return [
     '  <url>',
     `    <loc>${loc}</loc>`,
-    lastmod ? `    <lastmod>${lastmod}</lastmod>` : '',
+    `    <lastmod>${lastmod}</lastmod>`,
     '  </url>',
-  ].filter(Boolean).join('\n');
+  ].join('\n');
 }
 
 const homepageLastmod = latestGitDate([
