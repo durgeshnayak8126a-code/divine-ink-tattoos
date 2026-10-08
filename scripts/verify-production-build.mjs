@@ -126,6 +126,9 @@ for (const service of servicePages) {
   expect(html.includes('"name":"Gurugram","alternateName":"Gurgaon"'), `Service area identity must include Gurgaon alias for ${service.slug}.`);
   expect(html.includes(`${canonical}#breadcrumb`), `Service breadcrumb entity link missing for ${service.slug}.`);
   expect(html.includes(`${canonical}#webpage`), `Service WebPage entity link missing for ${service.slug}.`);
+  expect(countOccurrences(html, `"@id":"${canonical}#breadcrumb"`) === 1, `Service ${service.slug} must publish exactly one page breadcrumb entity.`);
+  expect(countOccurrences(html, `"@id":"${canonical}#service"`) === 1, `Service ${service.slug} must publish exactly one service entity.`);
+  expect(countOccurrences(html, `"@id":"${canonical}#webpage"`) === 1, `Service ${service.slug} must publish exactly one WebPage entity.`);
 }
 
 for (const location of locationPages) {
@@ -151,6 +154,8 @@ for (const location of locationPages) {
   expect(html.includes('"@type":["TattooParlor","LocalBusiness"]') || html.includes('"@type": ["TattooParlor", "LocalBusiness"]'), `LocalBusiness/TattooParlor schema missing for location ${location.slug}.`);
   expect(html.includes(`${canonical}#breadcrumb`), `Location breadcrumb entity link missing for ${location.slug}.`);
   expect(html.includes(`${canonical}#webpage`), `Location WebPage entity link missing for ${location.slug}.`);
+  expect(countOccurrences(html, `"@id":"${canonical}#breadcrumb"`) === 1, `Location ${location.slug} must publish exactly one page breadcrumb entity.`);
+  expect(countOccurrences(html, `"@id":"${canonical}#webpage"`) === 1, `Location ${location.slug} must publish exactly one WebPage entity.`);
   expect(html.includes('"mainEntity":{"@id":"https://divineinktattoos.in/#localbusiness"}'), `Location WebPage must link the local business entity for ${location.slug}.`);
   const normalizedLocation = html.replace(/\s+/g, '');
   expect(normalizedLocation.includes('"telephone":"+918445702782"'), `Locked phone is missing or changed on location ${location.slug}.`);
