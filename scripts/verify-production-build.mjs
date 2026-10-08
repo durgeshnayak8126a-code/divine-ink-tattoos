@@ -175,6 +175,7 @@ if (await exists(sitemapPath)) {
   const sitemap = await read(sitemapPath);
   const expectedPublicUrls = [
     'https://divineinktattoos.in/',
+    'https://divineinktattoos.in/studio/',
     ...servicePages.map((service) => `https://divineinktattoos.in/services/${service.slug}/`),
     ...locationPages.map((location) => `https://divineinktattoos.in/locations/${location.slug}/`),
   ];
