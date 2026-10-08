@@ -45,6 +45,10 @@ function validateRelated(items, itemLabel) {
 
 expectUnique(servicePages.map((item) => item.slug), 'Service slugs');
 expectUnique(locationPages.map((item) => item.slug), 'Location slugs');
+expectUnique(servicePages.map((item) => item.metaTitle), 'Service SEO titles');
+expectUnique(locationPages.map((item) => item.metaTitle), 'Location SEO titles');
+expect(servicePages.every((item) => item.metaTitle && item.description), 'Every service page must have SEO title and description.');
+expect(locationPages.every((item) => item.metaTitle && item.description), 'Every location page must have SEO title and description.');
 validateRelated(servicePages, 'Service');
 validateRelated(locationPages, 'Location');
 
