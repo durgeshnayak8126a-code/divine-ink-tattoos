@@ -288,9 +288,9 @@ if (await exists(studioHtmlPath)) {
   const studioHtml = await read(studioHtmlPath);
   expect(studioHtml.includes('<link rel="canonical" href="https://divineinktattoos.in/studio/">'), 'Studio canonical must be exact.');
   expect(studioHtml.includes('<meta name="description" content="Divine Ink is a tattoo-focused studio in Sector 31, Gurugram, offering custom, fine line, realism, portrait, black and grey, cover-up, sleeve and minimal tattoos plus professional piercing.">'), 'Studio meta description drifted.');
-  expect(studioHtml.includes('<meta property="og:title" content="Divine Ink Tattoos & Piercing Studio | Sector 31 Gurgaon">'), 'Studio OG title drifted.');
+  expect(studioHtml.includes('<meta property="og:title" content="Divine Ink Tattoos &amp; Piercing Studio | Sector 31 Gurgaon">'), 'Studio OG title drifted.');
   expect(studioHtml.includes('<meta property="og:description" content="Divine Ink is a tattoo-focused studio in Sector 31, Gurugram, offering custom, fine line, realism, portrait, black and grey, cover-up, sleeve and minimal tattoos plus professional piercing.">'), 'Studio OG description drifted.');
-  expect(studioHtml.includes('<meta name="twitter:title" content="Divine Ink Tattoos & Piercing Studio | Sector 31 Gurgaon">'), 'Studio Twitter title drifted.');
+  expect(studioHtml.includes('<meta name="twitter:title" content="Divine Ink Tattoos &amp; Piercing Studio | Sector 31 Gurgaon">'), 'Studio Twitter title drifted.');
   expect(studioHtml.includes('<meta name="twitter:description" content="Divine Ink is a tattoo-focused studio in Sector 31, Gurugram, offering custom, fine line, realism, portrait, black and grey, cover-up, sleeve and minimal tattoos plus professional piercing.">'), 'Studio Twitter description drifted.');
   expect((studioHtml.match(/<meta name="description"/g) || []).length === 1, 'Studio page must have exactly one meta description.');
   expect((studioHtml.match(/<meta property="og:description"/g) || []).length === 1, 'Studio page must have exactly one OG description.');
