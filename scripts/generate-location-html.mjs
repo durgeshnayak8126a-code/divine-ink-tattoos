@@ -63,6 +63,18 @@ function createLocationSchema(location) {
 
     {
       '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': `${canonical}#webpage`,
+      url: canonical,
+      name: location.metaTitle,
+      description: location.description,
+      isPartOf: { '@id': 'https://divineinktattoos.in/#website' },
+      about: { '@id': 'https://divineinktattoos.in/#localbusiness' },
+      breadcrumb: { '@id': `${canonical}#breadcrumb` },
+      inLanguage: 'en-IN',
+    },
+    {
+      '@context': 'https://schema.org',
       '@type': 'FAQPage',
       mainEntity: location.faq.map(([question, answer]) => ({
         '@type': 'Question',
