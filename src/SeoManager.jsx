@@ -116,6 +116,7 @@ export default function SeoManager({ service }) {
         areaServed: {
           '@type': 'City',
           name: 'Gurugram',
+          alternateName: 'Gurgaon',
         },
         provider: {
           '@id': 'https://divineinktattoos.in/#localbusiness',
