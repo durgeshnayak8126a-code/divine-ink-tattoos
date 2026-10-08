@@ -137,6 +137,7 @@ for (const location of locationPages) {
   expect(normalizedLocation.includes('"postalCode":"122001"'), `Locked postal code is missing or changed on location ${location.slug}.`);
   expect(normalizedLocation.includes('"addressLocality":"Gurugram"'), `Locked city is missing or changed on location ${location.slug}.`);
   expect(normalizedLocation.includes('cid=13259589601998313340'), `Canonical Maps CID is missing or changed on location ${location.slug}.`);
+  expect(normalizedLocation.includes('"propertyID":"GooglePlaceID","value":"ChIJyZWbyoMZDTkRfJeSnn2GA7g"'), `Canonical Google Place ID is missing or changed on location ${location.slug}.`);
   expect(normalizedLocation.includes('"latitude":28.4529') && normalizedLocation.includes('"longitude":77.0508791'), `Locked Maps coordinates are missing or changed on location ${location.slug}.`);
   expect(normalizedLocation.includes('"opens":"00:00"') && normalizedLocation.includes('"closes":"23:59"'), `Locked 24x7 hours are missing or changed on location ${location.slug}.`);
   expect(html.includes('"@type":"FAQPage"'), `FAQ schema missing for location ${location.slug}.`);
