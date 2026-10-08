@@ -205,6 +205,8 @@ if (await exists(sitemapPath)) {
   const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
   expect(new Set(sitemapUrls).size === sitemapUrls.length, 'Sitemap must not contain duplicate URLs.');
   expect(sitemapUrls.every((url) => /^https:\/\/divineinktattoos\.in\/[^?]*$/.test(url)), 'Sitemap URLs must use the canonical HTTPS host without query strings.');
+  const lastmods = [...sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map((match) => match[1]);
+  expect(lastmods.every((value) => /^\\d{4}-\\d{2}-\\d{2}$/.test(value)), 'Sitemap lastmod values must use ISO date format.');
   expect(!sitemap.includes('/admin/'), 'Sitemap must never include admin URLs.');
 }
 
