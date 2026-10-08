@@ -14,6 +14,10 @@ function expect(condition, message) {
   if (!condition) fail(message);
 }
 
+function countOccurrences(text, needle) {
+  return text.split(needle).length - 1;
+}
+
 async function exists(path) {
   try {
     await access(path);
