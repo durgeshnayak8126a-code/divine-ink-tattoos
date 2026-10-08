@@ -270,6 +270,14 @@ if (await exists(studioHtmlPath)) {
   expect(studioHtml.includes('name="robots" content="index, follow'), 'Studio page must be explicitly indexable.');
   expect(studioHtml.includes('https://divineinktattoos.in/studio/#webpage'), 'Studio WebPage schema link missing.');
   expect(studioHtml.includes('https://divineinktattoos.in/studio/#breadcrumb'), 'Studio breadcrumb schema link missing.');
+  expect(countJsonLdEntities(studioHtml, (entity) => entity?.['@id'] === 'https://divineinktattoos.in/studio/#webpage') === 1, 'Studio page must publish exactly one WebPage entity.');
+  expect(countJsonLdEntities(studioHtml, (entity) => entity?.['@id'] === 'https://divineinktattoos.in/studio/#breadcrumb') === 1, 'Studio page must publish exactly one breadcrumb entity.');
+  const studioWebPageSchema = getJsonLdEntities(studioHtml).find((entity) => entity?.['@id'] === 'https://divineinktattoos.in/studio/#webpage');
+  expect(studioWebPageSchema?.name === 'Divine Ink Tattoos & Piercing Studio | Sector 31 Gurgaon', 'Studio WebPage name drifted.');
+  expect(studioWebPageSchema?.description === 'Divine Ink is a tattoo-focused studio in Sector 31, Gurugram, offering custom, fine line, realism, portrait, black and grey, cover-up, sleeve and minimal tattoos plus professional piercing.', 'Studio WebPage description drifted.');
+  expect(studioWebPageSchema?.url === 'https://divineinktattoos.in/studio/', 'Studio WebPage URL drifted.');
+  expect(studioWebPageSchema?.mainEntity?.['@id'] === 'https://divineinktattoos.in/#localbusiness', 'Studio WebPage mainEntity drifted.');
+  expect(studioWebPageSchema?.breadcrumb?.['@id'] === 'https://divineinktattoos.in/studio/#breadcrumb', 'Studio WebPage breadcrumb drifted.');
   expect(studioHtml.includes('"breadcrumb":{"@id":"https://divineinktattoos.in/studio/#breadcrumb"}'), 'Studio WebPage must link its breadcrumb entity.');
   expect(studioHtml.includes('"mainEntity":{"@id":"https://divineinktattoos.in/#localbusiness"}'), 'Studio WebPage must link the local business entity.');
   const normalizedStudio = studioHtml.replace(/\s+/g, '');
