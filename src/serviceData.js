@@ -38,7 +38,7 @@ export const servicePages = [
     name: 'Fine Line Tattoos',
     title: 'Fine Line Tattoos in Gurugram',
     metaTitle: 'Fine Line Tattoo Artist in Gurgaon (Gurugram) | Divine Ink',
-    description: 'Looking for a fine line tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 offers fine line tattoo planning, sizing and placement guidance.'
+    description: 'Looking for a fine line tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 offers fine line tattoo planning, sizing and placement guidance.',
     eyebrow: 'Delicate lines · deliberate sizing',
     intro: 'Fine line tattoos rely on restraint and precision, but successful work also depends on choosing a size that can heal and age clearly.',
     overview: 'Divine Ink plans fine line concepts around line spacing, skin movement and the amount of detail requested. Botanical forms, symbols, small illustrations and simple lettering are adjusted rather than compressed into an unsuitable scale.',
@@ -52,7 +52,7 @@ export const servicePages = [
     name: 'Black & Grey Tattoos',
     title: 'Black & Grey Tattoos in Gurugram',
     metaTitle: 'Black & Grey Tattoo Artist in Gurgaon (Gurugram) | Divine Ink',
-    description: 'Looking for a black and grey tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 plans contrast, shading, scale and placement for tattoo work.'
+    description: 'Looking for a black and grey tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 plans contrast, shading, scale and placement for tattoo work.',
     eyebrow: 'Contrast · depth · controlled shading',
     intro: 'Black and grey tattooing uses tonal contrast to create depth without colour, from soft illustrative pieces to high-detail realism.',
     overview: 'We evaluate the reference for clear focal points, readable dark areas and enough open skin to preserve contrast. The design is adapted to the placement so shadows support the form instead of turning into an undifferentiated dark patch.',
@@ -80,7 +80,7 @@ export const servicePages = [
     name: 'Portrait Tattoos',
     title: 'Portrait Tattoos in Gurugram',
     metaTitle: 'Realism & Portrait Tattoo Artist in Gurgaon (Gurugram) | Divine Ink',
-    description: 'Looking for a realism or portrait tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 reviews references, scale and placement for detailed tattoo work.'
+    description: 'Looking for a realism or portrait tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 reviews references, scale and placement for detailed tattoo work.',
     eyebrow: 'Reference quality · likeness · expression',
     intro: 'Portrait and realism tattoos depend on reference quality, sufficient size and careful value structure to preserve recognisable features. When comparing a realism tattoo artist in Gurgaon, review the artist portfolio and healed-result quality alongside the style itself.',
     overview: 'We review whether the photograph has usable focus, lighting and facial detail before accepting it as the main reference. Cropping and background choices are planned to keep attention on the person, pet or memorial subject.',
@@ -108,7 +108,7 @@ export const servicePages = [
     name: 'Cover Up Tattoos',
     title: 'Cover Up Tattoos in Gurugram',
     metaTitle: 'Cover Up Tattoo Artist in Gurgaon (Gurugram) | Divine Ink',
-    description: 'Looking for a cover up tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 assesses existing ink, coverage, scale and realistic design options.'
+    description: 'Looking for a cover up tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 assesses existing ink, coverage, scale and realistic design options.',
     eyebrow: 'Assessment first · realistic coverage',
     intro: 'A successful cover-up is designed around the darkness, size and position of the existing tattoo—not simply placed over it.',
     overview: 'Send clear, unfiltered photographs in natural light for an initial assessment. We examine the darkest areas, scar tissue, faded sections and available surrounding space before recommending a direction.',
@@ -122,7 +122,7 @@ export const servicePages = [
     name: 'Sleeve Tattoos',
     title: 'Sleeve Tattoos in Gurugram',
     metaTitle: 'Sleeve Tattoo Artist in Gurgaon (Gurugram) | Divine Ink',
-    description: 'Looking for a sleeve tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 plans full-arm composition, style, transitions and multiple sessions.'
+    description: 'Looking for a sleeve tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 plans full-arm composition, style, transitions and multiple sessions.',
     eyebrow: 'Full-arm flow · planned sessions',
     intro: 'A sleeve should read as one composition around the arm instead of a collection of disconnected images filling empty spaces.',
     overview: 'We map primary subjects, transitions, background and open skin around the shoulder, elbow and forearm. Existing tattoos can sometimes be incorporated, but their style and placement affect the overall plan.',
@@ -136,7 +136,7 @@ export const servicePages = [
     name: 'Minimal Tattoos',
     title: 'Minimal Tattoos in Gurugram',
     metaTitle: 'Minimal Tattoo Artist in Gurgaon (Gurugram) | Divine Ink',
-    description: 'Looking for a minimal tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 plans clean forms, readable sizing and suitable placement.'
+    description: 'Looking for a minimal tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 plans clean forms, readable sizing and suitable placement.',
     eyebrow: 'Simple forms · intentional placement',
     intro: 'Minimal tattoos look effortless only when line weight, negative space and placement have been considered carefully.',
     overview: 'We simplify references to their essential shape and remove details that would not remain readable at the requested size. Symbols, small florals, geometric marks and understated lettering can all be adapted.',
