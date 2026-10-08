@@ -74,10 +74,24 @@ for (const service of servicePages) {
       areaServed: {
         '@type': 'City',
         name: 'Gurugram',
+        alternateName: 'Gurgaon',
       },
       provider: {
         '@id': 'https://divineinktattoos.in/#localbusiness',
       },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': `${canonical}#webpage`,
+      url: canonical,
+      name: metaTitle,
+      description,
+      isPartOf: { '@id': 'https://divineinktattoos.in/#website' },
+      about: { '@id': 'https://divineinktattoos.in/#localbusiness' },
+      mainEntity: { '@id': `${canonical}#service` },
+      breadcrumb: { '@id': `${canonical}#breadcrumb` },
+      inLanguage: 'en-IN',
     },
   ];
 
