@@ -48,6 +48,7 @@ for (const service of servicePages) {
     {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
+      '@id': `${canonical}#breadcrumb`,
       itemListElement: [
         {
           '@type': 'ListItem',
