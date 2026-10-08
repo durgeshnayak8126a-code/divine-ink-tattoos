@@ -14,21 +14,25 @@ function expect(condition, message) {
   if (!condition) fail(message);
 }
 
-function countJsonLdEntities(html, predicate) {
+function getJsonLdEntities(html) {
   const scripts = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi)].map((match) => match[1]);
-  let count = 0;
-  for (const script of scripts) {
+  const entities = [];
+
+  for (const [index, script] of scripts.entries()) {
+    let parsed;
     try {
-      const parsed = JSON.parse(script);
-      const entities = Array.isArray(parsed) ? parsed : [parsed];
-      for (const entity of entities) {
-        if (predicate(entity)) count += 1;
-      }
-    } catch {
-      // Other JSON-LD blocks are allowed; only matching page entities are counted.
+      parsed = JSON.parse(script);
+    } catch (error) {
+      throw new Error(`Invalid JSON-LD block #${index + 1}: ${error.message}`);
     }
+    entities.push(...(Array.isArray(parsed) ? parsed : [parsed]));
   }
-  return count;
+
+  return entities;
+}
+
+function countJsonLdEntities(html, predicate) {
+  return getJsonLdEntities(html).filter(predicate).length;
 }
 
 async function exists(path) {
