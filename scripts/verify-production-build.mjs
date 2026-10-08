@@ -111,6 +111,8 @@ for (const service of servicePages) {
   expect(html.includes('name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"'), `Public service ${service.slug} must explicitly allow indexing.`);
   expect(!html.includes('noindex'), `Public service ${service.slug} must not contain noindex directives.`);
   expect(html.includes('"@type":"Service"'), `Service schema missing for ${service.slug}.`);
+  expect(html.includes(`${canonical}#breadcrumb`), `Service breadcrumb entity link missing for ${service.slug}.`);
+  expect(html.includes(`${canonical}#webpage`), `Service WebPage entity link missing for ${service.slug}.`);
 }
 
 for (const location of locationPages) {
