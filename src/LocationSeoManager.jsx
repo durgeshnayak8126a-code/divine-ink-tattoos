@@ -45,6 +45,10 @@ export function createLocationSchema(location) {
       alternateName: 'Divine Ink Tattoos',
       url: 'https://divineinktattoos.in/',
       telephone: '+918445702782',
+      identifier: [
+        { '@type': 'PropertyValue', propertyID: 'GooglePlaceID', value: 'ChIJyZWbyoMZDTkRfJeSnn2GA7g' },
+        { '@type': 'PropertyValue', propertyID: 'GoogleMapsCID', value: '13259589601998313340' },
+      ],
       hasMap: 'https://www.google.com/maps?cid=13259589601998313340',
       sameAs: ['https://www.google.com/maps?cid=13259589601998313340', 'https://www.instagram.com/divineinktattoos1/', 'https://www.facebook.com/profile.php?id=100078466583354'],
       address: {
