@@ -5,6 +5,7 @@ import { locationPages } from '../src/locationData.js';
 const distDirectory = resolve('dist');
 const homepageHtml = await readFile(resolve(distDirectory, 'index.html'), 'utf8');
 const socialImage = 'https://divineinktattoos.in/divine-ink-logo.png';
+const publicRobotsContent = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 
 function escapeAttribute(value) {
   return value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
@@ -78,6 +79,7 @@ for (const location of locationPages) {
     .replace(/<link rel="canonical" href="[^"]*"\s*\/?>/i, `<link rel="canonical" href="${canonical}">`);
 
   html = replaceMeta(html, 'name', 'description', location.description);
+  html = replaceMeta(html, 'name', 'robots', publicRobotsContent);
   html = replaceMeta(html, 'property', 'og:title', location.metaTitle);
   html = replaceMeta(html, 'property', 'og:description', location.description);
   html = replaceMeta(html, 'property', 'og:url', canonical);
