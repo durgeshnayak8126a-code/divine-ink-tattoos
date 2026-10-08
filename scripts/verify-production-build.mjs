@@ -48,6 +48,12 @@ async function read(path) {
   return readFile(path, 'utf8');
 }
 
+function validateRenderedRelatedLinks(html, item, basePath, itemLabel) {
+  for (const relatedSlug of item.related || []) {
+    const href = basePath + '/' + relatedSlug + '/';
+    expect(html.includes('href="' + href + '"'), itemLabel + ' ' + item.slug + ' must render a crawlable related link to ' + href + '.');
+  }
+}
 function expectUnique(values, label) {
   const unique = new Set(values);
   expect(unique.size === values.length, `${label} must be unique.`);
@@ -131,6 +137,8 @@ for (const service of servicePages) {
   const canonical = `https://divineinktattoos.in/services/${service.slug}/`;
   const expectedTitle = service.metaTitle;
 
+  validateRenderedRelatedLinks(html, service, '/services', 'Service');
+
   expect(html.includes(`<title>${expectedTitle}</title>`), `Wrong SEO title for service ${service.slug}.`);
   expect(html.includes(`<meta name="description" content="${service.description}">`), `Wrong SEO description for service ${service.slug}.`);
   expect(html.includes(`<meta property="og:description" content="${service.description}">`), `Wrong OG description for service ${service.slug}.`);
@@ -168,6 +176,8 @@ for (const location of locationPages) {
 
   const html = await read(pagePath);
   const canonical = `https://divineinktattoos.in/locations/${location.slug}/`;
+
+  validateRenderedRelatedLinks(html, location, '/locations', 'Location');
 
   expect(html.includes(`<title>${location.metaTitle}</title>`), `Wrong SEO title for location ${location.slug}.`);
   expect(html.includes(`<meta name="description" content="${location.description}">`), `Wrong SEO description for location ${location.slug}.`);
