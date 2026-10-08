@@ -18,6 +18,14 @@ export default function StudioPage() {
     }
     meta.content = description;
 
+    let robots = document.querySelector('meta[name="robots"]');
+    if (!robots) {
+      robots = document.createElement('meta');
+      robots.name = 'robots';
+      document.head.appendChild(robots);
+    }
+    robots.content = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+
     let link = document.querySelector('link[rel="canonical"]');
     if (!link) {
       link = document.createElement('link');
@@ -60,6 +68,7 @@ export default function StudioPage() {
     return () => {
       script.remove();
       if (meta) meta.remove();
+      if (robots) robots.remove();
       if (link) link.remove();
     };
   }, []);
