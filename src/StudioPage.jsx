@@ -46,6 +46,7 @@ export default function StudioPage() {
           isPartOf: { '@id': 'https://divineinktattoos.in/#website' },
           about: { '@id': 'https://divineinktattoos.in/#localbusiness' },
           mainEntity: { '@id': 'https://divineinktattoos.in/#localbusiness' },
+          breadcrumb: { '@id': canonical + '#breadcrumb' },
           inLanguage: 'en-IN'
         },
         {
