@@ -27,14 +27,6 @@ function replaceMeta(html, attribute, key, content) {
 }
 
 function getServiceSeo(service) {
-  if (service.slug === 'fine-line-tattoos') {
-    return {
-      metaTitle: 'Fine Line Tattoo Artist in Gurgaon (Gurugram) | Divine Ink',
-      description:
-        'Looking for a fine line tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 offers fine line tattoo planning, sizing and placement guidance.',
-    };
-  }
-
   return {
     metaTitle: service.metaTitle,
     description: service.description,
