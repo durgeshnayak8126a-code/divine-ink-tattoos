@@ -114,6 +114,9 @@ for (const service of servicePages) {
   expect(html.includes(`<meta name="description" content="${service.description}">`), `Wrong SEO description for service ${service.slug}.`);
   expect(html.includes(`<meta property="og:description" content="${service.description}">`), `Wrong OG description for service ${service.slug}.`);
   expect(html.includes(`<meta name="twitter:description" content="${service.description}">`), `Wrong Twitter description for service ${service.slug}.`);
+  expect((html.match(/<meta name="description"/g) || []).length === 1, `Service ${service.slug} must have exactly one meta description.`);
+  expect((html.match(/<meta property="og:description"/g) || []).length === 1, `Service ${service.slug} must have exactly one OG description.`);
+  expect((html.match(/<meta name="twitter:description"/g) || []).length === 1, `Service ${service.slug} must have exactly one Twitter description.`);
   expect(html.includes(`rel="canonical" href="${canonical}"`), `Wrong canonical for service ${service.slug}.`);
   expect(html.includes('name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"'), `Public service ${service.slug} must explicitly allow indexing.`);
   expect(!html.includes('noindex'), `Public service ${service.slug} must not contain noindex directives.`);
