@@ -192,6 +192,16 @@ if (await exists(sitemapPath)) {
   expect(!sitemap.includes('/admin/'), 'Sitemap must never include admin URLs.');
 }
 
+const studioHtmlPath = resolve(dist, 'studio', 'index.html');
+expect(await exists(studioHtmlPath), 'dist/studio/index.html must exist.');
+if (await exists(studioHtmlPath)) {
+  const studioHtml = await read(studioHtmlPath);
+  expect(studioHtml.includes('<link rel="canonical" href="https://divineinktattoos.in/studio/">'), 'Studio canonical must be exact.');
+  expect(studioHtml.includes('name="robots" content="index, follow'), 'Studio page must be explicitly indexable.');
+  expect(studioHtml.includes('https://divineinktattoos.in/studio/#webpage'), 'Studio WebPage schema link missing.');
+  expect(studioHtml.includes('https://divineinktattoos.in/studio/#breadcrumb'), 'Studio breadcrumb schema link missing.');
+}
+
 const robotsPath = resolve(dist, 'robots.txt');
 expect(await exists(robotsPath), 'dist/robots.txt must exist.');
 if (await exists(robotsPath)) {
