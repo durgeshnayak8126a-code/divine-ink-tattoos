@@ -5,6 +5,7 @@ import { servicePages } from '../src/serviceData.js';
 const distDirectory = resolve('dist');
 const homepageHtml = await readFile(resolve(distDirectory, 'index.html'), 'utf8');
 const socialImage = 'https://divineinktattoos.in/divine-ink-logo.png';
+const publicRobotsContent = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 
 function escapeAttribute(value) {
   return value
@@ -88,6 +89,7 @@ for (const service of servicePages) {
     );
 
   html = replaceMeta(html, 'name', 'description', description);
+  html = replaceMeta(html, 'name', 'robots', publicRobotsContent);
   html = replaceMeta(html, 'property', 'og:title', metaTitle);
   html = replaceMeta(html, 'property', 'og:description', description);
   html = replaceMeta(html, 'property', 'og:url', canonical);
