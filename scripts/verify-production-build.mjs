@@ -97,6 +97,14 @@ if (await exists(homepagePath)) {
     'Homepage Twitter title changed unexpectedly.',
   );
   expect(
+    homepage.includes('<meta property="og:description" content="Custom tattoos, cover-ups, portraits, fine line and minimal tattoos plus professional piercing at Divine Ink in Sector 31, Gurgaon (Gurugram)." />'),
+    'Homepage OG description changed unexpectedly.',
+  );
+  expect(
+    homepage.includes('<meta name="twitter:description" content="Custom tattoos and professional body piercing at Divine Ink in Sector 31, Gurgaon (Gurugram)." />'),
+    'Homepage Twitter description changed unexpectedly.',
+  );
+  expect(
     homepage.includes('<link rel="canonical" href="https://divineinktattoos.in/"'),
     'Homepage canonical URL is missing or changed.',
   );
