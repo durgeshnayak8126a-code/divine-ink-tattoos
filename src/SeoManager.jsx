@@ -48,6 +48,7 @@ export default function SeoManager({ service }) {
 
     document.title = metaTitle;
     let canonicalElement = document.head.querySelector('link[rel="canonical"]');
+    const canonicalWasCreated = !canonicalElement;
     if (!canonicalElement) {
       canonicalElement = document.createElement('link');
       canonicalElement.setAttribute('rel', 'canonical');
@@ -127,7 +128,8 @@ export default function SeoManager({ service }) {
 
     return () => {
       document.title = previousTitle;
-      canonicalElement.setAttribute('href', previousCanonical);
+      if (canonicalWasCreated) canonicalElement.remove();
+      else canonicalElement.setAttribute('href', previousCanonical);
       previousMeta.forEach(([attribute, key, content]) => {
         const element = document.head.querySelector(`meta[${attribute}="${key}"]`);
         if (content === null) {
