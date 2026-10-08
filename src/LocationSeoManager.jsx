@@ -95,8 +95,14 @@ export function createLocationSchema(location) {
 export default function LocationSeoManager({ location }) {
   useEffect(() => {
     const previousTitle = document.title;
-    const canonicalElement = document.head.querySelector('link[rel="canonical"]');
+    let canonicalElement = document.head.querySelector('link[rel="canonical"]');
+    const canonicalWasCreated = !canonicalElement;
     const previousCanonical = canonicalElement?.getAttribute('href') || '';
+    if (!canonicalElement) {
+      canonicalElement = document.createElement('link');
+      canonicalElement.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalElement);
+    }
     const previousMeta = managedMeta.map(([attribute, key]) => {
       const element = document.head.querySelector(`meta[${attribute}="${key}"]`);
       return [attribute, key, element?.getAttribute('content') ?? null];
@@ -128,7 +134,8 @@ export default function LocationSeoManager({ location }) {
 
     return () => {
       document.title = previousTitle;
-      canonicalElement?.setAttribute('href', previousCanonical);
+      if (canonicalWasCreated) canonicalElement.remove();
+      else canonicalElement.setAttribute('href', previousCanonical);
       previousMeta.forEach(([attribute, key, content]) => {
         const element = document.head.querySelector(`meta[${attribute}="${key}"]`);
         if (content === null) element?.remove();
