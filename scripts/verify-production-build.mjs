@@ -118,6 +118,8 @@ for (const service of servicePages) {
   expect((html.match(/<meta property="og:description"/g) || []).length === 1, `Service ${service.slug} must have exactly one OG description.`);
   expect((html.match(/<meta name="twitter:description"/g) || []).length === 1, `Service ${service.slug} must have exactly one Twitter description.`);
   expect(html.includes(`rel="canonical" href="${canonical}"`), `Wrong canonical for service ${service.slug}.`);
+  expect((html.match(/<link rel="canonical"/g) || []).length === 1, `Service ${service.slug} must have exactly one canonical link.`);
+  expect((html.match(/<meta name="robots"/g) || []).length === 1, `Service ${service.slug} must have exactly one robots meta tag.`);
   expect(html.includes('name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"'), `Public service ${service.slug} must explicitly allow indexing.`);
   expect(!html.includes('noindex'), `Public service ${service.slug} must not contain noindex directives.`);
   expect(html.includes('"@type":"Service"'), `Service schema missing for ${service.slug}.`);
@@ -142,6 +144,8 @@ for (const location of locationPages) {
   expect((html.match(/<meta property="og:description"/g) || []).length === 1, `Location ${location.slug} must have exactly one OG description.`);
   expect((html.match(/<meta name="twitter:description"/g) || []).length === 1, `Location ${location.slug} must have exactly one Twitter description.`);
   expect(html.includes(`rel="canonical" href="${canonical}"`), `Wrong canonical for location ${location.slug}.`);
+  expect((html.match(/<link rel="canonical"/g) || []).length === 1, `Location ${location.slug} must have exactly one canonical link.`);
+  expect((html.match(/<meta name="robots"/g) || []).length === 1, `Location ${location.slug} must have exactly one robots meta tag.`);
   expect(html.includes('name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"'), `Public location ${location.slug} must explicitly allow indexing.`);
   expect(!html.includes('noindex'), `Public location ${location.slug} must not contain noindex directives.`);
   expect(html.includes('"@type":["TattooParlor","LocalBusiness"]') || html.includes('"@type": ["TattooParlor", "LocalBusiness"]'), `LocalBusiness/TattooParlor schema missing for location ${location.slug}.`);
