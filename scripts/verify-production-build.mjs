@@ -186,6 +186,9 @@ if (await exists(sitemapPath)) {
 
   const urlCount = (sitemap.match(/<url>/g) || []).length;
   expect(urlCount === expectedPublicUrls.length, `Sitemap should contain ${expectedPublicUrls.length} public URLs, found ${urlCount}.`);
+  const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\\/loc>/g)].map((match) => match[1]);
+  expect(new Set(sitemapUrls).size === sitemapUrls.length, 'Sitemap must not contain duplicate URLs.');
+  expect(sitemapUrls.every((url) => /^https:\\/\\/divineinktattoos\\.in\\/[^?]*$/.test(url)), 'Sitemap URLs must use the canonical HTTPS host without query strings.');
   expect(!sitemap.includes('/admin/'), 'Sitemap must never include admin URLs.');
 }
 
