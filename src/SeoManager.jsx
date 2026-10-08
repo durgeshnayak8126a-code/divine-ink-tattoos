@@ -89,6 +89,7 @@ export default function SeoManager({ service }) {
       {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
+        '@id': `${canonical}#breadcrumb`,
         itemListElement: [
           {
             '@type': 'ListItem',
