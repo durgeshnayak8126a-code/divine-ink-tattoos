@@ -203,6 +203,13 @@ if (await exists(studioHtmlPath)) {
   expect(studioHtml.includes('https://divineinktattoos.in/studio/#webpage'), 'Studio WebPage schema link missing.');
   expect(studioHtml.includes('https://divineinktattoos.in/studio/#breadcrumb'), 'Studio breadcrumb schema link missing.');
   expect(studioHtml.includes('"breadcrumb":{"@id":"https://divineinktattoos.in/studio/#breadcrumb"}'), 'Studio WebPage must link its breadcrumb entity.');
+  expect(studioHtml.includes('"mainEntity":{"@id":"https://divineinktattoos.in/#localbusiness"}'), 'Studio WebPage must link the local business entity.');
+  const normalizedStudio = studioHtml.replace(/\\s+/g, '');
+  expect(normalizedStudio.includes('"telephone":"+918445702782"'), 'Locked phone is missing or changed on studio page.');
+  expect(normalizedStudio.includes('"postalCode":"122001"'), 'Locked postal code is missing or changed on studio page.');
+  expect(normalizedStudio.includes('"addressLocality":"Gurugram"'), 'Locked city is missing or changed on studio page.');
+  expect(normalizedStudio.includes('cid=13259589601998313340'), 'Canonical Maps CID is missing or changed on studio page.');
+  expect(normalizedStudio.includes('"latitude":28.4529') && normalizedStudio.includes('"longitude":77.0508791"), 'Locked Maps coordinates are missing or changed on studio page.');
 }
 
 const robotsPath = resolve(dist, 'robots.txt');
