@@ -42,6 +42,12 @@ const homepageLastmod = latestGitDate([
   'src/usePublicGallery.js',
 ]);
 
+const studioLastmod = latestGitDate([
+  'src/StudioPage.jsx',
+  'src/App.jsx',
+  'src/SeoManager.jsx',
+]);
+
 const serviceLastmod = latestGitDate([
   'src/serviceData.js',
   'src/ServicePage.jsx',
@@ -58,6 +64,7 @@ const locationLastmod = latestGitDate([
 
 const entries = [
   urlEntry('/', homepageLastmod),
+  urlEntry('/studio/', studioLastmod),
   ...servicePages.map((service) => urlEntry(`/services/${service.slug}/`, serviceLastmod)),
   ...locationPages.map((location) => urlEntry(`/locations/${location.slug}/`, locationLastmod)),
 ];
