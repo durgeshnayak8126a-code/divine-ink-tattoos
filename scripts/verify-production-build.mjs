@@ -128,6 +128,8 @@ for (const location of locationPages) {
   expect(html.includes('name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"'), `Public location ${location.slug} must explicitly allow indexing.`);
   expect(!html.includes('noindex'), `Public location ${location.slug} must not contain noindex directives.`);
   expect(html.includes('"@type":["TattooParlor","LocalBusiness"]') || html.includes('"@type": ["TattooParlor", "LocalBusiness"]'), `LocalBusiness/TattooParlor schema missing for location ${location.slug}.`);
+  expect(html.includes(`${canonical}#breadcrumb`), `Location breadcrumb entity link missing for ${location.slug}.`);
+  expect(html.includes(`${canonical}#webpage`), `Location WebPage entity link missing for ${location.slug}.`);
   const normalizedLocation = html.replace(/\\s+/g, '');
   expect(normalizedLocation.includes('"telephone":"+918445702782"'), `Locked phone is missing or changed on location ${location.slug}.`);
   expect(normalizedLocation.includes('"postalCode":"122001"'), `Locked postal code is missing or changed on location ${location.slug}.`);
