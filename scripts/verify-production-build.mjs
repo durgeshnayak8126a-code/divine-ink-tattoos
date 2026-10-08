@@ -130,7 +130,7 @@ for (const location of locationPages) {
   expect(html.includes('"@type":["TattooParlor","LocalBusiness"]') || html.includes('"@type": ["TattooParlor", "LocalBusiness"]'), `LocalBusiness/TattooParlor schema missing for location ${location.slug}.`);
   expect(html.includes(`${canonical}#breadcrumb`), `Location breadcrumb entity link missing for ${location.slug}.`);
   expect(html.includes(`${canonical}#webpage`), `Location WebPage entity link missing for ${location.slug}.`);
-  const normalizedLocation = html.replace(/\\s+/g, '');
+  const normalizedLocation = html.replace(/\s+/g, '');
   expect(normalizedLocation.includes('"telephone":"+918445702782"'), `Locked phone is missing or changed on location ${location.slug}.`);
   expect(normalizedLocation.includes('"postalCode":"122001"'), `Locked postal code is missing or changed on location ${location.slug}.`);
   expect(normalizedLocation.includes('"addressLocality":"Gurugram"'), `Locked city is missing or changed on location ${location.slug}.`);
@@ -186,9 +186,9 @@ if (await exists(sitemapPath)) {
 
   const urlCount = (sitemap.match(/<url>/g) || []).length;
   expect(urlCount === expectedPublicUrls.length, `Sitemap should contain ${expectedPublicUrls.length} public URLs, found ${urlCount}.`);
-  const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\\/loc>/g)].map((match) => match[1]);
+  const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
   expect(new Set(sitemapUrls).size === sitemapUrls.length, 'Sitemap must not contain duplicate URLs.');
-  expect(sitemapUrls.every((url) => /^https:\\/\\/divineinktattoos\\.in\\/[^?]*$/.test(url)), 'Sitemap URLs must use the canonical HTTPS host without query strings.');
+  expect(sitemapUrls.every((url) => /^https:\/\/divineinktattoos\.in\/[^?]*$/.test(url)), 'Sitemap URLs must use the canonical HTTPS host without query strings.');
   expect(!sitemap.includes('/admin/'), 'Sitemap must never include admin URLs.');
 }
 
