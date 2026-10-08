@@ -62,6 +62,10 @@ if (await exists(homepagePath)) {
     'Homepage canonical URL is missing or changed.',
   );
   expect(
+    homepage.includes('name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"'),
+    'Homepage robots directive must explicitly allow indexing.',
+  );
+  expect(
     homepage.includes('name="google-site-verification"'),
     'Google Search Console verification meta is missing.',
   );
@@ -104,7 +108,8 @@ for (const service of servicePages) {
 
   expect(html.includes(`<title>${expectedTitle}</title>`), `Wrong SEO title for service ${service.slug}.`);
   expect(html.includes(`rel="canonical" href="${canonical}"`), `Wrong canonical for service ${service.slug}.`);
-  expect(!html.includes('content="noindex, nofollow, noarchive"'), `Public service ${service.slug} must remain indexable.`);
+  expect(html.includes('name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"'), `Public service ${service.slug} must explicitly allow indexing.`);
+  expect(!html.includes('noindex'), `Public service ${service.slug} must not contain noindex directives.`);
   expect(html.includes('"@type":"Service"'), `Service schema missing for ${service.slug}.`);
 }
 
@@ -118,7 +123,8 @@ for (const location of locationPages) {
 
   expect(html.includes(`<title>${location.metaTitle}</title>`), `Wrong SEO title for location ${location.slug}.`);
   expect(html.includes(`rel="canonical" href="${canonical}"`), `Wrong canonical for location ${location.slug}.`);
-  expect(!html.includes('content="noindex, nofollow, noarchive"'), `Public location ${location.slug} must remain indexable.`);
+  expect(html.includes('name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"'), `Public location ${location.slug} must explicitly allow indexing.`);
+  expect(!html.includes('noindex'), `Public location ${location.slug} must not contain noindex directives.`);
   expect(html.includes('"@type":["TattooParlor","LocalBusiness"]') || html.includes('"@type": ["TattooParlor", "LocalBusiness"]'), `LocalBusiness/TattooParlor schema missing for location ${location.slug}.`);
   const normalizedLocation = html.replace(/\\s+/g, '');
   expect(normalizedLocation.includes('"telephone":"+918445702782"'), `Locked phone is missing or changed on location ${location.slug}.`);
