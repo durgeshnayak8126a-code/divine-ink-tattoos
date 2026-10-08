@@ -85,6 +85,18 @@ if (await exists(homepagePath)) {
     'Homepage SEO title changed unexpectedly.',
   );
   expect(
+    homepage.includes('<meta name="description" content="Divine Ink is a tattoo shop and studio in Gurgaon (Gurugram), Sector 31, offering custom, cover-up, portrait, fine line and minimal tattoos plus professional piercing.">'),
+    'Homepage SEO description changed unexpectedly.',
+  );
+  expect(
+    homepage.includes('<meta property="og:title" content="Tattoo Shop & Studio in Gurgaon (Gurugram) | Divine Ink Tattoos">'),
+    'Homepage OG title changed unexpectedly.',
+  );
+  expect(
+    homepage.includes('<meta name="twitter:title" content="Tattoo Shop & Studio in Gurgaon (Gurugram) | Divine Ink Tattoos">'),
+    'Homepage Twitter title changed unexpectedly.',
+  );
+  expect(
     homepage.includes('<link rel="canonical" href="https://divineinktattoos.in/"'),
     'Homepage canonical URL is missing or changed.',
   );
