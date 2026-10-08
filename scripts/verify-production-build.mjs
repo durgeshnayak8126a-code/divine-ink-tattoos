@@ -135,6 +135,9 @@ for (const location of locationPages) {
   expect(html.includes(`<meta name="description" content="${location.description}">`), `Wrong SEO description for location ${location.slug}.`);
   expect(html.includes(`<meta property="og:description" content="${location.description}">`), `Wrong OG description for location ${location.slug}.`);
   expect(html.includes(`<meta name="twitter:description" content="${location.description}">`), `Wrong Twitter description for location ${location.slug}.`);
+  expect((html.match(/<meta name="description"/g) || []).length === 1, `Location ${location.slug} must have exactly one meta description.`);
+  expect((html.match(/<meta property="og:description"/g) || []).length === 1, `Location ${location.slug} must have exactly one OG description.`);
+  expect((html.match(/<meta name="twitter:description"/g) || []).length === 1, `Location ${location.slug} must have exactly one Twitter description.`);
   expect(html.includes(`rel="canonical" href="${canonical}"`), `Wrong canonical for location ${location.slug}.`);
   expect(html.includes('name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"'), `Public location ${location.slug} must explicitly allow indexing.`);
   expect(!html.includes('noindex'), `Public location ${location.slug} must not contain noindex directives.`);
