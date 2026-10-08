@@ -26,20 +26,6 @@ function setMeta(attribute, key, content) {
 }
 
 function getServiceSeo(service) {
-  const tattooSeo = {
-    'custom-tattoos': ['Custom Tattoo Artist in Gurgaon (Gurugram) | Divine Ink', 'Looking for a custom tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 offers original tattoo planning, placement and sizing guidance.'],
-    'fine-line-tattoos': ['Fine Line Tattoo Artist in Gurgaon (Gurugram) | Divine Ink', 'Looking for a fine line tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 offers fine line tattoo planning, sizing and placement guidance.'],
-    'portrait-tattoos': ['Realism & Portrait Tattoo Artist in Gurgaon (Gurugram) | Divine Ink', 'Looking for a realism or portrait tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 reviews references, scale and placement for detailed tattoo work.'],
-    'black-grey-tattoos': ['Black & Grey Tattoo Artist in Gurgaon (Gurugram) | Divine Ink', 'Looking for a black and grey tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 plans contrast, shading, scale and placement for tattoo work.'],
-    'cover-up-tattoos': ['Cover Up Tattoo Artist in Gurgaon (Gurugram) | Divine Ink', 'Looking for a cover up tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 assesses existing ink, coverage, scale and realistic design options.'],
-    'sleeve-tattoos': ['Sleeve Tattoo Artist in Gurgaon (Gurugram) | Divine Ink', 'Looking for a sleeve tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 plans full-arm composition, style, transitions and multiple sessions.'],
-    'minimal-tattoos': ['Minimal Tattoo Artist in Gurgaon (Gurugram) | Divine Ink', 'Looking for a minimal tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 plans clean forms, readable sizing and suitable placement.'],
-  };
-  if (tattooSeo[service.slug]) {
-    const [metaTitle, description] = tattooSeo[service.slug];
-    return { metaTitle, description };
-  }
-
   return {
     metaTitle: service.metaTitle,
     description: service.description,
