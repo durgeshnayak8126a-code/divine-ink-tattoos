@@ -126,6 +126,9 @@ if (await exists(homepagePath)) {
   const normalizedHomepage = homepage.replace(/\s+/g, '');
   expect(normalizedHomepage.includes('"telephone":"+918445702782"'), 'Locked phone is missing or changed in homepage schema.');
   expect(normalizedHomepage.includes('"postalCode":"122001"'), 'Locked postal code is missing or changed in homepage schema.');
+  expect(normalizedHomepage.includes('"propertyID":"GooglePlaceID","value":"ChIJyZWbyoMZDTkRfJeSnn2GA7g"'), 'Canonical Google Place ID is missing or changed in homepage schema.');
+  expect(normalizedHomepage.includes('"propertyID":"GoogleMapsCID","value":"13259589601998313340"'), 'Canonical Google Maps CID identifier is missing or changed in homepage schema.');
+  expect(normalizedHomepage.includes('"foundingDate":"2018-01-30"'), 'Locked founding date is missing or changed in homepage schema.');
   expect(normalizedHomepage.includes('"addressLocality":"Gurugram"'), 'Locked city is missing or changed in homepage schema.');
   expect(normalizedHomepage.includes('"addressRegion":"Haryana"'), 'Locked state is missing or changed in homepage schema.');
   expect(normalizedHomepage.includes('cid=13259589601998313340'), 'Canonical Maps CID is missing or changed in homepage schema.');
