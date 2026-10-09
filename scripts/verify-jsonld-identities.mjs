@@ -119,6 +119,16 @@ for (const [route, relativePath] of publicPages) {
     if (!businessSocials.includes(officialInstagram)) {
       failures.push('Homepage LocalBusiness schema must link the official Instagram profile @divineinktattoos1.');
     }
+
+    for (const [entityName, socials] of [
+      ['Organization', organizationSocials],
+      ['LocalBusiness', businessSocials],
+    ]) {
+      const instagramLinks = socials.filter((url) => /instagram\.com/i.test(url));
+      if (instagramLinks.some((url) => url !== officialInstagram)) {
+        failures.push('Homepage ' + entityName + ' schema contains an Instagram URL other than the official @divineinktattoos1 profile.');
+      }
+    }
   }
 
   const ids = entities.map((entity) => entity['@id']);
