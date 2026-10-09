@@ -133,7 +133,7 @@ if (await exists(homepagePath)) {
     'Homepage SEO title changed unexpectedly.',
   );
   expect(
-    homepage.includes('<meta name="description" content="Divine Ink is a tattoo studio in Sector 31, Gurugram, specialising in custom, fine-line, realism, portrait, black-and-grey and cover-up tattoos." />'),
+    homepage.includes('<meta name="description" content="Official Divine Ink Tattoos website: one studio at Shop No. 155, Basement, Main HUDA Market, Sector 31, Gurugram. Instagram @divineinktattoos1." />'),
     'Homepage SEO description changed unexpectedly.',
   );
   expect(
@@ -145,11 +145,11 @@ if (await exists(homepagePath)) {
     'Homepage Twitter title changed unexpectedly.',
   );
   expect(
-    homepage.includes('<meta property="og:description" content="Explore Divine Ink’s tattoo specialties in Sector 31, Gurugram: custom, fine-line, realism, portrait, black-and-grey and cover-up tattoos." />'),
+    homepage.includes('<meta property="og:description" content="Official Divine Ink studio: Shop No. 155, Basement, Main HUDA Market, Sector 31, Gurugram. Instagram @divineinktattoos1." />'),
     'Homepage OG description changed unexpectedly.',
   );
   expect(
-    homepage.includes('<meta name="twitter:description" content="Divine Ink’s Sector 31, Gurugram tattoo specialties include custom, fine-line, realism, portrait, black-and-grey and cover-up tattoos." />'),
+    homepage.includes('<meta name="twitter:description" content="Official Divine Ink studio: Shop No. 155, Basement, Main HUDA Market, Sector 31, Gurugram. Instagram @divineinktattoos1." />'),
     'Homepage Twitter description changed unexpectedly.',
   );
   expect(
