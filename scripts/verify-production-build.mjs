@@ -156,7 +156,7 @@ if (await exists(homepagePath)) {
   );
   expect(
     canonicalBusiness?.address?.streetAddress?.includes('Shop No. 155') &&
-      !/Shop No\\.? 189|Shop No\\.? 9|Samvit Hospital/i.test(canonicalBusiness?.address?.streetAddress || ''),
+      !['shop no. 189', 'shop no 189', 'shop no. 9', 'samvit hospital'].some((value) => (canonicalBusiness?.address?.streetAddress || '').toLowerCase().includes(value)),
     'Canonical business schema must keep only the verified Sector 31 address, not the unrelated Sector 38 listing.',
   );
   expect(
@@ -165,7 +165,7 @@ if (await exists(homepagePath)) {
     'Homepage must visibly disambiguate the official Sector 31 studio from incorrect directory listings.',
   );
   expect(
-    !/Shop No\\.? 189|Shop No\\.? 9, First Floor|Opposite Samvit Hospital|instagram\\.com\\/(?:angeltattoodesignstudio|devtattoostudio_)/i.test(homepage),
+    !['shop no. 189', 'shop no 189', 'shop no. 9, first floor', 'opposite samvit hospital', 'instagram.com/angeltattoodesignstudio', 'instagram.com/devtattoostudio_'].some((value) => homepage.toLowerCase().includes(value)),
     'Homepage must not contain conflicting third-party shop addresses or unrelated Instagram handles.',
   );
 
