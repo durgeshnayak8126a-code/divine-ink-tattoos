@@ -70,7 +70,8 @@ const faqs = [
   ['What hygiene process do you follow?', 'Single-use needles, fresh consumables, clean working surfaces and proper aftercare guidance are part of the studio process.'],
   ['Can I book a piercing appointment?', 'Yes. Send the piercing type and preferred time on WhatsApp to confirm availability.'],
   ['What is Divine Ink’s official Instagram account?', 'The official Instagram profile is @divineinktattoos1, linked directly from this website. Use that profile for Divine Ink studio work and updates.'],
-  ['Does Divine Ink have another Gurugram branch?', 'This official website lists one verified Divine Ink studio: Shop No. 155, Basement, near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram. We do not list a second Gurugram branch here. Use the linked official Sector 31 Google Maps profile to confirm the destination before visiting.']
+  ['Does Divine Ink have another Gurugram branch?', 'This official website lists one verified Divine Ink studio: Shop No. 155, Basement, near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram. We do not list a second Gurugram branch here. Use the linked official Sector 31 Google Maps profile to confirm the destination before visiting.'],
+  ['Is this website connected to Divine Ink studios in other cities?', 'No. This official website represents only Divine Ink Tattoos & Piercing Studio at its verified Sector 31 address in Gurugram, Haryana. It does not represent or advertise branches in other cities. For the correct phone number, address and directions, use the contact details and official Google Maps link on this website.']
 ];
 
 function App() {
