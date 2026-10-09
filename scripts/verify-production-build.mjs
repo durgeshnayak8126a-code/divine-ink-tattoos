@@ -155,6 +155,16 @@ if (await exists(homepagePath)) {
     'Canonical business schema must point to the official Divine Ink Instagram account.',
   );
   expect(
+    canonicalBusiness?.address?.streetAddress?.includes('Shop No. 155') &&
+      !/Shop No\\.? 189|Shop No\\.? 9|Samvit Hospital/i.test(canonicalBusiness?.address?.streetAddress || ''),
+    'Canonical business schema must keep only the verified Sector 31 address, not the unrelated Sector 38 listing.',
+  );
+  expect(
+    appSource.includes('We do not operate a Sector 38 or Islampur branch.') &&
+      appSource.includes('that is not the official Divine Ink studio address'),
+    'Homepage must visibly disambiguate the official Sector 31 studio from incorrect directory listings.',
+  );
+  expect(
     !/Shop No\\.? 189|Shop No\\.? 9, First Floor|Opposite Samvit Hospital|instagram\\.com\\/(?:angeltattoodesignstudio|devtattoostudio_)/i.test(homepage),
     'Homepage must not contain conflicting third-party shop addresses or unrelated Instagram handles.',
   );
