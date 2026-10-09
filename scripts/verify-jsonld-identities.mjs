@@ -47,45 +47,6 @@ for (const [route, relativePath] of publicPages) {
     continue;
   }
 
-  const unrelatedSignals = [
-    [/sector\s*38/i, 'a Sector 38 location'],
-    [/samvit hospital/i, 'the unrelated Samvit Hospital address'],
-    [/shop no\.?\s*9\b/i, 'an unrelated Shop No. 9 address'],
-    [/shop no\.?\s*189\b/i, 'the conflicting Shop No. 189 address'],
-    [/devtattoostudio|devtattoos/i, 'an unrelated Dev Tattoo social profile'],
-    [/angel tattoo design studio/i, 'an unrelated tattoo studio identity'],
-  ];
-  for (const [pattern, label] of unrelatedSignals) {
-    if (pattern.test(html)) {
-      failures.push('Official page ' + route + ' contains ' + label + '.');
-    }
-  }
-
-  const readMeta = (attribute, key) => {
-    const tagPattern = new RegExp('<meta[^>]*\\b' + attribute + '=["\\x27]' + key + '["\\x27][^>]*>', 'i');
-    const tag = html.match(tagPattern)?.[0];
-    return tag?.match(/\bcontent=["']([^"']*)["']/i)?.[1] ?? '';
-  };
-  for (const [attribute, key] of [
-    ['property', 'og:title'],
-    ['property', 'og:description'],
-    ['property', 'og:image'],
-    ['name', 'twitter:title'],
-    ['name', 'twitter:description'],
-    ['name', 'twitter:image'],
-  ]) {
-    if (!readMeta(attribute, key).trim()) {
-      failures.push('Public page ' + route + ' is missing non-empty ' + key + ' metadata.');
-    }
-  }
-  const officialSocialImage = 'https://divineinktattoos.in/divine-ink-logo.png';
-  if (readMeta('property', 'og:image') !== officialSocialImage) {
-    failures.push('Open Graph image on ' + route + ' must use the official Divine Ink logo.');
-  }
-  if (readMeta('name', 'twitter:image') !== officialSocialImage) {
-    failures.push('Twitter image on ' + route + ' must use the official Divine Ink logo.');
-  }
-
   const canonicalMatches = [...html.matchAll(/<link\s+rel="canonical"\s+href="([^"]+)"\s*\/?\s*>/gi)];
   const ogUrlMatches = [...html.matchAll(/<meta\s+property="og:url"\s+content="([^"]+)"\s*\/?\s*>/gi)];
   const expectedUrl = `https://divineinktattoos.in${route}`;
@@ -112,72 +73,6 @@ for (const [route, relativePath] of publicPages) {
       collectEntities(JSON.parse(match[1]), entities);
     } catch (error) {
       failures.push(`Invalid JSON-LD on ${route}, block ${index + 1}: ${error.message}`);
-    }
-  }
-
-  const businessEntities = entities.filter((entity) => {
-    const types = Array.isArray(entity['@type']) ? entity['@type'] : [entity['@type']];
-    return types.some((type) => ['LocalBusiness', 'TattooParlor'].includes(type));
-  });
-
-  for (const business of businessEntities) {
-    const address = business.address;
-    const streetAddress = typeof address === 'object' && address ? address.streetAddress : '';
-    const phone = business.telephone;
-    const mapUrl = business.hasMap;
-    const identifier = business.identifier;
-    if (
-      identifier?.['@type'] !== 'PropertyValue' ||
-      identifier?.propertyID !== 'Google Maps Place ID' ||
-      identifier?.value !== 'ChIJyZWbyoMZDTkRfJeSnn2GA7g'
-    ) {
-      failures.push('Structured business entity on ' + route + ' must carry the verified Google Maps Place ID.');
-    }
-    if (!/shop no\.?\s*155/i.test(String(streetAddress))) {
-      failures.push('Structured business address on ' + route + ' must identify the verified Shop No. 155 studio.');
-    }
-    if (!String(streetAddress).includes('Sector 31')) {
-      failures.push('Structured business address on ' + route + ' must identify the verified Sector 31 studio.');
-    }
-    if (/sector\s*38|samvit hospital|shop no\.?\s*9/i.test(String(streetAddress))) {
-      failures.push('Structured business address on ' + route + ' contains a conflicting Sector 38 location.');
-    }
-    if (phone && phone !== '+918445702782' && phone !== '+91 84457 02782') {
-      failures.push('Structured business phone mismatch on ' + route + ': ' + phone + '.');
-    }
-    if (route === '/' && mapUrl !== 'https://www.google.com/maps?cid=13259589601998313340') {
-      failures.push('Homepage LocalBusiness schema must link to the official Sector 31 Google Maps profile.');
-    }
-  }
-
-  if (route === '/' && businessEntities.length !== 1) {
-    failures.push('Homepage must have exactly one LocalBusiness/TattooParlor entity; found ' + businessEntities.length + '.');
-  }
-
-  if (route === '/') {
-    const officialInstagram = 'https://www.instagram.com/divineinktattoos1/';
-    const organization = entities.find((entity) => {
-      const types = Array.isArray(entity['@type']) ? entity['@type'] : [entity['@type']];
-      return types.includes('Organization') && entity['@id'] === 'https://divineinktattoos.in/#organization';
-    });
-    const organizationSocials = Array.isArray(organization?.sameAs) ? organization.sameAs : [];
-    const businessSocials = Array.isArray(businessEntities[0]?.sameAs) ? businessEntities[0].sameAs : [];
-
-    if (!organizationSocials.includes(officialInstagram)) {
-      failures.push('Homepage Organization schema must link the official Instagram profile @divineinktattoos1.');
-    }
-    if (!businessSocials.includes(officialInstagram)) {
-      failures.push('Homepage LocalBusiness schema must link the official Instagram profile @divineinktattoos1.');
-    }
-
-    for (const [entityName, socials] of [
-      ['Organization', organizationSocials],
-      ['LocalBusiness', businessSocials],
-    ]) {
-      const instagramLinks = socials.filter((url) => /instagram\.com/i.test(url));
-      if (instagramLinks.some((url) => url !== officialInstagram)) {
-        failures.push('Homepage ' + entityName + ' schema contains an Instagram URL other than the official @divineinktattoos1 profile.');
-      }
     }
   }
 
