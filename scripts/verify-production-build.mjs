@@ -63,7 +63,10 @@ function validateRelated(items, itemLabel) {
   const slugs = new Set(items.map((item) => item.slug));
   for (const item of items) {
     expect(Array.isArray(item.related), `${itemLabel} ${item.slug} must have related links.`);
-    for (const relatedSlug of item.related || []) {
+    const related = item.related || [];
+    expect(related.length >= 2, `${itemLabel} ${item.slug} must expose at least two related internal links.`);
+    expect(new Set(related).size === related.length, `${itemLabel} ${item.slug} must not repeat related internal links.`);
+    for (const relatedSlug of related) {
       expect(slugs.has(relatedSlug), `${itemLabel} ${item.slug} references missing related slug ${relatedSlug}.`);
       expect(relatedSlug !== item.slug, `${itemLabel} ${item.slug} must not relate to itself.`);
     }
