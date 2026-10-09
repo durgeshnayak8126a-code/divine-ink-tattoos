@@ -70,7 +70,7 @@ const faqs = [
   ['What hygiene process do you follow?', 'Single-use needles, fresh consumables, clean working surfaces and proper aftercare guidance are part of the studio process.'],
   ['Can I book a piercing appointment?', 'Yes. Send the piercing type and preferred time on WhatsApp to confirm availability.'],
   ['What is Divine Ink’s official Instagram account?', 'The official Instagram profile is @divineinktattoos1, linked directly from this website. Use that profile for Divine Ink studio work and updates.'],
-  ['Does Divine Ink have a Sector 38 studio?', 'The currently verified Divine Ink studio is at Shop No. 155, basement, near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram. This official website does not list a Sector 38 branch. Use the linked Sector 31 Google Maps listing to confirm directions before visiting.']
+  ['Does Divine Ink have another Gurugram branch?', 'The official website lists one verified Divine Ink studio: Shop No. 155, basement, near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram. Use the linked Sector 31 Google Maps listing to confirm directions before visiting.']
 ];
 
 function App() {
@@ -319,7 +319,7 @@ function App() {
             <h2>Divine Ink Tattoos in Sector 31, Gurugram</h2>
             <p>If you are searching for Divine Ink Tattoos in Gurgaon or Gurugram, the official website for this studio is <strong>divineinktattoos.in</strong>. The studio is at Shop No. 155, basement, near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001.</p>
             <p>For accurate directions, contact details, and studio information, use this official website and the linked Google Maps profile. Divine Ink Tattoos &amp; Piercing Studio welcomes tattoo and piercing clients at its Sector 31, Gurugram studio.</p>
-            <p>Divine Ink operates from one currently verified studio at this Sector 31 address. This official website does not list a Sector 38 branch. Please use the address and official map link above to confirm the destination before visiting.</p>
+            <p>Divine Ink operates from one studio at this verified Sector 31 address. This official website does not list a second Gurugram branch. Please use the address and official map link above to confirm the destination before visiting.</p>
             <p>The only official Instagram profile linked by Divine Ink is <strong>@divineinktattoos1</strong>. Use the Instagram link below for the studio’s own work and updates.</p>
             {mapLink && <a className="text-link" href={mapLink} target="_blank" rel="noreferrer">Open the Sector 31 Google Maps listing <ChevronRight size={18}/></a>}
             {instagramLink && <p><a className="text-link" href={instagramLink} target="_blank" rel="noreferrer">Official Instagram: @divineinktattoos1</a></p>}
