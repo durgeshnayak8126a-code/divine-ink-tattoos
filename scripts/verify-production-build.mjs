@@ -185,13 +185,22 @@ if (await exists(homepagePath)) {
   const canonicalBusiness = homepageEntities.find((entity) => entity?.['@id'] === 'https://divineinktattoos.in/#localbusiness');
   expect(
     canonicalBusiness?.disambiguatingDescription?.includes('Shop No. 155, Basement') &&
-      canonicalBusiness?.disambiguatingDescription?.includes('official website divineinktattoos.in') &&
+      canonicalBusiness?.disambiguatingDescription?.includes('official website') &&
+      canonicalBusiness?.disambiguatingDescription?.includes('one verified Gurugram studio only') &&
+      canonicalBusiness?.disambiguatingDescription?.includes('similarly named businesses') &&
       !['sector 38', 'islampur', 'samvit hospital', 'shop no. 9', 'shop no 9'].some((value) => (canonicalBusiness?.disambiguatingDescription || '').toLowerCase().includes(value)),
     'Homepage business schema must positively identify the verified Sector 31 studio without repeating conflicting listing details.',
   );
   expect(
     canonicalBusiness?.sameAs?.includes('https://www.instagram.com/divineinktattoos1/'),
     'Canonical business schema must point to the official Divine Ink Instagram account.',
+  );
+  const canonicalOrganization = homepageEntities.find((entity) => entity?.['@id'] === 'https://divineinktattoos.in/#organization');
+  expect(
+    canonicalOrganization?.description?.includes('independent Divine Ink Tattoos & Piercing Studio') &&
+      canonicalOrganization?.description?.includes('one verified studio only') &&
+      canonicalOrganization?.contactPoint?.areaServed === 'Gurugram, Haryana, India',
+    'Organization schema must disambiguate the independent Gurugram business and keep its service-contact area local.',
   );
   expect(
     canonicalBusiness?.identifier?.['@type'] === 'PropertyValue' &&
