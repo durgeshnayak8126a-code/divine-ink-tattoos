@@ -82,7 +82,11 @@ for (const [route, relativePath] of publicPages) {
     return matches.map((tag) => tag.match(/\bcontent=["']([^"']*)["']/i)?.[1] ?? '');
   };
 
-  const documentTitle = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1];
+  const titleMatches = [...html.matchAll(/<title>([\s\S]*?)<\/title>/gi)];
+  const documentTitle = titleMatches[0]?.[1];
+  if (titleMatches.length !== 1 || !documentTitle?.trim()) {
+    failures.push(`Public page ${route} must have exactly one non-empty document title; found ${titleMatches.length}.`);
+  }
   const ogTitles = readMetaContent('property', 'og:title');
   const twitterTitles = readMetaContent('name', 'twitter:title');
   const ogImages = readMetaContent('property', 'og:image');
@@ -103,6 +107,9 @@ for (const [route, relativePath] of publicPages) {
   }
   if (ogImages.length === 1 && twitterImages.length === 1 && ogImages[0] !== twitterImages[0]) {
     failures.push(`Open Graph and Twitter images must match on ${route}.`);
+  }
+  if (ogImages.length === 1 && !/^https:\/\//i.test(ogImages[0])) {
+    failures.push(`Open Graph image must use an absolute HTTPS URL on ${route}.`);
   }
 
   const scripts = [
