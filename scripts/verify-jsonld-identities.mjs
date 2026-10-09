@@ -127,6 +127,7 @@ for (const [route, relativePath] of publicPages) {
     const mapUrl = business.hasMap;
     if (!/shop no\.?\s*155/i.test(String(streetAddress))) {
       failures.push('Structured business address on ' + route + ' must identify the verified Shop No. 155 studio.');
+    }
     if (!String(streetAddress).includes('Sector 31')) {
       failures.push('Structured business address on ' + route + ' must identify the verified Sector 31 studio.');
     }
