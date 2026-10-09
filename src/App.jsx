@@ -325,10 +325,10 @@ function App() {
 
         <section id="services" className="section dark-panel">
           <div className="section-heading center">
-            <p className="eyebrow">What We Do</p>
-            <h2>Tattoo styles and services</h2>
-            <p>Divine Ink is a tattoo-focused studio in Sector 31, Gurugram, offering custom tattoos, cover-ups, realism, fine line, minimal and other tattoo styles, plus professional piercing.</p>
-            <p>Explore the service and location pages below to compare tattoo styles, understand the consultation process and choose the option that fits your idea, placement and size. Every design is evaluated for detail, placement and long-term readability before the session begins.</p>
+            <p className="eyebrow">Tattoo Specialties · Sector 31, Gurugram</p>
+            <h2>Tattoo Specialties in Gurgaon (Gurugram)</h2>
+            <p>Divine Ink’s tattoo specialties include custom tattoo design, fine line tattoos, realism and portrait tattoos, black-and-grey work, cover-up tattoos, minimal tattoos and sleeve planning—all at our single verified studio in Sector 31, Gurugram.</p>
+            <p>Choose a specialty below to review the relevant service details. Each consultation considers your reference, placement, size, detail and long-term readability. Professional piercing is also available at the same Sector 31 studio.</p>
           </div>
           <div className="service-grid">
             {services.map(([title, text, href], index) => (
