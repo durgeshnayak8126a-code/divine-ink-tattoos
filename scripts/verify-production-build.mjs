@@ -121,6 +121,20 @@ if (await exists(homepagePath)) {
       homepage.includes('"@type": ["TattooParlor", "LocalBusiness"]'),
     'Homepage LocalBusiness/TattooParlor schema is missing.',
   );
+  // Keep one canonical homepage entity for each site/business identity and ensure the page points to it.
+  const homepageEntities = getJsonLdEntities(homepage);
+  expect(
+    homepageEntities.filter((entity) => entity?.['@id'] === 'https://divineinktattoos.in/#localbusiness').length === 1,
+    'Homepage must publish exactly one canonical LocalBusiness entity.',
+  );
+  expect(
+    homepageEntities.filter((entity) => entity?.['@id'] === 'https://divineinktattoos.in/#organization').length === 1,
+    'Homepage must publish exactly one canonical Organization entity.',
+  );
+  const homepageWebPage = homepageEntities.find((entity) => entity?.['@type'] === 'WebPage' && entity?.url === 'https://divineinktattoos.in/');
+  expect(homepageWebPage?.about?.['@id'] === 'https://divineinktattoos.in/#localbusiness', 'Homepage WebPage must point to the canonical LocalBusiness entity.');
+  expect(homepageWebPage?.publisher?.['@id'] === 'https://divineinktattoos.in/#organization', 'Homepage WebPage publisher must point to the canonical Organization entity.');
+
   // Locked business/entity regression guards. These values may only change with explicit approval.
   // Normalize JSON-LD whitespace so formatting changes do not create false failures.
   const normalizedHomepage = homepage.replace(/\s+/g, '');
