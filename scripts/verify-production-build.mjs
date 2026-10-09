@@ -225,6 +225,11 @@ for (const location of locationPages) {
   expect(html.includes('name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"'), `Public location ${location.slug} must explicitly allow indexing.`);
   expect(!html.includes('noindex'), `Public location ${location.slug} must not contain noindex directives.`);
   expect(html.includes('"@type":["TattooParlor","LocalBusiness"]') || html.includes('"@type": ["TattooParlor", "LocalBusiness"]'), `LocalBusiness/TattooParlor schema missing for location ${location.slug}.`);
+  const locationEntities = getJsonLdEntities(html);
+  expect(locationEntities.filter((entity) => entity?.['@id'] === 'https://divineinktattoos.in/#localbusiness').length === 1, `Location ${location.slug} must reuse exactly one canonical LocalBusiness entity.`);
+  const locationBusinessEntity = locationEntities.find((entity) => entity?.['@id'] === 'https://divineinktattoos.in/#localbusiness');
+  expect(locationBusinessEntity?.url === 'https://divineinktattoos.in/', `Location ${location.slug} LocalBusiness URL must remain the homepage URL.`);
+  expect(locationEntities.filter((entity) => entity?.['@id'] === 'https://divineinktattoos.in/#organization').length === 1, `Location ${location.slug} must reuse exactly one canonical Organization entity.`);
   expect(html.includes(`${canonical}#breadcrumb`), `Location breadcrumb entity link missing for ${location.slug}.`);
   expect(html.includes(`${canonical}#webpage`), `Location WebPage entity link missing for ${location.slug}.`);
   expect(countJsonLdEntities(html, (entity) => entity?.['@id'] === `${canonical}#breadcrumb`) === 1, `Location ${location.slug} must publish exactly one page breadcrumb entity.`);
