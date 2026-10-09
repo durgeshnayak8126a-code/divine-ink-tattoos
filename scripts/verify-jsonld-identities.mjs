@@ -73,8 +73,35 @@ for (const [route, relativePath] of publicPages) {
     ['name', 'twitter:image'],
   ];
 
-  const readMetaContent = (attribute, key) => {
-    const escapedAttribute = attribute.replace(/[.*+?^{}()|[\]\\]/g, '\\  const scripts = [
+  const metaTags = [...html.matchAll(/<meta\b[^>]*>/gi)].map((match) => match[0]);
+  const readMetaContent = (attribute, key) => metaTags
+    .filter((tag) => new RegExp(\`\\b\${attribute}=["']\${key}["']\`, 'i').test(tag))
+    .map((tag) => tag.match(/\bcontent=["']([^"']*)["']/i)?.[1] ?? '');
+
+  const documentTitle = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1];
+  const ogTitles = readMetaContent('property', 'og:title');
+  const twitterTitles = readMetaContent('name', 'twitter:title');
+  const ogImages = readMetaContent('property', 'og:image');
+  const twitterImages = readMetaContent('name', 'twitter:image');
+
+  for (const [attribute, key] of socialMeta) {
+    const matches = readMetaContent(attribute, key);
+    if (matches.length !== 1 || !matches[0].trim()) {
+      failures.push(\`Public page \${route} must have exactly one non-empty \${key} meta value; found \${matches.length}.\`);
+    }
+  }
+
+  if (documentTitle && ogTitles.length === 1 && ogTitles[0] !== documentTitle) {
+    failures.push(\`Open Graph title must match the document title on \${route}.\`);
+  }
+  if (documentTitle && twitterTitles.length === 1 && twitterTitles[0] !== documentTitle) {
+    failures.push(\`Twitter title must match the document title on \${route}.\`);
+  }
+  if (ogImages.length === 1 && twitterImages.length === 1 && ogImages[0] !== twitterImages[0]) {
+    failures.push(\`Open Graph and Twitter images must match on \${route}.\`);
+  }
+
+  const scripts = [
     ...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi),
   ];');
     const escapedKey = key.replace(/[.*+?^{}()|[\]\\]/g, '\\  const scripts = [
