@@ -105,10 +105,12 @@ function App() {
   const primaryPhoneRecord = phoneRecords.find((item) => item.primary) || phoneRecords[0] || null;
   const primaryPhoneDigits = String(primaryPhoneRecord?.number || '').replace(/\D/g, '');
   const whatsappDigits = hasContactValue('whatsapp') ? String(contactSettings.whatsapp || '').replace(/\D/g, '') : defaultPhone;
-  const address = hasContactValue('address') ? String(contactSettings.address || '').trim() : defaultAddress;
+  // Keep public business identity locked to the verified Sector 31 studio and official social account.
+  // CMS contact settings must not override the canonical address, Maps CID, or official Instagram URL.
+  const address = defaultAddress;
   const openingHours = hasContactValue('openingHours') ? String(contactSettings.openingHours || '').trim() : defaultOpeningHours;
-  const mapLink = hasContactValue('googleMapsUrl') ? String(contactSettings.googleMapsUrl || '').trim() : defaultMapLink;
-  const instagramLink = hasContactValue('instagram') ? String(contactSettings.instagram || '').trim() : defaultInstagram;
+  const mapLink = defaultMapLink;
+  const instagramLink = defaultInstagram;
   const facebookLink = hasContactValue('facebook') ? String(contactSettings.facebook || '').trim() : defaultFacebook;
   const mapEmbedUrl = address ? `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed` : '';
   const whatsappLink = whatsappDigits ? `https://wa.me/${whatsappDigits}?text=${encodeURIComponent('Hi Divine Ink Tattoos, I want to book a consultation.')}` : '';
@@ -317,6 +319,7 @@ function App() {
             <p>For accurate directions, contact details, and studio information, use this official website and the linked Google Maps profile. Divine Ink Tattoos &amp; Piercing Studio welcomes tattoo and piercing clients at its Sector 31, Gurugram studio.</p>
             <p>Divine Ink operates from one studio at this verified Sector 31 address. This official website does not list a second Gurugram branch. Please use the address and official map link above to confirm the destination before visiting.</p>
             {mapLink && <a className="text-link" href={mapLink} target="_blank" rel="noreferrer">Open the Sector 31 Google Maps listing <ChevronRight size={18}/></a>}
+            {instagramLink && <p><a className="text-link" href={instagramLink} target="_blank" rel="noreferrer">Official Instagram: @divineinktattoos1</a></p>}
           </div>
         </section>
 
