@@ -85,6 +85,18 @@ expect(locationPages.every((item) => item.metaTitle && item.description), 'Every
 validateRelated(servicePages, 'Service');
 validateRelated(locationPages, 'Location');
 
+const appSource = await read(resolve('src', 'App.jsx'));
+expect(
+  appSource.includes('Divine Ink operates from one studio at this verified Sector 31 address.') &&
+    appSource.includes('This official website does not list a second Gurugram branch.') &&
+    appSource.includes('Open the Sector 31 Google Maps listing'),
+  'Homepage must clearly identify the single verified Sector 31 studio and point visitors to its official map listing.',
+);
+expect(
+  !['Shop No. 189', 'Shop No 189', 'Shop No. 9', 'Sector 38', 'Samvit Hospital', 'instagram.com/angeltattoodesignstudio', 'instagram.com/devtattoostudio_'].some((value) => appSource.toLowerCase().includes(value.toLowerCase())),
+  'Homepage source must not repeat conflicting third-party addresses or unrelated social accounts.',
+);
+
 const homepagePath = resolve(dist, 'index.html');
 expect(await exists(homepagePath), 'dist/index.html must exist after build.');
 
