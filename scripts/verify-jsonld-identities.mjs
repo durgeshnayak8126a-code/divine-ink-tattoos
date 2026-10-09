@@ -76,6 +76,34 @@ for (const [route, relativePath] of publicPages) {
     }
   }
 
+  const businessEntities = entities.filter((entity) => {
+    const types = Array.isArray(entity['@type']) ? entity['@type'] : [entity['@type']];
+    return types.some((type) => ['LocalBusiness', 'TattooParlor'].includes(type));
+  });
+
+  for (const business of businessEntities) {
+    const address = business.address;
+    const streetAddress = typeof address === 'object' && address ? address.streetAddress : '';
+    const phone = business.telephone;
+    const mapUrl = business.hasMap;
+    if (!String(streetAddress).includes('Sector 31')) {
+      failures.push('Structured business address on ' + route + ' must identify the verified Sector 31 studio.');
+    }
+    if (/sector\s*38|samvit hospital|shop no\.?\s*9/i.test(String(streetAddress))) {
+      failures.push('Structured business address on ' + route + ' contains a conflicting Sector 38 location.');
+    }
+    if (phone && phone !== '+918445702782' && phone !== '+91 84457 02782') {
+      failures.push('Structured business phone mismatch on ' + route + ': ' + phone + '.');
+    }
+    if (route === '/' && mapUrl !== 'https://www.google.com/maps?cid=13259589601998313340') {
+      failures.push('Homepage LocalBusiness schema must link to the official Sector 31 Google Maps profile.');
+    }
+  }
+
+  if (route === '/' && businessEntities.length !== 1) {
+    failures.push('Homepage must have exactly one LocalBusiness/TattooParlor entity; found ' + businessEntities.length + '.');
+  }
+
   const ids = entities.map((entity) => entity['@id']);
   const seen = new Set();
   for (const id of ids) {
