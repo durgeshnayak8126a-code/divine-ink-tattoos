@@ -125,6 +125,14 @@ for (const [route, relativePath] of publicPages) {
     const streetAddress = typeof address === 'object' && address ? address.streetAddress : '';
     const phone = business.telephone;
     const mapUrl = business.hasMap;
+    const identifier = business.identifier;
+    if (
+      identifier?.['@type'] !== 'PropertyValue' ||
+      identifier?.propertyID !== 'Google Maps Place ID' ||
+      identifier?.value !== 'ChIJyZWbyoMZDTkRfJeSnn2GA7g'
+    ) {
+      failures.push('Structured business entity on ' + route + ' must carry the verified Google Maps Place ID.');
+    }
     if (!/shop no\.?\s*155/i.test(String(streetAddress))) {
       failures.push('Structured business address on ' + route + ' must identify the verified Shop No. 155 studio.');
     }
