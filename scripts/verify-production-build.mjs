@@ -146,9 +146,10 @@ if (await exists(homepagePath)) {
   expect(homepageWebSite?.publisher?.['@id'] === 'https://divineinktattoos.in/#organization', 'Homepage WebSite publisher must point to the canonical Organization entity.');
   const canonicalBusiness = homepageEntities.find((entity) => entity?.['@id'] === 'https://divineinktattoos.in/#localbusiness');
   expect(
-    canonicalBusiness?.disambiguatingDescription?.includes('one physical studio only') &&
-      canonicalBusiness?.disambiguatingDescription?.includes('No Sector 38 or Islampur branch'),
-    'Homepage business schema must clearly distinguish the single Sector 31 studio from unrelated Sector 38/Islampur listings.',
+    canonicalBusiness?.disambiguatingDescription?.includes('Shop No. 155, Basement') &&
+      canonicalBusiness?.disambiguatingDescription?.includes('official website divineinktattoos.in') &&
+      !/sector 38|islampur|samvit hospital|shop no\\.? 9/i.test(canonicalBusiness?.disambiguatingDescription || ''),
+    'Homepage business schema must positively identify the verified Sector 31 studio without repeating conflicting listing details.',
   );
   expect(
     canonicalBusiness?.sameAs?.includes('https://www.instagram.com/divineinktattoos1/'),
@@ -160,8 +161,8 @@ if (await exists(homepagePath)) {
     'Canonical business schema must keep only the verified Sector 31 address, not the unrelated Sector 38 listing.',
   );
   expect(
-    !['shop no. 189', 'shop no 189', 'shop no. 9, first floor', 'opposite samvit hospital', 'instagram.com/angeltattoodesignstudio', 'instagram.com/devtattoostudio_'].some((value) => homepage.toLowerCase().includes(value)),
-    'Homepage must not contain conflicting third-party shop addresses or unrelated Instagram handles.',
+    !['shop no. 189', 'shop no 189', 'shop no. 9', 'sector 38', 'islampur', 'samvit hospital', 'instagram.com/angeltattoodesignstudio', 'instagram.com/devtattoostudio_'].some((value) => homepage.toLowerCase().includes(value)),
+    'Homepage schema and metadata must not repeat conflicting third-party locations or unrelated Instagram handles.',
   );
 
   // Locked business/entity regression guards. These values may only change with explicit approval.
@@ -388,9 +389,10 @@ if (await exists(robotsPath)) {
 
 const appSource = await read(resolve('src', 'App.jsx'));
   expect(
-    appSource.includes('We do not operate a Sector 38 or Islampur branch.') &&
-      appSource.includes('that is not the official Divine Ink studio address'),
-    'Homepage must visibly disambiguate the official Sector 31 studio from incorrect directory listings.',
+    appSource.includes('For accurate directions, contact details, and studio information, use this official website') &&
+      appSource.includes('Sector 31, Gurugram studio') &&
+      !/sector 38|islampur|samvit hospital|shop no\\.? 9/i.test(appSource),
+    'Homepage copy must reinforce the official Sector 31 studio without repeating conflicting listing details.',
   );
 expect(appSource.includes("const defaultPhone = '918445702782';"), 'Default homepage phone changed unexpectedly.');
 expect(appSource.includes("const { homepage: homepageSettings, contact: contactSettings } = usePublicCms();"), 'Contact settings must be connected without enabling other CMS sections.');
