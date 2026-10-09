@@ -106,6 +106,12 @@ expect(
   'Homepage source must not repeat conflicting third-party addresses or unrelated social accounts.',
 );
 
+expect(
+  homepageIdentitySource.includes('Tattoo Specialties in Gurgaon (Gurugram)') &&
+    homepageIdentitySource.includes('custom tattoo design, fine line tattoos, realism and portrait tattoos, black-and-grey work, cover-up tattoos'),
+  'Homepage must clearly identify Divine Ink\'s core tattoo specialties and verified Sector 31 studio.',
+);
+
 const homepagePath = resolve(dist, 'index.html');
 expect(await exists(homepagePath), 'dist/index.html must exist after build.');
 
@@ -180,6 +186,10 @@ if (await exists(homepagePath)) {
     canonicalBusiness?.address?.streetAddress?.includes('Shop No. 155') &&
       !['shop no. 189', 'shop no 189', 'shop no. 9', 'samvit hospital'].some((value) => (canonicalBusiness?.address?.streetAddress || '').toLowerCase().includes(value)),
     'Canonical business schema must keep only the verified Sector 31 address, not the unrelated Sector 38 listing.',
+  );
+  expect(
+    ['Custom tattoos', 'Fine line tattoos', 'Realism tattoos', 'Portrait tattoos', 'Black and grey tattoos', 'Cover-up tattoos', 'Sleeve tattoos', 'Minimal tattoos', 'Colour tattoos', 'Religious tattoos', 'Name and lettering tattoos', 'Couple tattoos', 'Body piercing', 'Ear piercing'].every((specialty) => canonicalBusiness?.knowsAbout?.includes(specialty)),
+    'Canonical business schema must enumerate the specialties that are visibly offered on the website.',
   );
   expect(
     !['shop no. 189', 'shop no 189', 'shop no. 9', 'sector 38', 'islampur', 'samvit hospital', 'instagram.com/angeltattoodesignstudio', 'instagram.com/devtattoostudio_'].some((value) => homepage.toLowerCase().includes(value)),
