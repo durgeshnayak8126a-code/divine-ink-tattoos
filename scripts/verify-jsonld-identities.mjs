@@ -47,6 +47,22 @@ for (const [route, relativePath] of publicPages) {
     continue;
   }
 
+  const canonicalMatches = [...html.matchAll(/<link\s+rel="canonical"\s+href="([^"]+)"\s*\/?\s*>/gi)];
+  const ogUrlMatches = [...html.matchAll(/<meta\s+property="og:url"\s+content="([^"]+)"\s*\/?\s*>/gi)];
+  const expectedUrl = `https://divineinktattoos.in${route}`;
+
+  if (canonicalMatches.length !== 1) {
+    failures.push(`Public page ${route} must have exactly one canonical URL; found ${canonicalMatches.length}.`);
+  } else if (canonicalMatches[0][1] !== expectedUrl) {
+    failures.push(`Canonical URL mismatch on ${route}: expected ${expectedUrl}, found ${canonicalMatches[0][1]}.`);
+  }
+
+  if (ogUrlMatches.length !== 1) {
+    failures.push(`Public page ${route} must have exactly one Open Graph URL; found ${ogUrlMatches.length}.`);
+  } else if (ogUrlMatches[0][1] !== expectedUrl) {
+    failures.push(`Open Graph URL mismatch on ${route}: expected ${expectedUrl}, found ${ogUrlMatches[0][1]}.`);
+  }
+
   const scripts = [
     ...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi),
   ];
@@ -71,9 +87,9 @@ for (const [route, relativePath] of publicPages) {
 }
 
 if (failures.length) {
-  console.error('Structured-data identity checks FAILED:');
+  console.error('Public URL and structured-data checks FAILED:');
   failures.forEach((failure, index) => console.error(`${index + 1}. ${failure}`));
   process.exit(1);
 }
 
-console.log(`Structured-data identity checks passed for ${publicPages.length} public pages: no duplicate @id values within a page.`);
+console.log(`Public URL and structured-data checks passed for ${publicPages.length} public pages: canonical/OG URL parity and no duplicate JSON-LD @id values.`);
