@@ -93,6 +93,15 @@ expect(
   'Homepage must clearly identify the single verified Sector 31 studio and point visitors to its official map listing.',
 );
 expect(
+  appSource.includes('const address = defaultAddress;') &&
+    appSource.includes('const mapLink = defaultMapLink;') &&
+    appSource.includes('const instagramLink = defaultInstagram;') &&
+    appSource.includes('Official Instagram: @divineinktattoos1') &&
+    appSource.includes('https://www.google.com/maps?cid=13259589601998313340') &&
+    appSource.includes('https://www.instagram.com/divineinktattoos1/'),
+  'Public homepage must lock its canonical Sector 31 address, Maps CID, and official Instagram account against stale CMS overrides.',
+);
+expect(
   !['Shop No. 189', 'Shop No 189', 'Shop No. 9', 'Sector 38', 'Samvit Hospital', 'instagram.com/angeltattoodesignstudio', 'instagram.com/devtattoostudio_'].some((value) => appSource.toLowerCase().includes(value.toLowerCase())),
   'Homepage source must not repeat conflicting third-party addresses or unrelated social accounts.',
 );
