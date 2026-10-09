@@ -25,7 +25,13 @@ function getJsonLdEntities(html) {
     } catch (error) {
       throw new Error(`Invalid JSON-LD block #${index + 1}: ${error.message}`);
     }
-    entities.push(...(Array.isArray(parsed) ? parsed : [parsed]));
+    if (Array.isArray(parsed)) {
+      entities.push(...parsed);
+    } else if (Array.isArray(parsed?.['@graph'])) {
+      entities.push(...parsed['@graph']);
+    } else {
+      entities.push(parsed);
+    }
   }
 
   return entities;
