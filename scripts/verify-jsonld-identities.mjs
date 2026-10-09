@@ -91,18 +91,18 @@ for (const [route, relativePath] of publicPages) {
   for (const [attribute, key] of socialMeta) {
     const matches = readMetaContent(attribute, key);
     if (matches.length !== 1 || !matches[0].trim()) {
-      failures.push(\`Public page \${route} must have exactly one non-empty \${key} meta value; found \${matches.length}.\`);
+      failures.push(`Public page \${route} must have exactly one non-empty \${key} meta value; found \${matches.length}.`);
     }
   }
 
   if (documentTitle && ogTitles.length === 1 && ogTitles[0] !== documentTitle) {
-    failures.push(\`Open Graph title must match the document title on \${route}.\`);
+    failures.push(`Open Graph title must match the document title on \${route}.`);
   }
   if (documentTitle && twitterTitles.length === 1 && twitterTitles[0] !== documentTitle) {
-    failures.push(\`Twitter title must match the document title on \${route}.\`);
+    failures.push(`Twitter title must match the document title on \${route}.`);
   }
   if (ogImages.length === 1 && twitterImages.length === 1 && ogImages[0] !== twitterImages[0]) {
-    failures.push(\`Open Graph and Twitter images must match on \${route}.\`);
+    failures.push(`Open Graph and Twitter images must match on \${route}.`);
   }
 
   const scripts = [
