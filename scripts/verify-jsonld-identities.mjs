@@ -51,6 +51,7 @@ for (const [route, relativePath] of publicPages) {
     [/sector\s*38/i, 'a Sector 38 location'],
     [/samvit hospital/i, 'the unrelated Samvit Hospital address'],
     [/shop no\.?\s*9\b/i, 'an unrelated Shop No. 9 address'],
+    [/shop no\.?\s*189\b/i, 'the conflicting Shop No. 189 address'],
     [/devtattoostudio|devtattoos/i, 'an unrelated Dev Tattoo social profile'],
     [/angel tattoo design studio/i, 'an unrelated tattoo studio identity'],
   ];
@@ -124,7 +125,7 @@ for (const [route, relativePath] of publicPages) {
     const streetAddress = typeof address === 'object' && address ? address.streetAddress : '';
     const phone = business.telephone;
     const mapUrl = business.hasMap;
-    if (!String(streetAddress).includes('Sector 31')) {
+    if (!/shop no\\.?\\s*155/i.test(String(streetAddress))) {\n      failures.push('Structured business address on ' + route + ' must identify the verified Shop No. 155 studio.');\n    }\n    if (!String(streetAddress).includes('Sector 31')) {
       failures.push('Structured business address on ' + route + ' must identify the verified Sector 31 studio.');
     }
     if (/sector\s*38|samvit hospital|shop no\.?\s*9/i.test(String(streetAddress))) {
