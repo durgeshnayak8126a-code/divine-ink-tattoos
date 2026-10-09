@@ -95,10 +95,10 @@ for (const [route, relativePath] of publicPages) {
     }
   }
 
-  if (documentTitle && ogTitles.length === 1 && ogTitles[0] !== documentTitle) {
+  if (documentTitle && ogTitles.length === 1 && ogTitles[0].replaceAll('&amp;', '&') !== documentTitle.replaceAll('&amp;', '&')) {
     failures.push(`Open Graph title must match the document title on ${route}.`);
   }
-  if (documentTitle && twitterTitles.length === 1 && twitterTitles[0] !== documentTitle) {
+  if (documentTitle && twitterTitles.length === 1 && twitterTitles[0].replaceAll('&amp;', '&') !== documentTitle.replaceAll('&amp;', '&')) {
     failures.push(`Twitter title must match the document title on ${route}.`);
   }
   if (ogImages.length === 1 && twitterImages.length === 1 && ogImages[0] !== twitterImages[0]) {
