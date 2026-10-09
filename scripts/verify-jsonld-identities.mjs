@@ -74,9 +74,13 @@ for (const [route, relativePath] of publicPages) {
   ];
 
   const metaTags = [...html.matchAll(/<meta\b[^>]*>/gi)].map((match) => match[0]);
-  const readMetaContent = (attribute, key) => metaTags
-    .filter((tag) => new RegExp(\`\\b\${attribute}=["']\${key}["']\`, 'i').test(tag))
-    .map((tag) => tag.match(/\bcontent=["']([^"']*)["']/i)?.[1] ?? '');
+  const readMetaContent = (attribute, key) => {
+    const matches = metaTags.filter((tag) =>
+      tag.includes(attribute + '="' + key + '"') ||
+      tag.includes(attribute + "='" + key + "'"),
+    );
+    return matches.map((tag) => tag.match(/\bcontent=["']([^"']*)["']/i)?.[1] ?? '');
+  };
 
   const documentTitle = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1];
   const ogTitles = readMetaContent('property', 'og:title');
