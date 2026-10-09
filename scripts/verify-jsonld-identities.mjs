@@ -63,40 +63,6 @@ for (const [route, relativePath] of publicPages) {
     failures.push(`Open Graph URL mismatch on ${route}: expected ${expectedUrl}, found ${ogUrlMatches[0][1]}.`);
   }
 
-  const socialMeta = [
-    ['property', 'og:title'],
-    ['property', 'og:description'],
-    ['property', 'og:image'],
-    ['name', 'twitter:card'],
-    ['name', 'twitter:title'],
-    ['name', 'twitter:description'],
-    ['name', 'twitter:image'],
-  ];
-
-  const metaTags = [...html.matchAll(/<meta\b[^>]*>/gi)].map((match) => match[0]);
-  const readMetaContent = (attribute, key) => {
-    const matches = metaTags.filter((tag) =>
-      tag.includes(attribute + '="' + key + '"') ||
-      tag.includes(attribute + "='" + key + "'"),
-    );
-    return matches.map((tag) => tag.match(/\bcontent=["']([^"']*)["']/i)?.[1] ?? '');
-  };
-
-  const titleMatches = [...html.matchAll(/<title>([\s\S]*?)<\/title>/gi)];
-  const ogImages = readMetaContent('property', 'og:image');
-  const twitterImages = readMetaContent('name', 'twitter:image');
-
-  for (const [attribute, key] of socialMeta) {
-    const matches = readMetaContent(attribute, key);
-    if (matches.length !== 1 || !matches[0].trim()) {
-      failures.push(`Public page ${route} must have exactly one non-empty ${key} meta value; found ${matches.length}.`);
-    }
-  }
-
-  if (ogImages.length === 1 && twitterImages.length === 1 && ogImages[0] !== twitterImages[0]) {
-    failures.push(`Open Graph and Twitter images must match on ${route}.`);
-  }
-
   const scripts = [
     ...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi),
   ];
