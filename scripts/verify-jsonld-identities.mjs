@@ -125,7 +125,9 @@ for (const [route, relativePath] of publicPages) {
     const streetAddress = typeof address === 'object' && address ? address.streetAddress : '';
     const phone = business.telephone;
     const mapUrl = business.hasMap;
-    if (!/shop no\\.?\\s*155/i.test(String(streetAddress))) {\n      failures.push('Structured business address on ' + route + ' must identify the verified Shop No. 155 studio.');\n    }\n    if (!String(streetAddress).includes('Sector 31')) {
+    if (!/shop no\.?\s*155/i.test(String(streetAddress))) {
+      failures.push('Structured business address on ' + route + ' must identify the verified Shop No. 155 studio.');
+    }
       failures.push('Structured business address on ' + route + ' must identify the verified Sector 31 studio.');
     }
     if (/sector\s*38|samvit hospital|shop no\.?\s*9/i.test(String(streetAddress))) {
