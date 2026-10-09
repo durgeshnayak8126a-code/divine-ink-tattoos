@@ -100,7 +100,9 @@ const homepageIdentitySource = await read(resolve('src', 'App.jsx'));
 expect(
   homepageIdentitySource.includes('Divine Ink operates from one studio at this verified Sector 31 address.') &&
     homepageIdentitySource.includes('This official website does not list a second Gurugram branch.') &&
-    homepageIdentitySource.includes('Open the Sector 31 Google Maps listing'),
+    homepageIdentitySource.includes('Open the Sector 31 Google Maps listing') &&
+    homepageIdentitySource.includes('Is this website connected to Divine Ink studios in other cities?') &&
+    homepageIdentitySource.includes('It does not represent or advertise branches in other cities.'),
   'Homepage must clearly identify the single verified Sector 31 studio and point visitors to its official map listing.',
 );
 expect(
