@@ -144,6 +144,20 @@ if (await exists(homepagePath)) {
   const homepageWebSite = homepageEntities.find((entity) => entity?.['@type'] === 'WebSite' && entity?.url === 'https://divineinktattoos.in/');
   expect(homepageWebSite?.about?.['@id'] === 'https://divineinktattoos.in/#localbusiness', 'Homepage WebSite must point to the canonical LocalBusiness entity.');
   expect(homepageWebSite?.publisher?.['@id'] === 'https://divineinktattoos.in/#organization', 'Homepage WebSite publisher must point to the canonical Organization entity.');
+  const canonicalBusiness = homepageEntities.find((entity) => entity?.['@id'] === 'https://divineinktattoos.in/#localbusiness');
+  expect(
+    canonicalBusiness?.disambiguatingDescription?.includes('one physical studio only') &&
+      canonicalBusiness?.disambiguatingDescription?.includes('No Sector 38 or Islampur branch'),
+    'Homepage business schema must clearly distinguish the single Sector 31 studio from unrelated Sector 38/Islampur listings.',
+  );
+  expect(
+    canonicalBusiness?.sameAs?.includes('https://www.instagram.com/divineinktattoos1/'),
+    'Canonical business schema must point to the official Divine Ink Instagram account.',
+  );
+  expect(
+    !/Shop No\\.? 189|Shop No\\.? 9, First Floor|Opposite Samvit Hospital|instagram\\.com\\/(?:angeltattoodesignstudio|devtattoostudio_)/i.test(homepage),
+    'Homepage must not contain conflicting third-party shop addresses or unrelated Instagram handles.',
+  );
 
   // Locked business/entity regression guards. These values may only change with explicit approval.
   // Normalize JSON-LD whitespace so formatting changes do not create false failures.
