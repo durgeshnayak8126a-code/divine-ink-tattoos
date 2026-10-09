@@ -224,7 +224,7 @@ for (const location of locationPages) {
   expect((html.match(/<meta name="robots"/g) || []).length === 1, `Location ${location.slug} must have exactly one robots meta tag.`);
   expect(html.includes('name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"'), `Public location ${location.slug} must explicitly allow indexing.`);
   expect(!html.includes('noindex'), `Public location ${location.slug} must not contain noindex directives.`);
-  expect(html.includes('"@type":["LocalBusiness","TattooParlor"]') || html.includes('"@type": ["LocalBusiness", "TattooParlor"]') || html.includes('"@type":"TattooParlor"') || html.includes('"@type": "TattooParlor"'), `Canonical LocalBusiness/TattooParlor schema missing for location ${location.slug}.`);
+  expect(html.includes('"@type":["TattooParlor","LocalBusiness"]') || html.includes('"@type": ["TattooParlor", "LocalBusiness"]') || html.includes('"@type":["LocalBusiness","TattooParlor"]') || html.includes('"@type": ["LocalBusiness", "TattooParlor"]'), `Canonical LocalBusiness/TattooParlor schema missing for location ${location.slug}.`);
   const locationEntities = getJsonLdEntities(html);
   expect(locationEntities.filter((entity) => entity?.['@id'] === 'https://divineinktattoos.in/#localbusiness').length === 1, `Location ${location.slug} must reuse exactly one canonical LocalBusiness entity.`);
   const locationBusinessEntity = locationEntities.find((entity) => entity?.['@id'] === 'https://divineinktattoos.in/#localbusiness');
