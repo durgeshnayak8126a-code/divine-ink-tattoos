@@ -160,11 +160,6 @@ if (await exists(homepagePath)) {
     'Canonical business schema must keep only the verified Sector 31 address, not the unrelated Sector 38 listing.',
   );
   expect(
-    appSource.includes('We do not operate a Sector 38 or Islampur branch.') &&
-      appSource.includes('that is not the official Divine Ink studio address'),
-    'Homepage must visibly disambiguate the official Sector 31 studio from incorrect directory listings.',
-  );
-  expect(
     !['shop no. 189', 'shop no 189', 'shop no. 9, first floor', 'opposite samvit hospital', 'instagram.com/angeltattoodesignstudio', 'instagram.com/devtattoostudio_'].some((value) => homepage.toLowerCase().includes(value)),
     'Homepage must not contain conflicting third-party shop addresses or unrelated Instagram handles.',
   );
@@ -392,6 +387,11 @@ if (await exists(robotsPath)) {
 }
 
 const appSource = await read(resolve('src', 'App.jsx'));
+  expect(
+    appSource.includes('We do not operate a Sector 38 or Islampur branch.') &&
+      appSource.includes('that is not the official Divine Ink studio address'),
+    'Homepage must visibly disambiguate the official Sector 31 studio from incorrect directory listings.',
+  );
 expect(appSource.includes("const defaultPhone = '918445702782';"), 'Default homepage phone changed unexpectedly.');
 expect(appSource.includes("const { homepage: homepageSettings, contact: contactSettings } = usePublicCms();"), 'Contact settings must be connected without enabling other CMS sections.');
 expect(appSource.includes('Array.isArray(contactSettings?.phones)'), 'Public site must support multiple managed phone numbers.');
