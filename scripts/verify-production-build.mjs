@@ -194,6 +194,12 @@ if (await exists(homepagePath)) {
     'Canonical business schema must point to the official Divine Ink Instagram account.',
   );
   expect(
+    canonicalBusiness?.identifier?.['@type'] === 'PropertyValue' &&
+      canonicalBusiness?.identifier?.propertyID === 'Google Maps Place ID' &&
+      canonicalBusiness?.identifier?.value === 'ChIJyZWbyoMZDTkRfJeSnn2GA7g',
+    'Canonical business schema must include the verified Google Maps Place ID for entity disambiguation.',
+  );
+  expect(
     canonicalBusiness?.address?.streetAddress?.includes('Shop No. 155') &&
       !['shop no. 189', 'shop no 189', 'shop no. 9', 'samvit hospital'].some((value) => (canonicalBusiness?.address?.streetAddress || '').toLowerCase().includes(value)),
     'Canonical business schema must keep only the verified Sector 31 address, not the unrelated Sector 38 listing.',
