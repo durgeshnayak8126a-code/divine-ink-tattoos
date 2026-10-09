@@ -63,8 +63,55 @@ for (const [route, relativePath] of publicPages) {
     failures.push(`Open Graph URL mismatch on ${route}: expected ${expectedUrl}, found ${ogUrlMatches[0][1]}.`);
   }
 
-  const scripts = [
+  const socialMeta = [
+    ['property', 'og:title'],
+    ['property', 'og:description'],
+    ['property', 'og:image'],
+    ['name', 'twitter:card'],
+    ['name', 'twitter:title'],
+    ['name', 'twitter:description'],
+    ['name', 'twitter:image'],
+  ];
+
+  const readMetaContent = (attribute, key) => {
+    const escapedAttribute = attribute.replace(/[.*+?^{}()|[\]\\]/g, '\\  const scripts = [
     ...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi),
+  ];');
+    const escapedKey = key.replace(/[.*+?^{}()|[\]\\]/g, '\\  const scripts = [
+    ...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi),
+  ];');
+    const pattern = new RegExp(
+      `<meta(?=[^>]*\\b${escapedAttribute}=["']${escapedKey}["'])(?=[^>]*\\bcontent=["']([^"']*)["'])[^>]*>`,
+      'gi',
+    );
+    return [...html.matchAll(pattern)].map((match) => match[1]);
+  };
+
+  const documentTitle = html.match(/<title>([\\s\\S]*?)<\\/title>/i)?.[1];
+  const ogTitles = readMetaContent('property', 'og:title');
+  const twitterTitles = readMetaContent('name', 'twitter:title');
+  const ogImages = readMetaContent('property', 'og:image');
+  const twitterImages = readMetaContent('name', 'twitter:image');
+
+  for (const [attribute, key] of socialMeta) {
+    const matches = readMetaContent(attribute, key);
+    if (matches.length !== 1 || !matches[0].trim()) {
+      failures.push(`Public page ${route} must have exactly one non-empty ${key} meta value; found ${matches.length}.`);
+    }
+  }
+
+  if (documentTitle && ogTitles.length === 1 && ogTitles[0] !== documentTitle) {
+    failures.push(`Open Graph title must match the document title on ${route}.`);
+  }
+  if (documentTitle && twitterTitles.length === 1 && twitterTitles[0] !== documentTitle) {
+    failures.push(`Twitter title must match the document title on ${route}.`);
+  }
+  if (ogImages.length === 1 && twitterImages.length === 1 && ogImages[0] !== twitterImages[0]) {
+    failures.push(`Open Graph and Twitter images must match on ${route}.`);
+  }
+
+  const scripts = [
+    ...html.matchAll(/<script type="application\\/ld\\+json">([\\s\\S]*?)<\\/script>/gi),
   ];
   const entities = [];
 
