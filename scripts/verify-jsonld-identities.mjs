@@ -47,6 +47,44 @@ for (const [route, relativePath] of publicPages) {
     continue;
   }
 
+  const unrelatedSignals = [
+    [/sector\s*38/i, 'a Sector 38 location'],
+    [/samvit hospital/i, 'the unrelated Samvit Hospital address'],
+    [/shop no\.?\s*9\b/i, 'an unrelated Shop No. 9 address'],
+    [/devtattoostudio|devtattoos/i, 'an unrelated Dev Tattoo social profile'],
+    [/angel tattoo design studio/i, 'an unrelated tattoo studio identity'],
+  ];
+  for (const [pattern, label] of unrelatedSignals) {
+    if (pattern.test(html)) {
+      failures.push('Official page ' + route + ' contains ' + label + '.');
+    }
+  }
+
+  const readMeta = (attribute, key) => {
+    const tagPattern = new RegExp('<meta[^>]*\\b' + attribute + '=["\\x27]' + key + '["\\x27][^>]*>', 'i');
+    const tag = html.match(tagPattern)?.[0];
+    return tag?.match(/\bcontent=["']([^"']*)["']/i)?.[1] ?? '';
+  };
+  for (const [attribute, key] of [
+    ['property', 'og:title'],
+    ['property', 'og:description'],
+    ['property', 'og:image'],
+    ['name', 'twitter:title'],
+    ['name', 'twitter:description'],
+    ['name', 'twitter:image'],
+  ]) {
+    if (!readMeta(attribute, key).trim()) {
+      failures.push('Public page ' + route + ' is missing non-empty ' + key + ' metadata.');
+    }
+  }
+  const officialSocialImage = 'https://divineinktattoos.in/divine-ink-logo.png';
+  if (readMeta('property', 'og:image') !== officialSocialImage) {
+    failures.push('Open Graph image on ' + route + ' must use the official Divine Ink logo.');
+  }
+  if (readMeta('name', 'twitter:image') !== officialSocialImage) {
+    failures.push('Twitter image on ' + route + ' must use the official Divine Ink logo.');
+  }
+
   const canonicalMatches = [...html.matchAll(/<link\s+rel="canonical"\s+href="([^"]+)"\s*\/?\s*>/gi)];
   const ogUrlMatches = [...html.matchAll(/<meta\s+property="og:url"\s+content="([^"]+)"\s*\/?\s*>/gi)];
   const expectedUrl = `https://divineinktattoos.in${route}`;
