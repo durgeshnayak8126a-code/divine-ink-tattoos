@@ -5,6 +5,17 @@ import { servicePages } from '../src/serviceData.js';
 
 const dist = resolve('dist');
 const failures = [];
+const locationSeoManagerSource = await readFile(resolve('src', 'LocationSeoManager.jsx'), 'utf8');
+const conflictingListingSignals = [
+  'shop no. 189',
+  'shop no 189',
+  'shop no. 9',
+  'sector 38',
+  'islampur',
+  'samvit hospital',
+  'instagram.com/angeltattoodesignstudio',
+  'instagram.com/devtattoostudio_',
+];
 
 function fail(message) {
   failures.push(message);
@@ -259,6 +270,11 @@ for (const service of servicePages) {
   expect(serviceWebPageSchema?.mainEntity?.['@id'] === `${canonical}#service`, `Service WebPage mainEntity drifted for ${service.slug}.`);
 }
 
+expect(
+  !locationSeoManagerSource.includes("'@type': ['TattooParlor', 'LocalBusiness']"),
+  'Client-side area-page schema must not duplicate the canonical LocalBusiness entity already present in the base HTML.',
+);
+
 for (const location of locationPages) {
   const pagePath = resolve(dist, 'locations', location.slug, 'index.html');
   expect(await exists(pagePath), `Missing generated location page: ${location.slug}.`);
@@ -266,6 +282,11 @@ for (const location of locationPages) {
 
   const html = await read(pagePath);
   const canonical = `https://divineinktattoos.in/locations/${location.slug}/`;
+  const normalizedLocationHtml = html.toLowerCase();
+  expect(
+    !conflictingListingSignals.some((signal) => normalizedLocationHtml.includes(signal)),
+    `Location page ${location.slug} must not contain unrelated Sector 38 listings, conflicting addresses, or other studios' Instagram handles.`,
+  );
 
   expect(html.includes(`<title>${location.metaTitle}</title>`), `Wrong SEO title for location ${location.slug}.`);
   expect(html.includes(`<meta name="description" content="${location.description}">`), `Wrong SEO description for location ${location.slug}.`);
