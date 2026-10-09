@@ -104,6 +104,23 @@ for (const [route, relativePath] of publicPages) {
     failures.push('Homepage must have exactly one LocalBusiness/TattooParlor entity; found ' + businessEntities.length + '.');
   }
 
+  if (route === '/') {
+    const officialInstagram = 'https://www.instagram.com/divineinktattoos1/';
+    const organization = entities.find((entity) => {
+      const types = Array.isArray(entity['@type']) ? entity['@type'] : [entity['@type']];
+      return types.includes('Organization') && entity['@id'] === 'https://divineinktattoos.in/#organization';
+    });
+    const organizationSocials = Array.isArray(organization?.sameAs) ? organization.sameAs : [];
+    const businessSocials = Array.isArray(businessEntities[0]?.sameAs) ? businessEntities[0].sameAs : [];
+
+    if (!organizationSocials.includes(officialInstagram)) {
+      failures.push('Homepage Organization schema must link the official Instagram profile @divineinktattoos1.');
+    }
+    if (!businessSocials.includes(officialInstagram)) {
+      failures.push('Homepage LocalBusiness schema must link the official Instagram profile @divineinktattoos1.');
+    }
+  }
+
   const ids = entities.map((entity) => entity['@id']);
   const seen = new Set();
   for (const id of ids) {
