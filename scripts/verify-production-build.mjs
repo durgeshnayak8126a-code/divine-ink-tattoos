@@ -245,7 +245,7 @@ for (const service of servicePages) {
     `Service page ${service.slug} must not contain unrelated studio addresses or competitor social handles.`,
   );
   expect(
-    !/https?:\\/\\/www\\.instagram\\.com\\/(?!divineinktattoos1\\/)[^"'\\s<]+/i.test(html),
+    !/https?:\/\/www\.instagram\.com\/(?!divineinktattoos1\/)[^"'\s<]+/i.test(html),
     `Service page ${service.slug} must not link to an unrelated Instagram account.`,
   );
 
