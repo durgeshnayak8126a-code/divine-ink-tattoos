@@ -239,6 +239,15 @@ for (const service of servicePages) {
   const html = await read(pagePath);
   const canonical = `https://divineinktattoos.in/services/${service.slug}/`;
   const expectedTitle = service.metaTitle;
+  const normalizedServiceHtml = html.toLowerCase();
+  expect(
+    !conflictingListingSignals.some((signal) => normalizedServiceHtml.includes(signal)),
+    `Service page ${service.slug} must not contain unrelated studio addresses or competitor social handles.`,
+  );
+  expect(
+    !/https?:\\/\\/www\\.instagram\\.com\\/(?!divineinktattoos1\\/)[^"'\\s<]+/i.test(html),
+    `Service page ${service.slug} must not link to an unrelated Instagram account.`,
+  );
 
   expect(html.includes(`<title>${expectedTitle}</title>`), `Wrong SEO title for service ${service.slug}.`);
   expect(html.includes(`<meta name="description" content="${service.description}">`), `Wrong SEO description for service ${service.slug}.`);
