@@ -137,9 +137,9 @@ if (await exists(homepagePath)) {
     homepageEntities.filter((entity) => entity?.['@id'] === 'https://divineinktattoos.in/#organization').length === 1,
     'Homepage must publish exactly one canonical Organization entity.',
   );
-  const homepageWebPage = homepageEntities.find((entity) => entity?.['@type'] === 'WebPage' && entity?.url === 'https://divineinktattoos.in/');
-  expect(homepageWebPage?.about?.['@id'] === 'https://divineinktattoos.in/#localbusiness', 'Homepage WebPage must point to the canonical LocalBusiness entity.');
-  expect(homepageWebPage?.publisher?.['@id'] === 'https://divineinktattoos.in/#organization', 'Homepage WebPage publisher must point to the canonical Organization entity.');
+  const homepageWebSite = homepageEntities.find((entity) => entity?.['@type'] === 'WebSite' && entity?.url === 'https://divineinktattoos.in/');
+  expect(homepageWebSite?.about?.['@id'] === 'https://divineinktattoos.in/#localbusiness', 'Homepage WebSite must point to the canonical LocalBusiness entity.');
+  expect(homepageWebSite?.publisher?.['@id'] === 'https://divineinktattoos.in/#organization', 'Homepage WebSite publisher must point to the canonical Organization entity.');
 
   // Locked business/entity regression guards. These values may only change with explicit approval.
   // Normalize JSON-LD whitespace so formatting changes do not create false failures.
