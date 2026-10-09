@@ -148,7 +148,7 @@ if (await exists(homepagePath)) {
   expect(
     canonicalBusiness?.disambiguatingDescription?.includes('Shop No. 155, Basement') &&
       canonicalBusiness?.disambiguatingDescription?.includes('official website divineinktattoos.in') &&
-      !/sector 38|islampur|samvit hospital|shop no\\.? 9/i.test(canonicalBusiness?.disambiguatingDescription || ''),
+      !['sector 38', 'islampur', 'samvit hospital', 'shop no. 9', 'shop no 9'].some((value) => (canonicalBusiness?.disambiguatingDescription || '').toLowerCase().includes(value)),
     'Homepage business schema must positively identify the verified Sector 31 studio without repeating conflicting listing details.',
   );
   expect(
@@ -391,7 +391,7 @@ const appSource = await read(resolve('src', 'App.jsx'));
   expect(
     appSource.includes('For accurate directions, contact details, and studio information, use this official website') &&
       appSource.includes('Sector 31, Gurugram studio') &&
-      !/sector 38|islampur|samvit hospital|shop no\\.? 9/i.test(appSource),
+      !['sector 38', 'islampur', 'samvit hospital', 'shop no. 9', 'shop no 9'].some((value) => appSource.toLowerCase().includes(value)),
     'Homepage copy must reinforce the official Sector 31 studio without repeating conflicting listing details.',
   );
 expect(appSource.includes("const defaultPhone = '918445702782';"), 'Default homepage phone changed unexpectedly.');
