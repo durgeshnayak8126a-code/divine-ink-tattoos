@@ -48,7 +48,7 @@ for (const [route, relativePath] of publicPages) {
   }
 
   const scripts = [
-    ...html.matchAll(/<script type="application\\/ld\\+json">([\\s\\S]*?)<\\/script>/gi),
+    ...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi),
   ];
   const entities = [];
 
