@@ -84,6 +84,41 @@ for (const [route, relativePath] of publicPages) {
     }
     seen.add(id);
   }
+
+  const canonicalBusinessId = 'https://divineinktattoos.in/#localbusiness';
+  const canonicalBusinesses = entities.filter((entity) => entity['@id'] === canonicalBusinessId);
+  if (canonicalBusinesses.length !== 1) {
+    failures.push(`Public page ${route} must reference exactly one canonical Divine Ink business entity; found ${canonicalBusinesses.length}.`);
+  } else {
+    const business = canonicalBusinesses[0];
+    const address = business.address || {};
+    const officialSocials = Array.isArray(business.sameAs) ? business.sameAs : [];
+    if (business.name !== 'Divine Ink Tattoos & Piercing Studio') {
+      failures.push(`Canonical business name mismatch on ${route}.`);
+    }
+    if (business.telephone !== '+918445702782') {
+      failures.push(`Canonical business phone mismatch on ${route}.`);
+    }
+    if (
+      !String(address.streetAddress || '').includes('Shop No. 155') ||
+      address.addressLocality !== 'Gurugram' ||
+      address.postalCode !== '122001'
+    ) {
+      failures.push(`Canonical business address mismatch on ${route}; only the Sector 31 studio address is allowed.`);
+    }
+    if (business.hasMap !== 'https://www.google.com/maps?cid=13259589601998313340') {
+      failures.push(`Canonical Google Maps identity mismatch on ${route}.`);
+    }
+    if (!officialSocials.includes('https://www.instagram.com/divineinktattoos1/')) {
+      failures.push(`Canonical official Instagram identity is missing on ${route}.`);
+    }
+    if (
+      ['shop no. 189', 'shop no 189', 'shop no. 9', 'sector 38', 'islampur', 'samvit hospital', 'instagram.com/angeltattoodesignstudio', 'instagram.com/devtattoostudio_']
+        .some((value) => JSON.stringify(business).toLowerCase().includes(value))
+    ) {
+      failures.push(`Canonical business entity on ${route} contains conflicting third-party listing details.`);
+    }
+  }
 }
 
 if (failures.length) {
