@@ -26,15 +26,14 @@ function latestGitDate(paths) {
 
 function urlEntry(pathname, lastmod = '') {
   const loc = `${siteUrl}${pathname}`;
-  if (!lastmod) {
-    throw new Error(`Missing sitemap lastmod for public URL: ${loc}`);
+  const lines = ['  <url>', `    <loc>${loc}</loc>`];
+  // Sitemap protocol makes lastmod optional. In shallow/archived builds,
+  // omit it rather than fail the entire build or fabricate a modification date.
+  if (/^\\d{4}-\\d{2}-\\d{2}$/.test(lastmod)) {
+    lines.push(`    <lastmod>${lastmod}</lastmod>`);
   }
-  return [
-    '  <url>',
-    `    <loc>${loc}</loc>`,
-    `    <lastmod>${lastmod}</lastmod>`,
-    '  </url>',
-  ].join('\n');
+  lines.push('  </url>');
+  return lines.join('\n');
 }
 
 const homepageLastmod = latestGitDate([
