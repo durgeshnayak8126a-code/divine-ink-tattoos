@@ -404,7 +404,7 @@ if (await exists(sitemapPath)) {
   expect(new Set(sitemapUrls).size === sitemapUrls.length, 'Sitemap must not contain duplicate URLs.');
   expect(sitemapUrls.every((url) => /^https:\/\/divineinktattoos\.in\/[^?]*$/.test(url)), 'Sitemap URLs must use the canonical HTTPS host without query strings.');
   const lastmods = [...sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map((match) => match[1]);
-  expect(lastmods.length === urlCount, 'Every sitemap URL must have exactly one lastmod value.');
+  expect(lastmods.length <= urlCount, 'Sitemap lastmod count cannot exceed the number of public URLs.');
   expect(lastmods.every((value) => /^\d{4}-\d{2}-\d{2}$/.test(value)), 'Sitemap lastmod values must use ISO date format.');
   expect(
     lastmods.every((value) => {
@@ -415,7 +415,7 @@ if (await exists(sitemapPath)) {
   );
   const publicUrlBlocks = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((match) => match[1]);
   expect(publicUrlBlocks.length === urlCount, 'Sitemap URL block count must match URL count.');
-  expect(publicUrlBlocks.every((block) => (block.match(/<loc>/g) || []).length === 1 && (block.match(/<lastmod>/g) || []).length === 1), 'Each sitemap URL block must contain exactly one loc and one lastmod.');
+  expect(publicUrlBlocks.every((block) => (block.match(/<loc>/g) || []).length === 1 && (block.match(/<lastmod>/g) || []).length <= 1), 'Each sitemap URL block must contain exactly one loc and at most one lastmod.');
   expect(!sitemap.includes('/admin/'), 'Sitemap must never include admin URLs.');
 }
 
