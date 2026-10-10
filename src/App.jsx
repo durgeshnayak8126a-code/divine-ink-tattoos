@@ -46,7 +46,6 @@ const defaultMapLink = 'https://www.google.com/maps?cid=13259589601998313340';
 const defaultAddress = 'Shop No. 155, Basement, Near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001';
 const defaultOpeningHours = 'Open 24x7 — advance confirmation recommended';
 const defaultInstagram = 'https://www.instagram.com/divineinktattoos1/';
-const defaultFacebook = 'https://www.facebook.com/profile.php?id=100078466583354';
 
 const services = [
   ['Custom Tattoos', 'Original concepts designed around your idea, placement and style.', '/services/custom-tattoos/'],
@@ -114,7 +113,6 @@ function App() {
   const openingHours = hasContactValue('openingHours') ? String(contactSettings.openingHours || '').trim() : defaultOpeningHours;
   const mapLink = defaultMapLink;
   const instagramLink = defaultInstagram;
-  const facebookLink = hasContactValue('facebook') ? String(contactSettings.facebook || '').trim() : defaultFacebook;
   const mapEmbedUrl = address ? `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed` : '';
   const whatsappLink = whatsappDigits ? `https://wa.me/${whatsappDigits}?text=${encodeURIComponent('Hi Divine Ink Tattoos, I want to book a consultation.')}` : '';
   const managedPiercingItems = getPreviewPiercingItems(homepageSettings?.piercingItems);
@@ -486,10 +484,7 @@ function App() {
                 {address && (mapLink ? <a href={mapLink} target="_blank" rel="noreferrer"><MapPin/> {address}</a> : <span><MapPin/> {address}</span>)}
                 {openingHours && <span><Clock3/> {openingHours}</span>}
               </div>
-              {(instagramLink || facebookLink) && <div className="social-row">
-                {instagramLink && <a href={instagramLink} target="_blank" rel="noreferrer">Instagram</a>}
-                {facebookLink && <a href={facebookLink} target="_blank" rel="noreferrer">Facebook</a>}
-              </div>}
+              {instagramLink && <div className="social-row"><a href={instagramLink} target="_blank" rel="noreferrer">Instagram</a></div>}
             </div>
             <form className="booking-form" action="https://formsubmit.co/divinetattoostudio1@gmail.com" method="POST">
               <input type="hidden" name="_subject" value="New Booking Enquiry — Divine Ink Website" />
@@ -525,7 +520,6 @@ function App() {
       <div className="floating-socials" aria-label="Social links">
         {whatsappLink && <a className="floating-social whatsapp" href={whatsappLink} target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp"><WhatsAppLogo/></a>}
         {instagramLink && <a className="floating-social instagram" href={instagramLink} target="_blank" rel="noreferrer" aria-label="Open Instagram"><InstagramLogo/></a>}
-        {facebookLink && <a className="floating-social facebook" href={facebookLink} target="_blank" rel="noreferrer" aria-label="Open Facebook"><FacebookLogo/></a>}
       </div>
 
       {lightbox && <div className="lightbox" role="dialog" aria-modal="true" aria-label={`${lightbox.category || 'Gallery'} image preview`} onClick={() => setLightbox(null)}>
