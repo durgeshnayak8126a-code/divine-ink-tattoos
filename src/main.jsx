@@ -9,6 +9,7 @@ const App = lazy(() => import('./App.jsx'));
 const AdminApp = lazy(() => import('./admin/AdminApp.jsx'));
 const LocationPage = lazy(() => import('./LocationPage.jsx'));
 const ServicePage = lazy(() => import('./ServicePage.jsx'));
+const StudioPage = lazy(() => import('./StudioPage.jsx'));
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -18,6 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="/" element={<App />} />
           <Route path="/admin/*" element={<AdminApp />} />
           <Route path="/services/:slug/" element={<ServicePage />} />
+          <Route path="/studio/" element={<StudioPage />} />
           <Route path="/locations/:slug/" element={<LocationPage />} />
         </Routes>
       </Suspense>

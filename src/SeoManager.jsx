@@ -26,14 +26,6 @@ function setMeta(attribute, key, content) {
 }
 
 function getServiceSeo(service) {
-  if (service.slug === 'fine-line-tattoos') {
-    return {
-      metaTitle: 'Fine Line Tattoo Artist in Gurgaon (Gurugram) | Divine Ink',
-      description:
-        'Looking for a fine line tattoo artist in Gurgaon (Gurugram)? Divine Ink in Sector 31 offers fine line tattoo planning, sizing and placement guidance.',
-    };
-  }
-
   return {
     metaTitle: service.metaTitle,
     description: service.description,
@@ -56,6 +48,7 @@ export default function SeoManager({ service }) {
 
     document.title = metaTitle;
     let canonicalElement = document.head.querySelector('link[rel="canonical"]');
+    const canonicalWasCreated = !canonicalElement;
     if (!canonicalElement) {
       canonicalElement = document.createElement('link');
       canonicalElement.setAttribute('rel', 'canonical');
@@ -83,6 +76,7 @@ export default function SeoManager({ service }) {
       {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
+        '@id': `${canonical}#breadcrumb`,
         itemListElement: [
           {
             '@type': 'ListItem',
@@ -109,10 +103,24 @@ export default function SeoManager({ service }) {
         areaServed: {
           '@type': 'City',
           name: 'Gurugram',
+          alternateName: 'Gurgaon',
         },
         provider: {
           '@id': 'https://divineinktattoos.in/#localbusiness',
         },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        '@id': `${canonical}#webpage`,
+        url: canonical,
+        name: metaTitle,
+        description,
+        isPartOf: { '@id': 'https://divineinktattoos.in/#website' },
+        about: { '@id': 'https://divineinktattoos.in/#localbusiness' },
+        mainEntity: { '@id': `${canonical}#service` },
+        breadcrumb: { '@id': `${canonical}#breadcrumb` },
+        inLanguage: 'en-IN',
       },
     ]);
     document.head.querySelector('#service-page-schema')?.remove();
@@ -120,7 +128,8 @@ export default function SeoManager({ service }) {
 
     return () => {
       document.title = previousTitle;
-      canonicalElement.setAttribute('href', previousCanonical);
+      if (canonicalWasCreated) canonicalElement.remove();
+      else canonicalElement.setAttribute('href', previousCanonical);
       previousMeta.forEach(([attribute, key, content]) => {
         const element = document.head.querySelector(`meta[${attribute}="${key}"]`);
         if (content === null) {

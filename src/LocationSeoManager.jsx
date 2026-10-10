@@ -31,6 +31,7 @@ export function createLocationSchema(location) {
     {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
+      '@id': canonical + '#breadcrumb',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://divineinktattoos.in/' },
         { '@type': 'ListItem', position: 2, name: location.name, item: canonical },
@@ -38,21 +39,16 @@ export function createLocationSchema(location) {
     },
     {
       '@context': 'https://schema.org',
-      '@type': ['LocalBusiness', 'TattooParlor'],
-      '@id': 'https://divineinktattoos.in/#localbusiness',
-      name: 'Divine Ink Tattoos & Piercing Studio',
+      '@type': 'WebPage',
+      '@id': canonical + '#webpage',
       url: canonical,
-      telephone: '+918445702782',
-      image: 'https://divineinktattoos.in/divine-ink-logo.png',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: 'Shop No. 155, Basement, near Apollo Pharmacy, Main HUDA Market, Sector 31',
-        addressLocality: 'Gurugram',
-        addressRegion: 'Haryana',
-        postalCode: '122001',
-        addressCountry: 'IN',
-      },
-      areaServed: { '@type': 'Place', name: `${location.name}, Gurugram` },
+      name: location.metaTitle,
+      description: location.description,
+      isPartOf: { '@id': 'https://divineinktattoos.in/#website' },
+      about: { '@id': 'https://divineinktattoos.in/#localbusiness' },
+      mainEntity: { '@id': 'https://divineinktattoos.in/#localbusiness' },
+      breadcrumb: { '@id': canonical + '#breadcrumb' },
+      inLanguage: 'en-IN',
     },
     {
       '@context': 'https://schema.org',
@@ -69,8 +65,14 @@ export function createLocationSchema(location) {
 export default function LocationSeoManager({ location }) {
   useEffect(() => {
     const previousTitle = document.title;
-    const canonicalElement = document.head.querySelector('link[rel="canonical"]');
+    let canonicalElement = document.head.querySelector('link[rel="canonical"]');
+    const canonicalWasCreated = !canonicalElement;
     const previousCanonical = canonicalElement?.getAttribute('href') || '';
+    if (!canonicalElement) {
+      canonicalElement = document.createElement('link');
+      canonicalElement.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalElement);
+    }
     const previousMeta = managedMeta.map(([attribute, key]) => {
       const element = document.head.querySelector(`meta[${attribute}="${key}"]`);
       return [attribute, key, element?.getAttribute('content') ?? null];
@@ -102,7 +104,8 @@ export default function LocationSeoManager({ location }) {
 
     return () => {
       document.title = previousTitle;
-      canonicalElement?.setAttribute('href', previousCanonical);
+      if (canonicalWasCreated) canonicalElement.remove();
+      else canonicalElement.setAttribute('href', previousCanonical);
       previousMeta.forEach(([attribute, key, content]) => {
         const element = document.head.querySelector(`meta[${attribute}="${key}"]`);
         if (content === null) element?.remove();
@@ -114,4 +117,3 @@ export default function LocationSeoManager({ location }) {
 
   return null;
 }
-

@@ -38,13 +38,11 @@ export default function ServicePage() {
   }
 
   const managed = cmsServices.find((item) => item.slug === slug);
+  // SEO identity stays on the static service source-of-truth.
+  // CMS may still supply optional pricing/FAQ presentation, but cannot rewrite
+  // the crawlable service title, intro, canonical metadata, or description.
   const service = {
     ...staticService,
-    name: managed?.title || staticService.name,
-    title: managed?.title || staticService.title,
-    intro: managed?.description || staticService.intro,
-    metaTitle: slug === 'fine-line-tattoos' ? staticService.metaTitle : (managed?.metaTitle || staticService.metaTitle),
-    description: managed?.metaDescription || staticService.description,
   };
   const pricing = String(managed?.pricing || '').trim();
   const managedFaqs = normalizeServiceFaqs(managed?.faqs);
@@ -94,10 +92,41 @@ export default function ServicePage() {
           </a>
         </section>
 
+        {!slug.includes('piercing') && (
+          <section className="section">
+            <div className="section-heading center">
+              <p className="eyebrow">Tattoo Services · Gurgaon</p>
+              <h2>Choose the right tattoo style before you book</h2>
+              <p>When comparing a tattoo shop in Gurgaon, tattoo artist in Gurgaon or tattoo studio in Gurgaon, start with the style, reference and placement that fit your idea. Divine Ink in Sector 31 offers consultation-led tattoo planning for custom, fine line, realism, portrait, black & grey, cover-up, minimal, religious and sleeve work.</p>
+              <p>For a tattoo shop near me in Gurugram, the studio is in Main HUDA Market near Apollo Pharmacy. Use the related tattoo services below to compare styles, then send your reference and approximate size for a consultation.</p>
+            </div>
+            <div className="service-grid">
+              <article className="service-card">
+                <h3>Custom & Fine Line Tattoos</h3>
+                <p>Compare original concepts and delicate line work based on the detail your placement can support.</p>
+                <Link className="text-link" to="/services/custom-tattoos/">Custom tattoos</Link>
+                <Link className="text-link" to="/services/fine-line-tattoos/">Fine line tattoos</Link>
+              </article>
+              <article className="service-card">
+                <h3>Realism & Black & Grey</h3>
+                <p>Review reference quality, contrast and scale before choosing detailed realism or portrait work.</p>
+                <Link className="text-link" to="/services/portrait-tattoos/">Portrait & realism</Link>
+                <Link className="text-link" to="/services/black-grey-tattoos/">Black & grey tattoos</Link>
+              </article>
+              <article className="service-card">
+                <h3>Cover-ups & Sleeves</h3>
+                <p>Plan coverage, composition and future expansion around the existing tattoo and available skin.</p>
+                <Link className="text-link" to="/services/cover-up-tattoos/">Cover-up tattoos</Link>
+                <Link className="text-link" to="/services/sleeve-tattoos/">Sleeve tattoos</Link>
+              </article>
+            </div>
+          </section>
+        )}
+
         <section className="section dark-panel">
           <div className="split-section">
             <article className="section-copy">
-              <p className="eyebrow">Divine Ink · Sector 31</p>
+              <p className="eyebrow"><Link to="/locations/sector-31/">Divine Ink · Sector 31</Link></p>
               <h2>Planning your {service.name.toLowerCase()}</h2>
               <p>{service.overview}</p>
               <p>{service.planning}</p>

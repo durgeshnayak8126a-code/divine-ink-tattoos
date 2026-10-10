@@ -5,6 +5,7 @@ import { locationPages } from '../src/locationData.js';
 const distDirectory = resolve('dist');
 const homepageHtml = await readFile(resolve(distDirectory, 'index.html'), 'utf8');
 const socialImage = 'https://divineinktattoos.in/divine-ink-logo.png';
+const publicRobotsContent = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 
 function escapeAttribute(value) {
   return value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
@@ -21,28 +22,25 @@ function createLocationSchema(location) {
     {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
+      '@id': `${canonical}#breadcrumb`,
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://divineinktattoos.in/' },
         { '@type': 'ListItem', position: 2, name: location.name, item: canonical },
       ],
     },
+
     {
       '@context': 'https://schema.org',
-      '@type': ['LocalBusiness', 'TattooParlor'],
-      '@id': 'https://divineinktattoos.in/#localbusiness',
-      name: 'Divine Ink Tattoos & Piercing Studio',
+      '@type': 'WebPage',
+      '@id': `${canonical}#webpage`,
       url: canonical,
-      telephone: '+918445702782',
-      image: socialImage,
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: 'Shop No. 155, Basement, near Apollo Pharmacy, Main HUDA Market, Sector 31',
-        addressLocality: 'Gurugram',
-        addressRegion: 'Haryana',
-        postalCode: '122001',
-        addressCountry: 'IN',
-      },
-      areaServed: { '@type': 'Place', name: `${location.name}, Gurugram` },
+      name: location.metaTitle,
+      description: location.description,
+      isPartOf: { '@id': 'https://divineinktattoos.in/#website' },
+      about: { '@id': 'https://divineinktattoos.in/#localbusiness' },
+      mainEntity: { '@id': 'https://divineinktattoos.in/#localbusiness' },
+      breadcrumb: { '@id': `${canonical}#breadcrumb` },
+      inLanguage: 'en-IN',
     },
     {
       '@context': 'https://schema.org',
@@ -63,6 +61,7 @@ for (const location of locationPages) {
     .replace(/<link rel="canonical" href="[^"]*"\s*\/?>/i, `<link rel="canonical" href="${canonical}">`);
 
   html = replaceMeta(html, 'name', 'description', location.description);
+  html = replaceMeta(html, 'name', 'robots', publicRobotsContent);
   html = replaceMeta(html, 'property', 'og:title', location.metaTitle);
   html = replaceMeta(html, 'property', 'og:description', location.description);
   html = replaceMeta(html, 'property', 'og:url', canonical);

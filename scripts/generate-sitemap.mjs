@@ -26,12 +26,14 @@ function latestGitDate(paths) {
 
 function urlEntry(pathname, lastmod = '') {
   const loc = `${siteUrl}${pathname}`;
-  return [
-    '  <url>',
-    `    <loc>${loc}</loc>`,
-    lastmod ? `    <lastmod>${lastmod}</lastmod>` : '',
-    '  </url>',
-  ].filter(Boolean).join('\n');
+  const lines = ['  <url>', `    <loc>${loc}</loc>`];
+  // Sitemap protocol makes lastmod optional. In shallow/archived builds,
+  // omit it rather than fail the entire build or fabricate a modification date.
+  if (/^\\d{4}-\\d{2}-\\d{2}$/.test(lastmod)) {
+    lines.push(`    <lastmod>${lastmod}</lastmod>`);
+  }
+  lines.push('  </url>');
+  return lines.join('\n');
 }
 
 const homepageLastmod = latestGitDate([
@@ -40,6 +42,12 @@ const homepageLastmod = latestGitDate([
   'src/artists.js',
   'src/usePublicCms.js',
   'src/usePublicGallery.js',
+]);
+
+const studioLastmod = latestGitDate([
+  'src/StudioPage.jsx',
+  'src/App.jsx',
+  'src/SeoManager.jsx',
 ]);
 
 const serviceLastmod = latestGitDate([
@@ -58,6 +66,7 @@ const locationLastmod = latestGitDate([
 
 const entries = [
   urlEntry('/', homepageLastmod),
+  urlEntry('/studio/', studioLastmod),
   ...servicePages.map((service) => urlEntry(`/services/${service.slug}/`, serviceLastmod)),
   ...locationPages.map((location) => urlEntry(`/locations/${location.slug}/`, locationLastmod)),
 ];

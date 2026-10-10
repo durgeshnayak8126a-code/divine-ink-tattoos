@@ -42,30 +42,35 @@ function FacebookLogo({ size = 25 }) {
 
 const defaultPhone = '918445702782';
 const defaultPhoneDisplay = '+91 84457 02782';
-const defaultMapLink = 'https://share.google/Ot0WZGKQFZkWTcSll';
+const defaultMapLink = 'https://www.google.com/maps?cid=13259589601998313340';
 const defaultAddress = 'Shop No. 155, Basement, Near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001';
 const defaultOpeningHours = 'Open 24x7 — advance confirmation recommended';
 const defaultInstagram = 'https://www.instagram.com/divineinktattoos1/';
-const defaultFacebook = 'https://www.facebook.com/profile.php?id=100078466583354';
 
 const services = [
-  ['Custom Tattoos', 'Original concepts designed around your idea, placement and style.'],
-  ['Cover-up Tattoos', 'Strategic designs created to conceal or transform an existing tattoo.'],
-  ['Realism & Portraits', 'Detailed black-and-grey and realistic portrait-focused artwork.'],
-  ['Minimal Tattoos', 'Clean, elegant and placement-conscious fine-line concepts.'],
-  ['Religious Tattoos', 'Respectful, thoughtfully composed spiritual and devotional designs.'],
-  ['Couple & Name Tattoos', 'Personalized matching designs, names and meaningful lettering.'],
-  ['Sleeve Tattoos', 'Large-scale compositions planned for flow, balance and future expansion.'],
-  ['Professional Piercing', 'Ear, nose, eyebrow, lip, tongue and belly piercing with hygiene-first care.']
+  ['Custom Tattoos', 'Original concepts designed around your idea, placement and style.', '/services/custom-tattoos/'],
+  ['Cover-up Tattoos', 'Strategic designs created to conceal or transform an existing tattoo.', '/services/cover-up-tattoos/'],
+  ['Realism & Portraits', 'Detailed black-and-grey and realistic portrait-focused artwork.', '/services/portrait-tattoos/'],
+  ['Minimal Tattoos', 'Clean, elegant and placement-conscious fine-line concepts.', '/services/minimal-tattoos/'],
+  ['Fine Line Tattoos', 'Delicate, precise tattoo work with sizing and placement planned for long-term readability.', '/services/fine-line-tattoos/'],
+  ['Religious Tattoos', 'Respectful, thoughtfully composed spiritual and devotional designs.', '/services/religious-tattoos/'],
+  ['Couple & Name Tattoos', 'Personalized matching designs, names and meaningful lettering.', '/services/name-tattoos/'],
+  ['Sleeve Tattoos', 'Large-scale compositions planned for flow, balance and future expansion.', '/services/sleeve-tattoos/'],
+  ['Professional Piercing', 'Ear, nose, eyebrow, lip, tongue and belly piercing with hygiene-first care.', '/services/ear-piercing/']
 ];
 
 const faqs = [
   ['How do I get an exact tattoo price?', 'Send the design reference, approximate size in inches and body placement on WhatsApp. Final pricing depends on detail, size, style, placement and time required.'],
+  ['How do I choose a tattoo artist in Gurgaon?', 'Review the artists and portfolio on this page, then send your reference, preferred style, size and placement for a consultation. The right artist depends on the artwork and style you want.'],
+  ['How do I find a tattoo studio near me in Gurgaon?', 'Divine Ink is located in Sector 31, Gurugram. Use the Sector 31 location page and the service pages to check the tattoo or piercing service that matches your requirement.'],
   ['Do you provide custom tattoo designs?', 'Yes. We discuss your idea, placement and style before preparing a custom concept.'],
   ['Do you do cover-up tattoos?', 'Yes. Cover-up feasibility depends on the darkness, size, location and age of the existing tattoo. A clear photo is required for assessment.'],
   ['Is the studio open 24x7?', 'Yes, the studio accepts bookings 24x7. Advance confirmation is recommended before visiting, especially for late-night appointments.'],
   ['What hygiene process do you follow?', 'Single-use needles, fresh consumables, clean working surfaces and proper aftercare guidance are part of the studio process.'],
-  ['Can I book a piercing appointment?', 'Yes. Send the piercing type and preferred time on WhatsApp to confirm availability.']
+  ['Can I book a piercing appointment?', 'Yes. Send the piercing type and preferred time on WhatsApp to confirm availability.'],
+  ['What is Divine Ink’s official Instagram account?', 'The official Instagram profile is @divineinktattoos1, linked directly from this website. Use that profile for Divine Ink studio work and updates.'],
+  ['Does Divine Ink have another Gurugram branch?', 'This official website lists one verified Divine Ink studio: Shop No. 155, Basement, near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram. We do not list a second Gurugram branch here. Use the linked official Sector 31 Google Maps profile to confirm the destination before visiting.'],
+  ['Is this website connected to Divine Ink studios in other cities?', 'No. This official website represents only Divine Ink Tattoos & Piercing Studio at its verified Sector 31 address in Gurugram, Haryana. It does not represent or advertise branches in other cities. For the correct phone number, address and directions, use the contact details and official Google Maps link on this website.']
 ];
 
 function App() {
@@ -102,11 +107,12 @@ function App() {
   const primaryPhoneRecord = phoneRecords.find((item) => item.primary) || phoneRecords[0] || null;
   const primaryPhoneDigits = String(primaryPhoneRecord?.number || '').replace(/\D/g, '');
   const whatsappDigits = hasContactValue('whatsapp') ? String(contactSettings.whatsapp || '').replace(/\D/g, '') : defaultPhone;
-  const address = hasContactValue('address') ? String(contactSettings.address || '').trim() : defaultAddress;
+  // Keep public business identity locked to the verified Sector 31 studio and official social account.
+  // CMS contact settings must not override the canonical address, Maps CID, or official Instagram URL.
+  const address = defaultAddress;
   const openingHours = hasContactValue('openingHours') ? String(contactSettings.openingHours || '').trim() : defaultOpeningHours;
-  const mapLink = hasContactValue('googleMapsUrl') ? String(contactSettings.googleMapsUrl || '').trim() : defaultMapLink;
-  const instagramLink = hasContactValue('instagram') ? String(contactSettings.instagram || '').trim() : defaultInstagram;
-  const facebookLink = hasContactValue('facebook') ? String(contactSettings.facebook || '').trim() : defaultFacebook;
+  const mapLink = defaultMapLink;
+  const instagramLink = defaultInstagram;
   const mapEmbedUrl = address ? `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed` : '';
   const whatsappLink = whatsappDigits ? `https://wa.me/${whatsappDigits}?text=${encodeURIComponent('Hi Divine Ink Tattoos, I want to book a consultation.')}` : '';
   const managedPiercingItems = getPreviewPiercingItems(homepageSettings?.piercingItems);
@@ -264,10 +270,10 @@ function App() {
       <main>
         <section id="home" className="hero" style={{ backgroundImage: `linear-gradient(90deg, rgba(5,5,5,.96) 0%, rgba(5,5,5,.72) 45%, rgba(5,5,5,.2) 100%), url(${hero})` }}>
           <div className="hero-content">
-            <p className="eyebrow">Premium Tattoo & Piercing Studio · Gurugram</p>
-            <h1>Ink Your Story At<br/><span>Divine Ink Tattoos</span></h1>
-            <p className="hero-tagline">Your Personal Tattoo Studio</p>
-            <p className="hero-copy">Custom tattoos, cover-ups, realism, portraits, minimal designs and professional piercing in a hygiene-focused studio at Sector 31, Gurugram.</p>
+            <p className="eyebrow">Tattoo Shop & Piercing Studio · Gurugram</p>
+            <h1>Tattoo Shop in Gurgaon<br/><span>Divine Ink Tattoos</span></h1>
+            <p className="hero-tagline">Tattoo Artist · Tattoo Studio · Sector 31, Gurugram</p>
+            <p className="hero-copy">Custom tattoos, cover-ups, realism, portraits, minimal designs and professional piercing in a hygiene-focused studio at <a href="/locations/sector-31/">Sector 31, Gurugram</a>.</p>
             <div className="hero-actions">
               {whatsappLink && <a className="btn primary" href={whatsappLink} target="_blank" rel="noreferrer"><MessageCircle size={19}/> Book on WhatsApp</a>}
               {primaryPhoneDigits && <a className="btn primary" href={`tel:+${primaryPhoneDigits}`}><Phone size={18}/> Book on Call</a>}
@@ -294,9 +300,9 @@ function App() {
           </div>
           <div className="section-copy">
             <p className="eyebrow">About Divine Ink</p>
-            <h2>A private, focused space for meaningful body art.</h2>
-            <p>Divine Ink Tattoos & Piercing Studio combines design consultation, placement planning and careful execution to create tattoos that look intentional—not generic.</p>
-            <p>Our studio is located in the basement near Apollo Pharmacy in Main HUDA Market, Sector 31, Gurugram. Every appointment is handled with clear communication, hygiene-conscious preparation and aftercare guidance.</p>
+            <h2>A tattoo shop in Gurgaon focused on meaningful body art.</h2>
+            <p>Divine Ink Tattoos & Piercing Studio is a tattoo-focused studio in Sector 31, Gurugram. We combine design consultation, placement planning and careful execution to create tattoos that look intentional—not generic.</p>
+            <p>Our studio is located in the basement near Apollo Pharmacy in Main HUDA Market, <a href="/locations/sector-31/">Sector 31, Gurugram</a>. Every appointment is handled with clear communication, hygiene-conscious preparation and aftercare guidance.</p>
             <div className="feature-list">
               <span><ShieldCheck/> Single-use needles & fresh consumables</span>
               <span><CalendarCheck/> Appointment-based consultation</span>
@@ -306,26 +312,74 @@ function App() {
           </div>
         </section>
 
+        <section id="studio-identity" className="section identity-section">
+          <div className="section-heading center">
+            <p className="eyebrow">Studio Identity</p>
+            <h2>Divine Ink Tattoos in Sector 31, Gurugram</h2>
+            <p>If you are searching for Divine Ink Tattoos in Gurgaon or Gurugram, the official website for this studio is <strong>divineinktattoos.in</strong>. The studio is at Shop No. 155, basement, near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001.</p>
+            <p>For accurate directions, contact details, and studio information, use this official website and the linked Google Maps profile. Divine Ink Tattoos &amp; Piercing Studio welcomes tattoo and piercing clients at its Sector 31, Gurugram studio.</p>
+            <p>Divine Ink operates from one studio at this verified Sector 31 address. This official website does not list a second Gurugram branch. Please use the address and official map link above to confirm the destination before visiting.</p>
+            <p>The only official Instagram profile linked by Divine Ink is <strong>@divineinktattoos1</strong>. Use the Instagram link below for the studio’s own work and updates.</p>
+            {mapLink && <a className="text-link" href={mapLink} target="_blank" rel="noreferrer">Open the Sector 31 Google Maps listing <ChevronRight size={18}/></a>}
+            {instagramLink && <p><a className="text-link" href={instagramLink} target="_blank" rel="noreferrer">Official Instagram: @divineinktattoos1</a></p>}
+          </div>
+        </section>
+
         <section id="services" className="section dark-panel">
           <div className="section-heading center">
-            <p className="eyebrow">What We Do</p>
-            <h2>Tattoo styles and services</h2>
-            <p>Every design is evaluated for size, placement, detail and long-term readability before the session begins.</p>
+            <p className="eyebrow">Tattoo Specialties · Sector 31, Gurugram</p>
+            <h2>Tattoo Specialties in Gurgaon (Gurugram)</h2>
+            <p>Divine Ink’s tattoo specialties include custom tattoo design, fine line tattoos, realism and portrait tattoos, black-and-grey work, cover-up tattoos, minimal tattoos and sleeve planning—all at our single verified studio in Sector 31, Gurugram.</p>
+            <p>Choose a specialty below to review the relevant service details. Each consultation considers your reference, placement, size, detail and long-term readability. Professional piercing is also available at the same Sector 31 studio.</p>
           </div>
           <div className="service-grid">
-            {services.map(([title, text], index) => (
+            {services.map(([title, text, href], index) => (
               <article className="service-card" key={title}>
                 <span className="service-number">{String(index + 1).padStart(2,'0')}</span>
                 <h3>{title}</h3><p>{text}</p>
+                <a className="text-link service-card-link" href={href}>View service <ChevronRight size={18}/></a>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section id="tattoo-gurgaon" className="section">
+          <div className="section-heading center">
+            <p className="eyebrow">Tattoo Studio · Gurugram</p>
+            <h2>Tattoo Shop in Gurgaon for Custom, Fine Line & Realism Work</h2>
+            <p>For anyone comparing a tattoo shop in Gurgaon, tattoo artist in Gurgaon or tattoo studio in Gurgaon, the most useful starting point is the tattoo style you actually want. Divine Ink in Sector 31 handles custom tattoos, fine line, realism and portraits, black & grey, cover-ups, minimal designs, religious tattoos, name tattoos and sleeve planning.</p>
+            <p>From a first tattoo to a detailed cover-up or large sleeve, consultation covers reference quality, size, placement, composition and how the design should read on the body. If you are looking for a tattoo shop near me in Gurugram, the studio is in Main HUDA Market, Sector 31, near Apollo Pharmacy.</p>
+          </div>
+          <div className="service-grid">
+            <article className="service-card">
+              <span className="service-number">01</span>
+              <h3>Custom & Fine Line</h3>
+              <p>Start with your idea, reference and placement, then choose the closest tattoo style.</p>
+              <a className="text-link service-card-link" href="/services/custom-tattoos/">Custom tattoos <ChevronRight size={18}/></a>
+              <a className="text-link service-card-link" href="/services/fine-line-tattoos/">Fine line tattoos <ChevronRight size={18}/></a>
+            </article>
+            <article className="service-card">
+              <span className="service-number">02</span>
+              <h3>Realism & Portraits</h3>
+              <p>Reference quality, scale and contrast matter when planning a realistic portrait tattoo.</p>
+              <a className="text-link service-card-link" href="/services/portrait-tattoos/">Portrait & realism tattoos <ChevronRight size={18}/></a>
+              <a className="text-link service-card-link" href="/services/black-grey-tattoos/">Black & grey tattoos <ChevronRight size={18}/></a>
+            </article>
+            <article className="service-card">
+              <span className="service-number">03</span>
+              <h3>Cover-ups & Sleeves</h3>
+              <p>Existing ink, available space and future expansion are considered before the design is finalised.</p>
+              <a className="text-link service-card-link" href="/services/cover-up-tattoos/">Cover-up tattoos <ChevronRight size={18}/></a>
+              <a className="text-link service-card-link" href="/services/sleeve-tattoos/">Sleeve tattoos <ChevronRight size={18}/></a>
+            </article>
           </div>
         </section>
 
         <section id="artists" className="section">
           <div className="section-heading center">
             <p className="eyebrow">Meet The Artists</p>
-            <h2>Experience guided by your idea</h2>
+            <h2>Tattoo Artists in Gurgaon (Gurugram)</h2>
+            <p>Choose an artist based on the style and portfolio that fit your tattoo idea. If you are comparing the <strong>best tattoo artist in Gurgaon</strong>, <strong>best tattoo shop in Gurgaon</strong> or <strong>best tattoo studio in Gurgaon</strong>, use the portfolio and service pages to compare the work that actually matches your requested style. For people researching a <strong>top tattoo artist in Gurgaon</strong> or <strong>top tattoo studio in Gurgaon</strong>, portfolio fit and consultation quality are more useful than a generic ranking. If you are comparing a <strong>top tattoo artist near me</strong> or <strong>top tattoo studio near me</strong>, use the same portfolio, style and consultation checks before choosing.</p>
           </div>
           <div className="artist-grid">
             {visibleArtists.map((artist) => (
@@ -430,10 +484,7 @@ function App() {
                 {address && (mapLink ? <a href={mapLink} target="_blank" rel="noreferrer"><MapPin/> {address}</a> : <span><MapPin/> {address}</span>)}
                 {openingHours && <span><Clock3/> {openingHours}</span>}
               </div>
-              {(instagramLink || facebookLink) && <div className="social-row">
-                {instagramLink && <a href={instagramLink} target="_blank" rel="noreferrer">Instagram</a>}
-                {facebookLink && <a href={facebookLink} target="_blank" rel="noreferrer">Facebook</a>}
-              </div>}
+              {instagramLink && <div className="social-row"><a href={instagramLink} target="_blank" rel="noreferrer">Instagram</a></div>}
             </div>
             <form className="booking-form" action="https://formsubmit.co/divinetattoostudio1@gmail.com" method="POST">
               <input type="hidden" name="_subject" value="New Booking Enquiry — Divine Ink Website" />
@@ -460,8 +511,8 @@ function App() {
       </main>
 
       <footer className="footer">
-        <div><img src={logo} alt="Divine Ink logo"/><p>Custom tattoos and professional piercing in Sector 31, Gurugram.</p></div>
-        <div><h4>Quick Links</h4><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#artists">Artists</a><a href="#reviews">Reviews</a></div>
+        <div><img src={logo} alt="Divine Ink logo"/><p>Tattoo-focused studio in Sector 31, Gurugram for custom, fine line, realism, portrait, black &amp; grey, cover-up and sleeve tattoos, with professional piercing.</p></div>
+        <div><h4>Popular Tattoo Services</h4><a href="/services/custom-tattoos/">Custom Tattoos</a><a href="/services/fine-line-tattoos/">Fine Line Tattoos</a><a href="/services/portrait-tattoos/">Realism & Portrait Tattoos</a><a href="/services/cover-up-tattoos/">Cover Up Tattoos</a><a href="/services/sleeve-tattoos/">Sleeve Tattoos</a><a href="/locations/sector-31/">Tattoo Shop in Sector 31</a></div>
         <div><h4>Contact</h4>{phoneRecords.map((item) => { const digits = item.number.replace(/\D/g, ''); return digits ? <a key={item.id} href={`tel:+${digits}`}>{item.number}</a> : null; })}<a href="mailto:divinetattoostudio1@gmail.com">divinetattoostudio1@gmail.com</a>{mapLink && <a href={mapLink} target="_blank" rel="noreferrer">Get Directions</a>}</div>
         <div className="copyright">© {new Date().getFullYear()} Divine Ink Tattoos & Piercing Studio. All rights reserved.</div>
       </footer>
@@ -469,7 +520,6 @@ function App() {
       <div className="floating-socials" aria-label="Social links">
         {whatsappLink && <a className="floating-social whatsapp" href={whatsappLink} target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp"><WhatsAppLogo/></a>}
         {instagramLink && <a className="floating-social instagram" href={instagramLink} target="_blank" rel="noreferrer" aria-label="Open Instagram"><InstagramLogo/></a>}
-        {facebookLink && <a className="floating-social facebook" href={facebookLink} target="_blank" rel="noreferrer" aria-label="Open Facebook"><FacebookLogo/></a>}
       </div>
 
       {lightbox && <div className="lightbox" role="dialog" aria-modal="true" aria-label={`${lightbox.category || 'Gallery'} image preview`} onClick={() => setLightbox(null)}>
