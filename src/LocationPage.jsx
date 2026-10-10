@@ -6,6 +6,7 @@ import { locationPageMap } from './locationData.js';
 const whatsappLink =
   'https://wa.me/918445702782?text=Hi%20Divine%20Ink%20Tattoos%2C%20I%20want%20to%20book%20a%20consultation.';
 const mapsLink = 'https://www.google.com/maps?cid=13259589601998313340';
+const instagramLink = 'https://www.instagram.com/divineinktattoos1/';
 
 export default function LocationPage() {
   const { slug } = useParams();
@@ -52,6 +53,7 @@ export default function LocationPage() {
             <aside className="service-card">
               <span className="service-number">Plan your visit</span>
               <h3>One verified studio in Sector 31</h3>
+              <p>This is an area information page, not a separate branch. All appointments take place at the one official Sector 31 address shown below.</p>
               <p>• Send references before booking</p>
               <p>• Confirm the appointment and map pin</p>
               <p>• Discuss placement and realistic sizing</p>
@@ -105,6 +107,7 @@ export default function LocationPage() {
                 <a href="tel:+918445702782">Call +91 84457 02782</a>
                 <a href={whatsappLink} rel="noreferrer" target="_blank">Book on WhatsApp</a>
                 <a href={mapsLink} rel="noreferrer" target="_blank">Get Google Maps directions</a>
+                <a href={instagramLink} rel="noreferrer" target="_blank">Official Instagram: @divineinktattoos1</a>
                 <Link to="/services/custom-tattoos/">Explore custom tattoos</Link>
                 <Link to="/services/fine-line-tattoos/">Explore fine line tattoos</Link>
                 <Link to="/services/portrait-tattoos/">Explore realism & portrait tattoos</Link>
@@ -137,6 +140,7 @@ export default function LocationPage() {
           <h4>Contact</h4>
           <a href="tel:+918445702782">+91 84457 02782</a>
           <a href={whatsappLink} rel="noreferrer" target="_blank">WhatsApp</a>
+          <a href={instagramLink} rel="noreferrer" target="_blank">Official Instagram: @divineinktattoos1</a>
         </div>
         <div className="copyright">© {new Date().getFullYear()} Divine Ink Tattoos & Piercing Studio. All rights reserved.</div>
       </footer>
