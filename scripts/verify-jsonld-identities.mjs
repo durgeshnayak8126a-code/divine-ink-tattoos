@@ -47,6 +47,22 @@ for (const [route, relativePath] of publicPages) {
     continue;
   }
 
+  const conflictingListingPatterns = [
+    /\\bshop\\s*no\\.?\\s*189\\b/i,
+    /\\bshop\\s*no\\.?\\s*9\\b/i,
+    /\\bsector\\s*38\\b/i,
+    /\\bislampur\\b/i,
+    /\\bsamvit\\s+hospital\\b/i,
+    /instagram\\.com\\/angeltattoodesignstudio/i,
+    /instagram\\.com\\/devtattoostudio_/i,
+    /\\+91[\\s-]*99580[\\s-]*47997/i,
+  ];
+  for (const pattern of conflictingListingPatterns) {
+    if (pattern.test(html)) {
+      failures.push(`Public page ${route} contains conflicting third-party listing details matching ${pattern}.`);
+    }
+  }
+
   const canonicalMatches = [...html.matchAll(/<link\s+rel="canonical"\s+href="([^"]+)"\s*\/?\s*>/gi)];
   const ogUrlMatches = [...html.matchAll(/<meta\s+property="og:url"\s+content="([^"]+)"\s*\/?\s*>/gi)];
   const expectedUrl = `https://divineinktattoos.in${route}`;
