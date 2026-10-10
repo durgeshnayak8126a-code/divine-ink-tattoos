@@ -118,6 +118,10 @@ expect(
   !['Shop No. 189', 'Shop No 189', 'Shop No. 9', 'Sector 38', 'Samvit Hospital', 'instagram.com/angeltattoodesignstudio', 'instagram.com/devtattoostudio_'].some((value) => homepageIdentitySource.toLowerCase().includes(value.toLowerCase())),
   'Homepage source must not repeat conflicting third-party addresses or unrelated social accounts.',
 );
+expect(
+  !homepageIdentitySource.includes('100078466583354') && !homepageIdentitySource.includes('defaultFacebook') && !homepageIdentitySource.includes('facebookLink'),
+  'Public homepage must not publish an unverified Facebook account; only the confirmed official Instagram profile is allowed.',
+);
 
 expect(
   homepageIdentitySource.includes('Tattoo Specialties in Gurgaon (Gurugram)') &&
