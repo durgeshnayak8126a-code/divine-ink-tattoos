@@ -56,6 +56,10 @@ for (const [route, relativePath] of publicPages) {
     /instagram\.com\/angeltattoodesignstudio/i,
     /instagram\.com\/devtattoostudio_/i,
     /\+91[\s-]*99580[\s-]*47997/i,
+    /\b8075987210\b/i,
+    /\b7356809623\b/i,
+    /\b9958047997\b/i,
+    /instagram\.com\/(?:devtattoostudio_|angeltattoodesignstudio)/i,
   ];
   for (const pattern of conflictingListingPatterns) {
     if (pattern.test(html)) {
