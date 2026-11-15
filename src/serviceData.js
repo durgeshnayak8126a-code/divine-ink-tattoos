@@ -215,6 +215,35 @@ export const servicePages = [
     highlights: ['Two-point alignment assessment', 'Ear ridge and clearance check', 'Pressure-risk explanation', 'Long-term cartilage aftercare'],
     related: ['ear-piercing', 'eyebrow-piercing', 'nose-piercing'],
   },
+
+  {
+    slug: 'temporary-tattoos',
+    name: 'Temporary Tattoos',
+    title: 'Tattoo Shop Near Me in Gurgaon – Temporary Tattoos at Divine Ink',
+    metaTitle: 'Tattoo Shop Near Me in Gurgaon | Temporary Tattoos | Divine Ink',
+    description: 'Searching for a tattoo shop near me or a tattoo shop in Gurgaon? Enquire about temporary tattoo designs at Divine Ink, Sector 31, Gurugram.',
+    eyebrow: 'Temporary designs · explore your look',
+    intro: 'Looking for a tattoo shop near me, a tattoo studio in Gurgaon or a way to try a design before choosing permanent ink? Divine Ink Tattoos & Piercing Studio in Sector 31, Gurugram, welcomes enquiries about temporary tattoo options.',
+    overview: 'If you are comparing the best tattoo shop in Gurgaon or searching for a tattoo artist near me, consider the design options, studio location, portfolio and the information provided before choosing. At Divine Ink, you can discuss temporary tattoo ideas, preferred placement and the available application options before confirming.',
+    planning: 'Bring a reference image or describe the style you have in mind. The team can discuss the design, approximate size, placement, availability and price. Confirm the product or application method and its expected wear time before proceeding.',
+    care: 'Temporary tattoo wear time and skin response depend on the product and application method. Follow the specific instructions provided, avoid applying a product to irritated or broken skin, and stop use if irritation occurs. Product suitability should be confirmed before application.',
+    highlights: ['Minimal, lettering and symbolic design enquiries', 'Reference-based design discussion', 'Placement and size planning', 'Availability and pricing confirmed before proceeding'],
+    related: ['custom-tattoos', 'minimal-tattoos', 'name-tattoos'],
+  },
+  {
+    slug: 'laser-tattoo-removal',
+    name: 'Laser Tattoo Removal',
+    title: 'Tattoo Removal in Gurgaon – Enquire at Divine Ink',
+    metaTitle: 'Tattoo Removal in Gurgaon | Tattoo Shop Near Me | Divine Ink',
+    description: 'Searching for tattoo removal in Gurgaon or a tattoo shop near me? Enquire at Divine Ink, Sector 31, about laser tattoo removal and cover-up options.',
+    eyebrow: 'Existing tattoo · removal enquiries',
+    intro: 'Searching for tattoo removal in Gurgaon, a tattoo shop near me or a studio to discuss an unwanted tattoo? Divine Ink Tattoos in Sector 31 accepts enquiries about laser tattoo removal and possible cover-up planning.',
+    overview: 'People comparing a tattoo shop in Gurgaon or the best tattoo shop near me may be looking to remove an old design, explore lightening before a cover-up or understand available options. The suitability of laser treatment depends on the tattoo and individual skin characteristics and must be assessed by a qualified provider.',
+    planning: 'An assessment should consider tattoo size, location, ink colours, ink depth, age of the tattoo and relevant skin characteristics. Ask the provider about qualifications, the laser technology used, possible risks, expected sessions, aftercare and total estimated cost before deciding.',
+    care: 'Treatment response and the number of sessions vary. Complete removal, scar-free results and a specific outcome cannot be guaranteed. Follow the treating provider’s aftercare instructions and seek professional advice if unexpected skin reactions occur.',
+    highlights: ['Enquiry about an existing tattoo', 'Discussion of removal and cover-up goals', 'Assessment factors explained before treatment', 'Provider, technology, risks and aftercare to be confirmed'],
+    related: ['cover-up-tattoos', 'custom-tattoos', 'black-grey-tattoos'],
+  },
 ];
 
 export const servicePageMap = new Map(
