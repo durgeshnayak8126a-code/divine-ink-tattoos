@@ -214,7 +214,7 @@ export const servicePages = [
     care: 'Industrial piercings can be sensitive to sleeping pressure and accidental knocks. Healing requires patience, careful cleaning and avoiding headphones or habits that irritate the area.',
     highlights: ['Two-point alignment assessment', 'Ear ridge and clearance check', 'Pressure-risk explanation', 'Long-term cartilage aftercare'],
     related: ['ear-piercing', 'eyebrow-piercing', 'nose-piercing'],
-  },,
+  },
 
   {
     slug: 'temporary-tattoos',
