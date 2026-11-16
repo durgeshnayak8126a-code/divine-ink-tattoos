@@ -25,7 +25,7 @@ export const locationPages = [
     name: 'Sector 31',
     title: 'Tattoo Shop in Sector 31, Gurugram',
     metaTitle: 'Tattoo Shop in Sector 31, Gurgaon | Divine Ink',
-    description: 'Tattoo studio in Sector 31, Gurugram for custom, fine-line, minimal, portrait, sleeve and cover-up tattoos. Explore Divine Ink’s portfolio and plan a visit.',
+    description: 'Custom, fine-line, minimal, portrait, sleeve and cover-up tattoos at Divine Ink, Sector 31, Gurugram. Explore the portfolio and plan a visit.',
     eyebrow: 'Official studio · Main HUDA Market',
     intro: `Looking for a tattoo shop in Sector 31? Divine Ink’s studio is based at ${studioAddress}. Explore tattoo styles, review the portfolio and contact the team to plan your visit.`,
     local: 'At the Sector 31 studio, you can discuss custom tattoos, fine-line and minimal designs, portraits, realism, religious tattoos, sleeves and cover-ups. Bring a reference or explain your idea; the design, size and placement can then be discussed before an appointment is confirmed.',
