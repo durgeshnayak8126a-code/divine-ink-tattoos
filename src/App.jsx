@@ -231,7 +231,7 @@ function App() {
         <section id="home" className="hero" style={{ backgroundImage: `linear-gradient(90deg, rgba(5,5,5,.96) 0%, rgba(5,5,5,.72) 45%, rgba(5,5,5,.2) 100%), url(${hero})` }}>
           <div className="hero-content">
             <p className="eyebrow">Premium Tattoo & Piercing Studio · Gurugram</p>
-            <h1>Tattoo Shop in Gurgaon<br/><span>Custom &amp; Cover-Up Tattoos</span></h1>
+            <h1>Ink Your Story At<br/><span>Divine Ink Tattoos</span></h1>
             <p className="hero-tagline">Your Personal Tattoo Studio</p>
             <p className="hero-copy">Custom tattoos, cover-ups, realism, portraits, minimal designs and professional piercing in a hygiene-focused studio at Sector 31, Gurugram.</p>
             <div className="hero-actions">
