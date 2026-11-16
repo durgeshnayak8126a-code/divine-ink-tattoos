@@ -29,7 +29,7 @@ export const locationPages = [
     eyebrow: 'Official studio · Main HUDA Market',
     intro: `Looking for a tattoo shop in Sector 31? Divine Ink’s studio is based at ${studioAddress}. Explore tattoo styles, review the portfolio and contact the team to plan your visit.`,
     local: 'At the Sector 31 studio, you can discuss custom tattoos, fine-line and minimal designs, portraits, realism, religious tattoos, sleeves and cover-ups. Bring a reference or explain your idea; the design, size and placement can then be discussed before an appointment is confirmed.',
-    travel: 'Divine Ink has one official studio at ${studioAddress}. It is near Apollo Pharmacy in Main HUDA Market. Please confirm your appointment and map pin before travelling.',
+    travel: `Divine Ink has one official studio at ${studioAddress}. It is near Apollo Pharmacy in Main HUDA Market. Please confirm your appointment and map pin before travelling.`,
     faq: [
       ['Where is Divine Ink in Sector 31?', `The studio is at ${studioAddress}.`],
       ['What tattoo styles are available to discuss?', 'You can discuss custom, fine-line, minimal, portrait, realism, black-and-grey, colour, religious, sleeve and cover-up tattoos. The right design depends on your idea, placement and size.'],
