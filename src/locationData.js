@@ -7,9 +7,9 @@ export const locationPages = [
     name: 'Gurgaon',
     title: 'Tattoo Artist in Gurgaon (Gurugram)',
     metaTitle: 'Tattoo Artist in Gurgaon | Divine Ink Tattoos',
-    description: 'Searching for a tattoo artist in Gurgaon? Explore custom, fine-line, portrait, realism, black-and-grey, minimal, sleeve and cover-up tattoos at Divine Ink’s Sector 31 studio.',
+    description: 'Tattoo artist in Gurgaon? Explore custom, fine-line, portrait, realism, minimal, sleeve and cover-up tattoos at Divine Ink, Sector 31.',
     eyebrow: 'Tattoo studio · Gurugram',
-    intro: 'Divine Ink is one tattoo studio in Sector 31, Gurugram. This city page helps people compare tattoo styles and plan a visit to the official studio.',
+    intro: 'Divine Ink is a tattoo studio based in Sector 31, Gurugram, serving clients from across Gurgaon. Explore tattoo styles and plan a visit to the official studio.',
     local: 'Explore custom concepts, fine-line designs, minimal tattoos, portraits, realism, black-and-grey work, sleeves and cover-ups. Before choosing a tattoo artist in Gurgaon, review work in the style you want, discuss placement and size, and ask how the design will be adapted to your idea.',
     travel: 'All appointments take place at the one Divine Ink studio: Shop No. 155, Basement, near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001. This is not a separate branch in every Gurgaon neighbourhood.',
     faq: [
