@@ -1,5 +1,4 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { useMemo } from 'react';
 import './App.css';
 import SeoManager from './SeoManager.jsx';
 import { servicePageMap } from './serviceData.js';
@@ -30,6 +29,18 @@ function normalizeServiceFaqs(value) {
   }).filter((item) => item?.question && item?.answer);
 }
 
+function mergeServiceFaqs(editorialFaqs, managedFaqs) {
+  const seen = new Set();
+  return [...normalizeServiceFaqs(managedFaqs), ...normalizeServiceFaqs(editorialFaqs)]
+    .filter((item) => {
+      const key = item.question.trim().toLocaleLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .map((item, index) => ({ ...item, id: `service-faq-${index}` }));
+}
+
 export default function ServicePage() {
   const { slug } = useParams();
   const staticService = servicePageMap.get(slug);
@@ -47,17 +58,7 @@ export default function ServicePage() {
     ...staticService,
   };
   const pricing = String(managed?.pricing || '').trim();
-  const pageFaqs = useMemo(() => {
-    const editorial = normalizeServiceFaqs(serviceFaqs[slug]);
-    const managedItems = normalizeServiceFaqs(managed?.faqs);
-    const seen = new Set();
-    return [...managedItems, ...editorial].filter((item) => {
-      const key = item.question.trim().toLocaleLowerCase();
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    }).map((item, index) => ({ ...item, id: `service-faq-${index}` }));
-  }, [slug, managed?.faqs]);
+  const pageFaqs = mergeServiceFaqs(serviceFaqs[slug], managed?.faqs);
 
   const displayPhone = String(contact?.phone || fallbackPhone).trim();
   const telNumber = phoneDigits(displayPhone, fallbackWhatsapp);
