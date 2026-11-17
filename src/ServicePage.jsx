@@ -2,6 +2,7 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import './App.css';
 import SeoManager from './SeoManager.jsx';
 import { servicePageMap } from './serviceData.js';
+import { serviceFaqs } from './serviceFaqData.js';
 import { usePublicCms } from './usePublicCms.js';
 
 const fallbackPhone = '+91 84457 02782';
@@ -28,6 +29,18 @@ function normalizeServiceFaqs(value) {
   }).filter((item) => item?.question && item?.answer);
 }
 
+function mergeServiceFaqs(editorialFaqs, managedFaqs) {
+  const seen = new Set();
+  return [...normalizeServiceFaqs(managedFaqs), ...normalizeServiceFaqs(editorialFaqs)]
+    .filter((item) => {
+      const key = item.question.trim().toLocaleLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .map((item, index) => ({ ...item, id: `service-faq-${index}` }));
+}
+
 export default function ServicePage() {
   const { slug } = useParams();
   const staticService = servicePageMap.get(slug);
@@ -45,7 +58,7 @@ export default function ServicePage() {
     ...staticService,
   };
   const pricing = String(managed?.pricing || '').trim();
-  const managedFaqs = normalizeServiceFaqs(managed?.faqs);
+  const pageFaqs = mergeServiceFaqs(serviceFaqs[slug], managed?.faqs);
 
   const displayPhone = String(contact?.phone || fallbackPhone).trim();
   const telNumber = phoneDigits(displayPhone, fallbackWhatsapp);
@@ -55,7 +68,7 @@ export default function ServicePage() {
 
   return (
     <div className="site-shell">
-      <SeoManager service={service} />
+      <SeoManager service={service} faqs={pageFaqs} />
 
       <header className="site-header">
         <a className="brand" href="/" aria-label="Divine Ink home">
@@ -142,14 +155,14 @@ export default function ServicePage() {
           </div>
         </section>
 
-        {managedFaqs.length > 0 && (
+        {pageFaqs.length > 0 && (
           <section className="section faq-section">
             <div className="section-heading">
               <p className="eyebrow">Service FAQs</p>
               <h2>Questions about {service.name.toLowerCase()}</h2>
             </div>
             <div className="faq-list">
-              {managedFaqs.map((item) => (
+              {pageFaqs.map((item) => (
                 <article className="open" key={item.id}>
                   <button aria-expanded="true" type="button"><span>{item.question}</span></button>
                   <div className="faq-answer" style={{ maxHeight: 'none' }}><p>{item.answer}</p></div>
