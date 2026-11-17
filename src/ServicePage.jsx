@@ -10,7 +10,7 @@ const fallbackWhatsapp = '918445702782';
 const fallbackAddress = 'Shop No. 155, Basement, near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001';
 
 function phoneDigits(value, fallback = '') {
-  const digits = String(value || '').replace(/\\D/g, '');
+  const digits = String(value || '').replace(/\D/g, '');
   return digits || fallback;
 }
 
