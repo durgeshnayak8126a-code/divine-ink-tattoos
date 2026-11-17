@@ -32,7 +32,7 @@ function getServiceSeo(service) {
   };
 }
 
-export default function SeoManager({ service }) {
+export default function SeoManager({ service, faqs = [] }) {
   useEffect(() => {
     const previousTitle = document.title;
     const previousCanonical =
@@ -69,10 +69,7 @@ export default function SeoManager({ service }) {
     setMeta('name', 'twitter:image', socialImage);
     setMeta('name', 'twitter:image:alt', 'Divine Ink Tattoos & Piercing Studio logo');
 
-    const schema = document.createElement('script');
-    schema.id = 'service-page-schema';
-    schema.type = 'application/ld+json';
-    schema.textContent = JSON.stringify([
+    const schemaEntities = [
       {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
@@ -122,7 +119,28 @@ export default function SeoManager({ service }) {
         breadcrumb: { '@id': `${canonical}#breadcrumb` },
         inLanguage: 'en-IN',
       },
-    ]);
+    ];
+
+    if (faqs.length > 0) {
+      schemaEntities.push({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        '@id': `${canonical}#faq`,
+        mainEntity: faqs.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.answer,
+          },
+        })),
+      });
+    }
+
+    const schema = document.createElement('script');
+    schema.id = 'service-page-schema';
+    schema.type = 'application/ld+json';
+    schema.textContent = JSON.stringify(schemaEntities);
     document.head.querySelector('#service-page-schema')?.remove();
     document.head.appendChild(schema);
 
@@ -140,7 +158,7 @@ export default function SeoManager({ service }) {
       });
       schema.remove();
     };
-  }, [service]);
+  }, [service, faqs]);
 
   return null;
 }
