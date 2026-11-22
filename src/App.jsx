@@ -66,7 +66,7 @@ const faqs = [
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeFilter, setActiveFilter] = useState(null);
+  const [activeFilter, setActiveFilter] = useState(null);\n  const categoryGalleryRef = useRef(null);
   const [activeArtist, setActiveArtist] = useState('All Artists');
   const [lightbox, setLightbox] = useState(null);
   const [piercingLightbox, setPiercingLightbox] = useState(null);
@@ -318,15 +318,15 @@ function App() {
             {filters.map((category) => {
               const categoryItems = galleryItems.filter((item) => item.category === category && (activeArtist === 'All Artists' || item.artist === activeArtist));
               const preview = categoryItems[0];
-              return <button type="button" key={category} className={`category-card ${activeFilter === category ? 'active' : ''}`} onClick={() => setActiveFilter(category)} aria-expanded={activeFilter === category}>
+              return <button type="button" key={category} className={`category-card ${activeFilter === category ? 'active' : ''}`} onClick={() => { setActiveFilter(category); window.requestAnimationFrame(() => categoryGalleryRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })); }} aria-expanded={activeFilter === category}>
                 {preview && <img src={preview.image} alt="" loading="lazy"/>}
                 <span className="category-card-label"><strong>{category}</strong><small>{categoryItems.length} {categoryItems.length === 1 ? 'tattoo' : 'tattoos'}</small></span>
               </button>;
             })}
           </div>
           {!activeFilter ? <p className="category-hint">Select a category to explore its complete tattoo gallery.</p> : (
-            <div className="selected-category-gallery">
-              <div className="selected-category-heading"><h3>{activeFilter} Tattoos</h3><button type="button" onClick={() => setActiveFilter(null)}>Close gallery ×</button></div>
+            <div className="selected-category-gallery" ref={categoryGalleryRef}>
+              <div className="selected-category-heading"><div><p className="eyebrow">Currently viewing category</p><h3>{activeFilter} Tattoos</h3></div><button type="button" onClick={() => setActiveFilter(null)}>Close gallery ×</button></div>
               {filtered.length === 0 ? <p style={{ textAlign: 'center', color: 'var(--muted)' }}>No portfolio images are assigned to this artist yet.</p> : <div className="gallery-grid">
                 {filtered.map(({ id, image, category, altText }) => (
                   <button className="gallery-card" key={id} onClick={(event) => {
