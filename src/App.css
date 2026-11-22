@@ -230,3 +230,41 @@ button.btn.primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(37, 211, 102, 0.35);
 }
+
+/* WHITE THEME PREVIEW: palette-only overrides; layout/content/assets unchanged */
+:root { color:#1b1b1b; background:#ffffff; --ink:#ffffff; --panel:#f6f6f6; --muted:#555555; --line:rgba(170,138,78,.28); }
+body { background:#ffffff; color:#1b1b1b; }
+.site-shell { background:#ffffff; color:#1b1b1b; }
+.site-header { background:rgba(255,255,255,.94); border-bottom:1px solid #e8e5df; }
+.nav a { color:#252525; }
+.menu-button { color:#222; }
+.hero { background-color:#fff; }
+.hero-content { color:#fff; }
+.quick-strip { background:#f7f7f7; }
+.quick-strip span { color:#555; }
+.section-copy > p:not(.eyebrow), .section-heading > p:not(.eyebrow) { color:#555; }
+.feature-list span { color:#333; }
+.dark-panel,.gallery-section,.reviews-section { background:#f7f7f7; color:#222; border-color:#e5e5e5; }
+.service-card { background:#fff; border-color:#e5e2dc; color:#222; box-shadow:0 4px 18px rgba(0,0,0,.035); }
+.service-card p { color:#555; }
+.artist-card { background:#fff; border-color:#e6e1d8; }
+.artist-card > div { background:linear-gradient(transparent,rgba(0,0,0,.94)); }
+.filter-row button { color:#444; border-color:#ddd; }
+.piercing-grid figure { background:#fff; border-color:#e5e5e5; }
+.piercing-grid figcaption { color:#333; }
+.faq-list { border-color:#ddd; }
+.faq-list article { border-color:#ddd; }
+.faq-list button { color:#222; }
+.faq-answer p { color:#555; }
+.contact-card { background:linear-gradient(135deg,#fff,#f6f6f6); color:#222; border-color:#e5e2dc; }
+.contact-list a,.contact-list span { color:#333; }
+.footer { background:#f7f7f7; color:#222; border-color:#e5e5e5; }
+.footer p,.footer a { color:#555; }
+.footer h4 { color:var(--gold-soft); }
+.copyright { color:#777; border-color:#ddd; }
+.booking-form { background:#fff; color:#222; }
+.form-grid label { color:#333; }
+.form-grid input,.form-grid select,.form-grid textarea { background:#fff; color:#222; border-color:#ddd; }
+.form-note { color:#666; }
+.btn.secondary { color:#222; border-color:#bbb; }
+@media (max-width:780px) { .nav { background:#fff; } .nav a { color:#222; } }
