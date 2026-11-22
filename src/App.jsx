@@ -66,7 +66,7 @@ const faqs = [
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeFilter, setActiveFilter] = useState('All');
+  const [activeFilter, setActiveFilter] = useState(null);
   const [activeArtist, setActiveArtist] = useState('All Artists');
   const [lightbox, setLightbox] = useState(null);
   const [piercingLightbox, setPiercingLightbox] = useState(null);
@@ -86,10 +86,10 @@ function App() {
   const aboutFloatingImage = aboutImages[1] || artistWorking;
   const artists = normalizeArtists(homepageSettings?.artists);
   const visibleArtists = artists.filter((artist) => artist.active && artist.name);
-  const filters = ['All', ...new Set(galleryItems.map((item) => item.category))];
+  const filters = [...new Set(galleryItems.map((item) => item.category))];
   const filtered = useMemo(
     () => galleryItems.filter((item) => {
-      const categoryMatches = activeFilter === 'All' || item.category === activeFilter;
+      const categoryMatches = !activeFilter || item.category === activeFilter;
       const artistMatches = activeArtist === 'All Artists' || item.artist === activeArtist;
       return categoryMatches && artistMatches;
     }),
@@ -100,7 +100,7 @@ function App() {
 
   const viewArtistPortfolio = (artist) => {
     setActiveArtist(artist);
-    setActiveFilter('All');
+    setActiveFilter(null);
     window.requestAnimationFrame(() => {
       document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
@@ -314,21 +314,29 @@ function App() {
             <h2>Real work. Different stories.</h2>
             <p>Browse selected tattoos created across portrait, realism, religious, minimal, floral, geometric and color styles.</p>
           </div>
-          <div className="filter-row">
-            {filters.map((filter) => <button key={filter} className={activeFilter === filter ? 'active' : ''} onClick={() => { setActiveFilter(filter); setActiveArtist('All Artists'); }}>{filter}</button>)}
+          <div className="category-grid">
+            {filters.map((category) => {
+              const categoryItems = galleryItems.filter((item) => item.category === category && (activeArtist === 'All Artists' || item.artist === activeArtist));
+              const preview = categoryItems[0];
+              return <button type="button" key={category} className={`category-card ${activeFilter === category ? 'active' : ''}`} onClick={() => setActiveFilter(category)} aria-expanded={activeFilter === category}>
+                {preview && <img src={preview.image} alt="" loading="lazy"/>}
+                <span className="category-card-label"><strong>{category}</strong><small>{categoryItems.length} {categoryItems.length === 1 ? 'tattoo' : 'tattoos'}</small></span>
+              </button>;
+            })}
           </div>
-          {filtered.length === 0 ? (
-            <p style={{ textAlign: 'center', color: 'var(--muted)' }}>No portfolio images are assigned to this artist yet.</p>
-          ) : (
-            <div className="gallery-grid">
-              {filtered.map(({ id, image, category, altText }) => (
-                <button className="gallery-card" key={id} onClick={(event) => {
-                  lightboxTriggerRef.current = event.currentTarget;
-                  setLightbox({ id, src: image, category, altText });
-                }} aria-label={`Open ${category || 'portfolio'} image`}>
-                  <img src={image} alt={altText || category || 'Tattoo portfolio image'} loading="lazy"/><span className="gallery-overlay"><small>{category}</small><ZoomIn size={20}/></span>
-                </button>
-              ))}
+          {!activeFilter ? <p className="category-hint">Select a category to explore its complete tattoo gallery.</p> : (
+            <div className="selected-category-gallery">
+              <div className="selected-category-heading"><h3>{activeFilter} Tattoos</h3><button type="button" onClick={() => setActiveFilter(null)}>Close gallery ×</button></div>
+              {filtered.length === 0 ? <p style={{ textAlign: 'center', color: 'var(--muted)' }}>No portfolio images are assigned to this artist yet.</p> : <div className="gallery-grid">
+                {filtered.map(({ id, image, category, altText }) => (
+                  <button className="gallery-card" key={id} onClick={(event) => {
+                    lightboxTriggerRef.current = event.currentTarget;
+                    setLightbox({ id, src: image, category, altText });
+                  }} aria-label={`Open ${category || 'portfolio'} image`}>
+                    <img src={image} alt={altText || category || 'Tattoo portfolio image'} loading="lazy"/><span className="gallery-overlay"><small>{category}</small><ZoomIn size={20}/></span>
+                  </button>
+                ))}
+              </div>}
             </div>
           )}
         </section>
