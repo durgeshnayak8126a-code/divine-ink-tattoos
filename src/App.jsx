@@ -66,7 +66,7 @@ const faqs = [
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeFilter, setActiveFilter] = useState('All');
+  const [activeFilter, setActiveFilter] = useState(null);
   const [activeArtist, setActiveArtist] = useState('All Artists');
   const [lightbox, setLightbox] = useState(null);
   const [piercingLightbox, setPiercingLightbox] = useState(null);
@@ -89,7 +89,7 @@ function App() {
   const filters = ['All', ...new Set(galleryItems.map((item) => item.category))];
   const filtered = useMemo(
     () => galleryItems.filter((item) => {
-      const categoryMatches = activeFilter === 'All' || item.category === activeFilter;
+      const categoryMatches = activeFilter === 'All' || (activeFilter !== null && item.category === activeFilter);
       const artistMatches = activeArtist === 'All Artists' || item.artist === activeArtist;
       return categoryMatches && artistMatches;
     }),
@@ -317,7 +317,9 @@ function App() {
           <div className="filter-row">
             {filters.map((filter) => <button key={filter} className={activeFilter === filter ? 'active' : ''} onClick={() => { setActiveFilter(filter); setActiveArtist('All Artists'); }}>{filter}</button>)}
           </div>
-          {filtered.length === 0 ? (
+          {activeFilter === null ? (
+            <p style={{ textAlign: 'center', color: 'var(--muted)' }}>Select a tattoo category above to explore the designs.</p>
+          ) : filtered.length === 0 ? (
             <p style={{ textAlign: 'center', color: 'var(--muted)' }}>No portfolio images are assigned to this artist yet.</p>
           ) : (
             <div className="gallery-grid">
