@@ -268,3 +268,9 @@ body { background:#ffffff; color:#1b1b1b; }
 .form-note { color:#666; }
 .btn.secondary { color:#222; border-color:#bbb; }
 @media (max-width:780px) { .nav { background:#fff; } .nav a { color:#222; } }
+
+
+/* White-theme contrast fix: artist names and portfolio CTA */
+.artist-card h3 { color:#ffffff !important; text-shadow:0 2px 8px rgba(0,0,0,.7); }
+.artist-card .btn.secondary { background:var(--gold) !important; color:#111 !important; border:1px solid var(--gold) !important; font-weight:800; }
+.artist-card .btn.secondary:hover { background:#c79a3b !important; color:#111 !important; border-color:#c79a3b !important; transform:translateY(-2px); }
