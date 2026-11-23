@@ -66,7 +66,8 @@ const faqs = [
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeFilter, setActiveFilter] = useState('All');\n  const [activeArtist, setActiveArtist] = useState('All Artists');
+  const [activeFilter, setActiveFilter] = useState('All');
+  const [activeArtist, setActiveArtist] = useState('All Artists');
   const [lightbox, setLightbox] = useState(null);
   const [piercingLightbox, setPiercingLightbox] = useState(null);
   const [openFaq, setOpenFaq] = useState(0);
