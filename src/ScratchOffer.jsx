@@ -17,7 +17,8 @@ export default function ScratchOffer({ phone }) {
   const scratched = useRef(0);
 
   useEffect(() => {
-    setOpen(true);
+    const timer = setTimeout(() => setOpen(true), 10000);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
