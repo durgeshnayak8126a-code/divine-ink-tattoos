@@ -420,7 +420,6 @@ function App() {
           </div>
           <iframe title="Divine Ink Tattoos location" loading="lazy" referrerPolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Shop%20No.%20155%20Near%20Apollo%20Pharmacy%20Main%20HUDA%20Market%20Sector%2031%20Gurugram%20Haryana%20122001&output=embed"></iframe>
         </section>
-        <ScratchOffer phone={phone} />
       </main>
 
       <footer className="footer">
@@ -434,6 +433,7 @@ function App() {
         <a className="floating-social whatsapp" href={whatsappLink} target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp"><WhatsAppLogo/></a>
         <a className="floating-social instagram" href="https://www.instagram.com/divineinktattoos1/" target="_blank" rel="noreferrer" aria-label="Open Instagram"><InstagramLogo/></a>
         <a className="floating-social facebook" href="https://www.facebook.com/profile.php?id=100078466583354" target="_blank" rel="noreferrer" aria-label="Open Facebook"><FacebookLogo/></a>
+        <ScratchOffer phone={phone} />
       </div>
 
       {lightbox && <div className="lightbox" role="dialog" aria-modal="true" aria-label={`${lightbox.category || 'Gallery'} image preview`} onClick={() => setLightbox(null)}>
