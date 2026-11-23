@@ -19,8 +19,7 @@ export default function ScratchOffer({ phone }) {
   useEffect(() => {
     try {
       if (sessionStorage.getItem('divineScratchSeen')) return;
-      const timer = window.setTimeout(() => setOpen(true), 8500);
-      return () => window.clearTimeout(timer);
+      setOpen(true);
     } catch { return undefined; }
   }, []);
 
