@@ -17,10 +17,7 @@ export default function ScratchOffer({ phone }) {
   const scratched = useRef(0);
 
   useEffect(() => {
-    try {
-      if (sessionStorage.getItem('divineScratchSeen')) return;
-      setOpen(true);
-    } catch { return undefined; }
+    setOpen(true);
   }, []);
 
   useEffect(() => {
