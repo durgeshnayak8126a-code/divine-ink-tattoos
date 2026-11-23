@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import './App.css';
+import ScratchOffer from './ScratchOffer.jsx';
 
 function SvgIcon({ size = 24, children, ...props }) {
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>{children}</svg>;
@@ -419,6 +420,7 @@ function App() {
           </div>
           <iframe title="Divine Ink Tattoos location" loading="lazy" referrerPolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Shop%20No.%20155%20Near%20Apollo%20Pharmacy%20Main%20HUDA%20Market%20Sector%2031%20Gurugram%20Haryana%20122001&output=embed"></iframe>
         </section>
+        <ScratchOffer phone={phone} />
       </main>
 
       <footer className="footer">
