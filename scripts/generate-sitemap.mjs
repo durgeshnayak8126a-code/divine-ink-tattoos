@@ -69,6 +69,7 @@ const entries = [
   urlEntry('/studio/', studioLastmod),
   ...servicePages.map((service) => urlEntry(`/services/${service.slug}/`, serviceLastmod)),
   ...locationPages.map((location) => urlEntry(`/locations/${location.slug}/`, locationLastmod)),
+  urlEntry('/tattoo-shop-near-me-gurgaon/', latestGitDate(['public/tattoo-shop-near-me-gurgaon/index.html'])),
 ];
 
 const sitemap = [
