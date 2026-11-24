@@ -396,6 +396,7 @@ if (await exists(sitemapPath)) {
     'https://divineinktattoos.in/studio/',
     ...servicePages.map((service) => `https://divineinktattoos.in/services/${service.slug}/`),
     ...locationPages.map((location) => `https://divineinktattoos.in/locations/${location.slug}/`),
+    'https://divineinktattoos.in/tattoo-shop-near-me-gurgaon/',
   ];
 
   for (const url of expectedPublicUrls) {
@@ -421,6 +422,18 @@ if (await exists(sitemapPath)) {
   expect(publicUrlBlocks.length === urlCount, 'Sitemap URL block count must match URL count.');
   expect(publicUrlBlocks.every((block) => (block.match(/<loc>/g) || []).length === 1 && (block.match(/<lastmod>/g) || []).length <= 1), 'Each sitemap URL block must contain exactly one loc and at most one lastmod.');
   expect(!sitemap.includes('/admin/'), 'Sitemap must never include admin URLs.');
+}
+
+const nearMePath = resolve(dist, 'tattoo-shop-near-me-gurgaon', 'index.html');
+expect(await exists(nearMePath), 'Near-me Gurgaon landing page must exist.');
+if (await exists(nearMePath)) {
+  const nearMeHtml = await read(nearMePath);
+  expect(nearMeHtml.includes('<title>Tattoo Shop Near Me in Gurgaon | Divine Ink, Sector 31</title>'), 'Near-me landing page title drifted.');
+  expect(nearMeHtml.includes('rel="canonical" href="https://divineinktattoos.in/tattoo-shop-near-me-gurgaon/"'), 'Near-me landing page canonical is missing or incorrect.');
+  expect(nearMeHtml.includes('Shop No. 155, Basement, near Apollo Pharmacy, Main HUDA Market, Sector 31, Gurugram, Haryana 122001'), 'Near-me landing page must use the locked Sector 31 address.');
+  expect(nearMeHtml.includes('href="tel:+918445702782"') && nearMeHtml.includes('https://wa.me/918445702782'), 'Near-me landing page must preserve the official contact number.');
+  expect(nearMeHtml.includes('https://divineinktattoos.in/#localbusiness'), 'Near-me landing page must reference the canonical business entity.');
+  expect(nearMeHtml.includes('name="robots" content="index, follow'), 'Near-me landing page must be indexable.');
 }
 
 const studioHtmlPath = resolve(dist, 'studio', 'index.html');
