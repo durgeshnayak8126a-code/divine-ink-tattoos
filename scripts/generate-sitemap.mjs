@@ -29,7 +29,7 @@ function urlEntry(pathname, lastmod = '') {
   const lines = ['  <url>', `    <loc>${loc}</loc>`];
   // Sitemap protocol makes lastmod optional. In shallow/archived builds,
   // omit it rather than fail the entire build or fabricate a modification date.
-  if (/^\\d{4}-\\d{2}-\\d{2}$/.test(lastmod)) {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(lastmod)) {
     lines.push(`    <lastmod>${lastmod}</lastmod>`);
   }
   lines.push('  </url>');
