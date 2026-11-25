@@ -46,6 +46,26 @@ export const serviceFaqs = {
     ['Can I discuss a custom religious tattoo design?', 'Yes. Share the symbols, scripture or devotional reference that matters to you, along with the preferred placement and style. The composition is discussed before the stencil is confirmed.'],
     ['Can detailed religious artwork be made small?', 'Some detailed faces, hands, lettering and ornament need more space to remain clear. The artist can suggest a practical scale after reviewing your reference.'],
   ],
+  'ear-piercing': [
+    ['What ear piercing options can I discuss?', 'Contact Divine Ink in Sector 31 to discuss the ear piercing placement you have in mind. Suitability and available options are confirmed during consultation.'],
+    ['What should I confirm before an ear piercing appointment?', 'Ask the studio to confirm the available jewellery, procedure details, current pricing and aftercare instructions before booking.'],
+  ],
+  'nose-piercing': [
+    ['Can I enquire about nose piercing at Divine Ink?', 'Yes. Contact the Sector 31 studio to discuss the placement you want, available options and appointment availability.'],
+    ['What should I ask before booking a nose piercing?', 'Confirm the jewellery options, procedure details, current price and aftercare guidance with the studio before your appointment.'],
+  ],
+  'belly-piercing': [
+    ['Can everyone get a belly piercing?', 'Not every anatomy or circumstance is suitable. The studio should assess the intended placement in person and explain available options before proceeding.'],
+    ['How do I prepare for a belly piercing appointment?', 'Contact the studio first to confirm availability, jewellery options, pricing and the aftercare instructions you will need to follow.'],
+  ],
+  'eyebrow-piercing': [
+    ['Can I discuss eyebrow piercing placement before booking?', 'Yes. Contact Divine Ink to discuss the placement you want. Suitability is assessed in person before the procedure.'],
+    ['What should I confirm for an eyebrow piercing?', 'Ask about jewellery options, procedure details, current pricing and aftercare before confirming your appointment.'],
+  ],
+  'industrial-piercing': [
+    ['Is industrial piercing suitable for every ear?', 'No. Ear anatomy affects whether an industrial piercing is suitable. The intended placement should be assessed in person before proceeding.'],
+    ['What should I ask before booking an industrial piercing?', 'Confirm suitability assessment, jewellery options, current pricing and aftercare guidance with the studio before booking.'],
+  ],
   'sleeve-tattoos': [
     ['How do I plan a full sleeve tattoo?', 'Start with the main theme, subjects and preferred style. Divine Ink can discuss how the composition may flow around the shoulder, elbow and forearm and how sessions may be planned.'],
     ['Can an existing tattoo be included in a sleeve?', 'Sometimes. Its position, style, size and condition affect how it can connect with new artwork. Share clear photos for an initial discussion.'],
