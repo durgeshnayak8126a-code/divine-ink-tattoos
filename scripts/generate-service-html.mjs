@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { servicePages } from '../src/serviceData.js';
+import { serviceFaqs } from '../src/serviceFaqData.js';
 
 const distDirectory = resolve('dist');
 const homepageHtml = await readFile(resolve(distDirectory, 'index.html'), 'utf8');
@@ -87,6 +88,20 @@ for (const service of servicePages) {
       inLanguage: 'en-IN',
     },
   ];
+
+  const serviceFaq = serviceFaqs[service.slug] || [];
+  if (serviceFaq.length > 0) {
+    schema.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: serviceFaq.map(([question, answer]) => ({
+        '@type': 'Question',
+        name: question,
+        acceptedAnswer: { '@type': 'Answer', text: answer },
+      })),
+    });
+  }
 
   let html = homepageHtml
     .replace(/<title>[\s\S]*?<\/title>/i, `<title>${metaTitle}</title>`)
